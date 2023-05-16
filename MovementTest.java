@@ -1,16 +1,31 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 public class MovementTest implements KeyListener {
    Player player;
+   Drawing drawing;
 
    public MovementTest() {
-      player = new Player(800 / 2, 500 / 2);
+      player = new Player(800 / 2, 500 / 2, new Sprite[] {
+         new Sprite("assets/rebecca0.png"),
+         new Sprite("assets/rebecca1.png"),
+         new Sprite("assets/rebecca0.png"),
+         new Sprite("assets/rebecca2.png"),
+      },
+      new Sprite[] {
+      
+      });
+      
       JFrame frame = new JFrame("Testing");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setSize(800, 500);
-      frame.add(new Drawing());
+      
+      drawing = new Drawing();
+      frame.add(drawing);
       frame.addKeyListener(this);
       frame.setVisible(true);
    }
@@ -24,6 +39,7 @@ public class MovementTest implements KeyListener {
          player.move("LEFT");
       if (e.getKeyCode() == KeyEvent.VK_RIGHT)
          player.move("RIGHT");
+      drawing.repaint();
     }
    
    public void keyReleased(KeyEvent e) {}
@@ -33,7 +49,6 @@ public class MovementTest implements KeyListener {
       public void paint (Graphics g) {
          
          player.draw(g);
-           
       }
    }
    
