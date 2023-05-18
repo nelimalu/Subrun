@@ -53,22 +53,22 @@ public class Player {
       }
       
       if (buttons[0]) {
-         vDirection = 1;
+         vDirection += 1;
          g.drawImage(nextSprite.getImage(), x, y, null);
          prevDirection = 0;
       }
       if (buttons[1]) {
-         vDirection = -1;
+         vDirection -= 1;
          g.drawImage(nextSprite.getImage(), x, y, null);
          prevDirection = 1;
       }
       if (buttons[2]) {
-         hDirection = 1;
+         hDirection += 1;
          g.drawImage(nextSprite.getImage(), x, y, null);
          prevDirection = 2;
       }
       if (buttons[3]) {
-         hDirection = -1;
+         hDirection -= 1;
          g.drawImage(nextSprite.getImage(), x + width, y, -width, height, null);
          prevDirection = 3;
       }
