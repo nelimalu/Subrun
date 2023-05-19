@@ -7,10 +7,11 @@ public class Controller {
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
    
    public static int screen = 0;
-   private boolean initScreen = true;
+   public static boolean initScreen = true;
    
    /* INITIALIZE SCREENS */
    Menu menu = new Menu();
+   CharSelect charSelect = new CharSelect(new Sprite("assets/rebecca0.png", 10), new Sprite("assets/benji.png", 10));
    
    
    public Controller() {
@@ -31,9 +32,17 @@ public class Controller {
    }
    
    private void removeListeners() {
-      for (KeyListener a : frame.getListeners(KeyListener.class)) {
+      for (KeyListener a : frame.getListeners(KeyListener.class))
          frame.removeKeyListener(a);
-      }
+      for (MouseListener b : frame.getListeners(MouseListener.class))
+         frame.removeMouseListener(b);
+      for (MouseMotionListener c : frame.getListeners(MouseMotionListener.class))
+         frame.removeMouseMotionListener(c);
+   }
+   
+   public static void changeScreen(int newScreen) {
+      screen = newScreen;
+      initScreen = true;
    }
    
    class Drawing extends JComponent {  
@@ -44,9 +53,20 @@ public class Controller {
                if (initScreen) {
                   removeListeners();
                   frame.addMouseListener(menu);
+                  frame.addMouseMotionListener(menu);
                   initScreen = false;
                }
-               menu.paint();
+               menu.paint(g);
+               break;
+            case 1:
+               if (initScreen) {
+                  removeListeners();
+                  frame.addMouseListener(charSelect);
+                  frame.addMouseMotionListener(charSelect);
+                  initScreen = false;
+               }
+               charSelect.paint(g);
+               break;
                
          }
          
