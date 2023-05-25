@@ -8,10 +8,12 @@ public class Controller {
    
    public static int screen = 0;
    public static boolean initScreen = true;
+   public static Timer timer;
    
    /* INITIALIZE SCREENS */
    Menu menu = new Menu();
    CharSelect charSelect = new CharSelect(new Sprite("assets/rebecca0.png", 10), new Sprite("assets/benji.png", 10));
+   Info info = new Info(new Sprite("assets/money.png", 5), new Sprite("assets/benji.png", 10));
    
    
    public Controller() {
@@ -23,7 +25,7 @@ public class Controller {
       //frame.addKeyListener(this);
       frame.setVisible(true);
 
-      Timer timer = new Timer(40, new ActionListener() {
+      timer = new Timer(40, new ActionListener() {
          public void actionPerformed(ActionEvent a) {
             drawing.repaint();
          }
@@ -66,6 +68,15 @@ public class Controller {
                   initScreen = false;
                }
                charSelect.paint(g);
+               break;
+            case 2:
+               if (initScreen) {
+                  removeListeners();
+                  frame.addMouseListener(info);
+                  frame.addMouseMotionListener(info);
+                  initScreen = false;
+               }
+               info.paint(g);
                break;
                
          }

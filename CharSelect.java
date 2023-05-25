@@ -21,7 +21,8 @@ public class CharSelect implements MouseListener, MouseMotionListener {
    }
    
    public void mouseClicked (MouseEvent e) {
-      
+      if (xHover < 120 && yHover > 415) 
+         Controller.changeScreen(0);
    }
 
    public void mousePressed (MouseEvent e) {
@@ -54,8 +55,7 @@ public class CharSelect implements MouseListener, MouseMotionListener {
       for (int i = 0; i < 800; i += 80) {
          g.fillRect(i,130,50,20);
          g.fillRect(i,360,50,20);
-         g.drawImage(rebecca.getImage(), 460, 175, null);
-         g.drawImage(benji.getImage(), 160,175, null);
+         
       }
       g.setColor(Color.black);
       g.setFont(new Font("Helvetica Neue", Font.BOLD, 44));
@@ -63,20 +63,34 @@ public class CharSelect implements MouseListener, MouseMotionListener {
       
       g.setColor(Color.white);
       
-      g.fillRect(125,350,230,75);
-      g.fillRect(425,350,230,75);
+      g.fillRect(125,330,230,75);
+      g.fillRect(425,330,230,75);
 
       g.setColor(new Color(209, 196, 56));
       if (xHover>125 && xHover<355 && yHover>350 && yHover < 425) 
-         g.fillRect(125,350,230,75);
+         g.fillRect(125,330,230,75);
       if (xHover>425 && xHover<655 && yHover>350 && yHover < 425) 
-         g.fillRect(425,350,230,75);         
+         g.fillRect(425,330,230,75);         
       
       g.setColor(Color.black);
-      g.drawRect(125,350,230,75);
-      g.drawRect(425,350,230,75);
+      g.drawRect(125,330,230,75);
+      g.drawRect(425,330,230,75);
       g.setFont(new Font("Helvetica Neue", Font.PLAIN, 24));
-      g.drawString("Benji", 213, 395);
-      g.drawString("Rebecca", 500, 395);      
+      g.drawString("Benji", 213, 375);
+      g.drawString("Rebecca", 500, 375); 
+      g.setFont(new Font("Arial", Font.BOLD, 30));
+      g.drawImage(rebecca.getImage(), 460, 155, null);
+      g.drawImage(benji.getImage(), 160,155, null);
+
+      g.setColor(Color.white);
+      g.drawString("<- Back", 15, 440);
+      if (xHover < 120 && yHover > 415) {
+         g.setFont(new Font("Arial", Font.BOLD, 30));
+         g.setColor(Color.yellow);
+         g.drawString("<- Back", 15, 440);
+         
+         
+      }
+     
    }
 }
