@@ -38,7 +38,7 @@ public class Controller {
    
    class Drawing extends JComponent {  
       public void paint (Graphics g) {
-         
+         System.out.println("hi");
          switch (screen) {
             case 0:
                if (initScreen) {
@@ -46,7 +46,8 @@ public class Controller {
                   frame.addMouseListener(menu);
                   initScreen = false;
                }
-               menu.paint();
+               menu.paint(g);
+               break;
                
          }
          
