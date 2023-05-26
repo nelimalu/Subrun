@@ -7,10 +7,13 @@ public class Controller {
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
    
    public static int screen = 0;
-   private boolean initScreen = true;
+   public static boolean initScreen = true;
+   public static Timer timer;
    
    /* INITIALIZE SCREENS */
    Menu menu = new Menu();
+   CharSelect charSelect = new CharSelect(new Sprite("assets/rebecca0.png", 10), new Sprite("assets/benji.png", 10));
+   Info info = new Info(new Sprite("assets/money.png", 5), new Sprite("assets/benji.png", 10));
    
    
    public Controller() {
@@ -22,7 +25,7 @@ public class Controller {
       //frame.addKeyListener(this);
       frame.setVisible(true);
 
-      Timer timer = new Timer(40, new ActionListener() {
+      timer = new Timer(40, new ActionListener() {
          public void actionPerformed(ActionEvent a) {
             drawing.repaint();
          }
@@ -31,22 +34,48 @@ public class Controller {
    }
    
    private void removeListeners() {
-      for (KeyListener a : frame.getListeners(KeyListener.class)) {
+      for (KeyListener a : frame.getListeners(KeyListener.class))
          frame.removeKeyListener(a);
-      }
+      for (MouseListener b : frame.getListeners(MouseListener.class))
+         frame.removeMouseListener(b);
+      for (MouseMotionListener c : frame.getListeners(MouseMotionListener.class))
+         frame.removeMouseMotionListener(c);
+   }
+   
+   public static void changeScreen(int newScreen) {
+      screen = newScreen;
+      initScreen = true;
    }
    
    class Drawing extends JComponent {  
       public void paint (Graphics g) {
-         System.out.println("hi");
          switch (screen) {
             case 0:
                if (initScreen) {
                   removeListeners();
                   frame.addMouseListener(menu);
+                  frame.addMouseMotionListener(menu);
                   initScreen = false;
                }
                menu.paint(g);
+               break;
+            case 1:
+               if (initScreen) {
+                  removeListeners();
+                  frame.addMouseListener(charSelect);
+                  frame.addMouseMotionListener(charSelect);
+                  initScreen = false;
+               }
+               charSelect.paint(g);
+               break;
+            case 2:
+               if (initScreen) {
+                  removeListeners();
+                  frame.addMouseListener(info);
+                  frame.addMouseMotionListener(info);
+                  initScreen = false;
+               }
+               info.paint(g);
                break;
                
          }

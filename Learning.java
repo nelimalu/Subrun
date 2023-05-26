@@ -4,13 +4,13 @@ import java.awt.event.*;
 
 public class Learning implements KeyListener {
    Drawing drawing;
-   Sprite character
+   Sprite character;
    int screen = 0;
    
    public Learning(String name) {
-      if (name.equals("Rebecca");
+      if (name.equals("Rebecca")) {
          character = new Sprite("assets/rebecca0.png");
-      else
+      } else {}
          
    
       JFrame frame = new JFrame("Testing");
@@ -44,7 +44,7 @@ public class Learning implements KeyListener {
       public void paint (Graphics g) {
          switch (screen) {
             case 0:
-               introScreen();
+               introScreen(g);
                break;
             case 1:
                //suburbsScreen();
@@ -78,7 +78,7 @@ public class Learning implements KeyListener {
    }
    
    public static void main (String[] args) {
-      new Learning();
+      new Learning("Rebecca");
    }
 
    

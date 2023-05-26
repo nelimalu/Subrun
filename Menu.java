@@ -22,12 +22,17 @@ public class Menu implements MouseListener, MouseMotionListener {
    }
    
    public void mouseClicked(MouseEvent e) {
-      if (xHover>270 && xHover<480 && yHover>150 && yHover < 210) 
+      if (xHover>270 && xHover<480 && yHover>150 && yHover < 210) {
          System.out.println("PLAY");
-      if (xHover>270 && xHover<480 && yHover>250 && yHover < 310) 
+         Controller.changeScreen(1);
+      } if (xHover>270 && xHover<480 && yHover>250 && yHover < 310) {
          System.out.println("INFO");
-      if (xHover>270 && xHover<480 && yHover>350 && yHover < 410)
+         Controller.changeScreen(2);
+      } if (xHover>270 && xHover<480 && yHover>350 && yHover < 410) {
          System.out.println("EXIT");
+         //Controller.timer.cancel();
+         //Controller.timer.purge();
+      }
    }
 
    public void mousePressed (MouseEvent e) {}

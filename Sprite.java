@@ -5,12 +5,25 @@ import java.io.*;
 
 public class Sprite {
    private BufferedImage image;
-   public static final int SCALE = 5;
+   private int scale;
    
    public Sprite(String path) {
+      scale = 5;
       try {
          image = ImageIO.read(new File(path));
-         Image scaled = image.getScaledInstance(image.getWidth() * SCALE, image.getHeight() * SCALE, Image.SCALE_DEFAULT);
+         Image scaled = image.getScaledInstance(image.getWidth() * scale, image.getHeight() * scale, Image.SCALE_DEFAULT);
+         image = convertToBufferedImage(scaled);
+      } catch (IOException e) {
+         System.out.println("hekp");
+      }
+      
+   }
+   
+   public Sprite(String path, int scale) {
+      this.scale = scale;
+      try {
+         image = ImageIO.read(new File(path));
+         Image scaled = image.getScaledInstance(image.getWidth() * scale, image.getHeight() * scale, Image.SCALE_DEFAULT);
          image = convertToBufferedImage(scaled);
       } catch (IOException e) {
          System.out.println("hekp");
