@@ -6,7 +6,7 @@ public class Controller {
    public Drawing drawing;
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
    
-   public static int screen = 0;
+   public static int screen = 3;
    public static boolean initScreen = true;
    public static Timer timer;
    
@@ -14,7 +14,7 @@ public class Controller {
    Menu menu = new Menu();
    CharSelect charSelect = new CharSelect(new Sprite("assets/rebecca0.png", 10), new Sprite("assets/benji.png", 10));
    Info info = new Info(new Sprite("assets/money.png", 5), new Sprite("assets/benji.png", 10));
-   
+   Maze maze = new Maze();
    
    public Controller() {
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +50,7 @@ public class Controller {
    class Drawing extends JComponent {  
       public void paint (Graphics g) {
          switch (screen) {
-            case 0:
+            case 0:  // menu
                if (initScreen) {
                   removeListeners();
                   frame.addMouseListener(menu);
@@ -59,7 +59,7 @@ public class Controller {
                }
                menu.paint(g);
                break;
-            case 1:
+            case 1:  // character select
                if (initScreen) {
                   removeListeners();
                   frame.addMouseListener(charSelect);
@@ -68,7 +68,7 @@ public class Controller {
                }
                charSelect.paint(g);
                break;
-            case 2:
+            case 2:  // info screen
                if (initScreen) {
                   removeListeners();
                   frame.addMouseListener(info);
@@ -76,6 +76,14 @@ public class Controller {
                   initScreen = false;
                }
                info.paint(g);
+               break;
+            case 3: // Maze
+               if (initScreen) {
+                  removeListeners();
+                  frame.addKeyListener(maze);
+                  initScreen = false;
+               }
+               maze.paint(g);
                break;
                
          }

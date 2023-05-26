@@ -32,7 +32,31 @@ public class Player {
             return false;
        return true;
    }
-   
+
+   public boolean collide(int x, int y, Obstacle obstacle) {
+      return x < obstacle.getX() + obstacle.getWidth() &&
+              x + this.width > obstacle.getX() &&
+              y < obstacle.getY() + obstacle.getHeight() &&
+              this.height + y > obstacle.getY();
+   }
+
+   public String getSide(int x, int y, Obstacle obstacle) {
+      if (y > obstacle.getY() + obstacle.getHeight())
+         return "BOTTOM";
+      else if (y + height < obstacle.getY())
+         return "TOP";
+      else if (x < obstacle.getX())
+         return "LEFT";
+      return "RIGHT";
+   }
+
+   public void move(int x, int y, Obstacle[] obstacles) {
+      for (Obstacle obstacle : obstacles) {
+         obstacle.moveX(x * SPEED);
+         obstacle.moveY(y * SPEED);
+      }
+   }
+
    public void draw(Graphics g, boolean[] buttons, Obstacle[] obstacles) {
       //g.drawRect(x - width / 2, y - height / 2, width, height);
        Sprite nextSprite = !buttons[0] ? horizontalSprites[animationCount / ANIMATION_DELAY_FACTOR] : verticalSprites[animationCount / ANIMATION_DELAY_FACTOR];
@@ -74,9 +98,36 @@ public class Player {
       }
       
       if (moving) {
+         boolean collided = false;
+         int moveAmountX = hDirection * SPEED;
+         int moveAmountY = vDirection * SPEED
+
          for (Obstacle obstacle : obstacles) {
-            obstacle.moveX(hDirection * SPEED);
-            obstacle.moveY(vDirection * SPEED);
+            if (collide(x + hDirection * SPEED, y + vDirection * SPEED, obstacle)) {
+               collided = true;
+               String side = getSide(x, y, obstacle);
+
+               if (side.equals("TOP")) {
+                  moveAmountY = 0; // get difference from current position to box so the player is right up against the box but not colliding
+               }
+               if (side.equals("BOTTOM")) {
+
+               }
+               if (side.equals("LEFT")) {
+
+               }
+               if (side.equals("RIGHT")) {
+
+               }
+
+            }
+         }
+
+         for (Obstacle obstacle : obstacles) {
+            if (!collided) {
+               obstacle.moveX(hDirection * SPEED);
+               obstacle.moveY(vDirection * SPEED);
+            }
          }
       } else 
          buttons[prevDirection] = false;
