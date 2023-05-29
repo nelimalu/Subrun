@@ -100,7 +100,7 @@ public class Player {
       if (moving) {
          boolean collided = false;
          int moveAmountX = hDirection * SPEED;
-         int moveAmountY = vDirection * SPEED
+         int moveAmountY = vDirection * SPEED;
 
          for (Obstacle obstacle : obstacles) {
             if (collide(x + hDirection * SPEED, y + vDirection * SPEED, obstacle)) {
