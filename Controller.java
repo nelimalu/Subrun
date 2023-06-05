@@ -7,7 +7,7 @@ public class Controller {
    public Drawing drawing;
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
    
-   public static int screen = 3;
+   public static int screen = 5;
    public static boolean initScreen = true;
    public static Timer timer;
    
@@ -17,6 +17,7 @@ public class Controller {
    Info info = new Info(new Sprite("assets/money.png", 5), new Sprite("assets/benji.png", 10));
    Splash splash = new Splash(new Sprite("assets/bike.png", 5), new Sprite("assets/bus.png", 7));
    Exit exit = new Exit(new Sprite("assets/car.png", 5));
+   Maze maze = new Maze();
    
    public Controller() {
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,9 +52,8 @@ public class Controller {
    
    class Drawing extends JComponent {  
       public void paint (Graphics g) {
-         
          switch (screen) {
-            case 0:
+            case 0:  // menu
                if (initScreen) {
                   removeListeners();
                   frame.addMouseListener(menu);
@@ -62,7 +62,7 @@ public class Controller {
                }
                menu.paint(g);
                break;
-            case 1:
+            case 1:  // character select
                if (initScreen) {
                   removeListeners();
                   frame.addMouseListener(charSelect);
@@ -71,7 +71,7 @@ public class Controller {
                }
                charSelect.paint(g);
                break;
-            case 2:
+            case 2:  // info screen
                if (initScreen) {
                   removeListeners();
                   frame.addMouseListener(info);
@@ -80,7 +80,8 @@ public class Controller {
                }
                info.paint(g);
                break;
-            case 3: 
+
+            case 5: 
                if (initScreen) {
                   removeListeners();
                   frame.addMouseListener(info);
@@ -90,7 +91,23 @@ public class Controller {
                splash.paint(g);
                break;
             case 4:
+               if (initScreen) {
+                  removeListeners();
+                  frame.addMouseListener(info);
+                  frame.addMouseMotionListener(info);
+                  initScreen = false;
+               }
                exit.paint(g);
+               break;
+
+            case 3: // Maze
+               if (initScreen) {
+                  removeListeners();
+                  frame.addKeyListener(maze);
+                  initScreen = false;
+               }
+               maze.paint(g);
+
                break;
                
          }
