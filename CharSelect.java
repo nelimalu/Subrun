@@ -47,6 +47,8 @@ public class CharSelect implements MouseListener, MouseMotionListener {
    }
 
    public void paint (Graphics g) {
+      
+      
       g.setColor(new Color(64, 63, 63));
       g.fillRect(0,0,800,500);
       
