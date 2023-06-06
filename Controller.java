@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+
 public class Controller {
    public Drawing drawing;
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
@@ -14,6 +15,8 @@ public class Controller {
    Menu menu = new Menu();
    CharSelect charSelect = new CharSelect(new Sprite("assets/rebecca0.png", 10), new Sprite("assets/benji.png", 10));
    Info info = new Info(new Sprite("assets/money.png", 5), new Sprite("assets/benji.png", 10));
+   Splash splash = new Splash(new Sprite("assets/bike.png", 5), new Sprite("assets/bus.png", 7));
+   Exit exit = new Exit(new Sprite("assets/car.png", 5));
    Maze maze = new Maze();
    
    public Controller() {
@@ -77,6 +80,26 @@ public class Controller {
                }
                info.paint(g);
                break;
+
+            case 5: 
+               if (initScreen) {
+                  removeListeners();
+                  frame.addMouseListener(info);
+                  frame.addMouseMotionListener(info);
+                  initScreen = false;
+               }
+               splash.paint(g);
+               break;
+            case 4:
+               if (initScreen) {
+                  removeListeners();
+                  frame.addMouseListener(info);
+                  frame.addMouseMotionListener(info);
+                  initScreen = false;
+               }
+               exit.paint(g);
+               break;
+
             case 3: // Maze
                if (initScreen) {
                   removeListeners();
@@ -84,6 +107,7 @@ public class Controller {
                   initScreen = false;
                }
                maze.paint(g);
+
                break;
                
          }

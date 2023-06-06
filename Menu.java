@@ -30,8 +30,7 @@ public class Menu implements MouseListener, MouseMotionListener {
          Controller.changeScreen(2);
       } if (xHover>270 && xHover<480 && yHover>350 && yHover < 410) {
          System.out.println("EXIT");
-         //Controller.timer.cancel();
-         //Controller.timer.purge();
+         Controller.changeScreen(4);
       }
    }
 

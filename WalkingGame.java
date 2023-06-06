@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.awt.*;
 
@@ -6,21 +7,14 @@ public class WalkingGame {
     private ArrayList<Lane> lanes;
     private ArrayList<Car> cars;
 
-    private static class Lane {
-        private int x;
-        private int y;
-        private int width;
-        private int height;
+    private static class Lane extends Obstacle {
         private int direction;
         private int speed;
         private boolean isRoad;
         private int frequency;
 
         public Lane(int x, int y, int width, int height) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+            super(x, y, width, height);
             this.direction = Math.random() >= 0.5 ? -1 : 1;
             this.speed = (int) (Math.random() * 5) + 5;
             this.isRoad = false;
@@ -34,8 +28,8 @@ public class WalkingGame {
         }
 
         public void move(int xDistance, int yDistance) {
-            x += xDistance;
-            y += yDistance;
+            moveX(xDistance);
+            moveY(yDistance);
         }
 
         public void draw(Graphics g) {
@@ -44,12 +38,13 @@ public class WalkingGame {
                 g.setColor(new Color(168, 168, 168));
             else
                 g.setColor(new Color(89, 168, 49));
-            g.fillRect(x, y, width, height);
+            g.fillRect(getX(), getY(), getWidth(), getHeight());
         }
 
         public void update(long frame, ArrayList<Car> cars) {
             if (isRoad && frame % (frequency * 25L) == 0) {
-                cars.add(new Car(x, y, direction, speed, new Sprite("assets/car.png", 3)));
+                int x = direction > 0 ? getX() : getX() + getWidth();
+                cars.add(new Car(x, getY() - getHeight() / 3, direction, speed, new Sprite("assets/car.png", 5)));
             }
         }
     }
@@ -65,17 +60,19 @@ public class WalkingGame {
         }
 
         public void draw(Graphics g) {
-            /*
+
             if (direction == 1)
                 g.drawImage(getSprite().getImage(), getX(), getY(), null);
             else
                 g.drawImage(getSprite().getImage(), getX() + getWidth(), getY(), -getWidth(), getHeight(), null);
 
-             */
+
         }
 
-        public void move() {
+        public boolean move(int x, int width) {
             moveX(speed * direction);
+
+            return getX() < x || getX() > x + width;
         }
 
     }
@@ -84,11 +81,15 @@ public class WalkingGame {
 
         private ArrayList<Car> cars;
         private ArrayList<Lane> lanes;
+        private int x;
+        private int width;
         private long frame;
 
         public SampleGame(int x, int y, int width, int height) {
             lanes = new ArrayList<Lane>();
             cars = new ArrayList<Car>();
+            this.x = x;
+            this.width = width;
 
             boolean[] laneTypes = {false, true, false, true, true, false, true, true, false, false, true, true, true, true, false};
             int[] laneFrequencies = {3, 2, 4, 3, 5, 2, 5, 4, 2};  // 9
@@ -111,9 +112,10 @@ public class WalkingGame {
             for (Lane lane : lanes) {
                 lane.move(xDistance, yDistance);
             }
+            this.x = lanes.get(0).getX();
         }
 
-        public void draw(Graphics g) {
+        public void draw(Graphics g, Player player) {
             frame++;
 
             for (Lane lane : lanes) {
@@ -121,12 +123,25 @@ public class WalkingGame {
                 lane.update(frame, cars);
             }
 
-            for (Car car : cars) {
-                car.draw(g);
-                car.move();
+            ArrayList<Integer> toRemove = new ArrayList<Integer>();
+            for (int i = 0; i < cars.size(); i++) {
+                cars.get(i).draw(g);
+                if (player.collide(cars.get(i))) {
+                    System.out.println("DEAD");
+                }
+                if (cars.get(i).move(x, width))
+                    toRemove.add(i);
             }
 
+            for (int i = 0; i < toRemove.size(); i++)
+                toRemove.set(i, toRemove.get(i) - i);
 
+            for (int index : toRemove) cars.remove(index);
+
+            // check if win
+            if (player.collide(lanes.get(lanes.size() - 1))) {
+                System.out.println("WINNERIASJDF");
+            }
         }
     }
 }

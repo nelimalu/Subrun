@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 
 public class Player {
@@ -11,9 +10,8 @@ public class Player {
    private int animationCount;
    private int animationDirection;
    private int prevDirection;
-   
    private static final int ANIMATION_DELAY_FACTOR = 2;
-   public static final int SPEED = 5;
+   public static final int SPEED = 10;
    
    public Player(int x, int y, Sprite[] horizontalSprites, Sprite[] verticalSprites) {
       this.width = horizontalSprites[0].getImage().getWidth();
@@ -38,6 +36,10 @@ public class Player {
               x + this.width > obstacle.getX() &&
               y < obstacle.getY() + obstacle.getHeight() &&
               this.height + y > obstacle.getY();
+   }
+
+   public boolean collide(Obstacle obstacle) {
+      return collide(x, y, obstacle);
    }
 
    public String getSide(int x, int y, Obstacle obstacle) {
@@ -84,13 +86,58 @@ public class Player {
       return "NONE";
    }
 
-   public void draw(Graphics g, boolean[] buttons, Obstacle[] obstacles) {
-       g.drawRect(x, y, width, height);
-       Sprite nextSprite = !buttons[0] ? horizontalSprites[animationCount / ANIMATION_DELAY_FACTOR] : verticalSprites[animationCount / ANIMATION_DELAY_FACTOR];
-
+   public int[] move(boolean[] buttons, Obstacle[] obstacles) {
       int vDirection = 0;  // vertical direction
       int hDirection = 0;  // horizontal direction
-      
+
+      boolean moving = !allFalse(buttons);
+
+      if (buttons[0]) {
+         vDirection += 1;
+         prevDirection = 0;
+      }
+      if (buttons[1]) {
+         vDirection -= 1;
+         prevDirection = 1;
+      }
+      if (buttons[2]) {
+         hDirection += 1;
+         prevDirection = 2;
+      }
+      if (buttons[3]) {
+         hDirection -= 1;
+         prevDirection = 3;
+      }
+
+      if (moving) {
+         int moveAmountX = hDirection * SPEED;
+         int moveAmountY = vDirection * SPEED;
+
+         for (Obstacle obstacle : obstacles) {
+
+            if (collide(x - hDirection * SPEED, y - vDirection * SPEED, obstacle)) {
+               String side = getSide(x, y, obstacle);
+
+               switch (side) {
+                  case "TOP" ->
+                          moveAmountY = y + height - obstacle.getY(); // get difference from current position to box so the player is right up against the box but not colliding
+                  case "BOTTOM" -> moveAmountY = obstacle.getY() + obstacle.getHeight() - y;
+                  case "LEFT" -> moveAmountX = x + width - obstacle.getX();
+                  case "RIGHT" -> moveAmountX = obstacle.getX() + obstacle.getWidth() - x;
+               }
+            }
+         }
+
+         return new int[] {moveAmountX, moveAmountY};
+      }
+
+      return new int[] {0, 0};
+   }
+
+   public void draw(Graphics g, boolean[] buttons) {
+       //g.drawRect(x, y, width, height);
+       Sprite nextSprite = !buttons[0] ? horizontalSprites[animationCount / ANIMATION_DELAY_FACTOR] : verticalSprites[animationCount / ANIMATION_DELAY_FACTOR];
+
       boolean moving = !allFalse(buttons);
       if (moving) {
          animationCount += animationDirection;
@@ -100,55 +147,24 @@ public class Player {
          buttons[prevDirection] = true;
          animationCount = 0;
       }
-      
+
       if (buttons[0]) {
-         vDirection += 1;
          g.drawImage(nextSprite.getImage(), x, y, null);
-         prevDirection = 0;
       }
       if (buttons[1]) {
-         vDirection -= 1;
          g.drawImage(nextSprite.getImage(), x, y, null);
          prevDirection = 1;
       }
       if (buttons[2]) {
-         hDirection += 1;
          g.drawImage(nextSprite.getImage(), x, y, null);
          prevDirection = 2;
       }
       if (buttons[3]) {
-         hDirection -= 1;
          g.drawImage(nextSprite.getImage(), x + width, y, -width, height, null);
          prevDirection = 3;
       }
 
-      if (moving) {
-         boolean collided = false;
-         int moveAmountX = hDirection * SPEED;
-         int moveAmountY = vDirection * SPEED;
-
-         for (Obstacle obstacle : obstacles) {
-
-            if (collide(x - hDirection * SPEED, y - vDirection * SPEED, obstacle)) {
-               String side = getSide(x, y, obstacle);
-
-               if (side.equals("TOP"))
-                  moveAmountY = y + height - obstacle.getY(); // get difference from current position to box so the player is right up against the box but not colliding
-               else if (side.equals("BOTTOM"))
-                  moveAmountY = obstacle.getY() + obstacle.getHeight() - y;
-               else if (side.equals("LEFT"))
-                  moveAmountX = x + width - obstacle.getX();
-               else if (side.equals("RIGHT"))
-                  moveAmountX = obstacle.getX() + obstacle.getWidth() - x;
-               break;
-            }
-         }
-
-         for (Obstacle obstacle : obstacles) {
-            obstacle.moveX(moveAmountX);
-            obstacle.moveY(moveAmountY);
-         }
-      } else
+      if (!moving)
          buttons[prevDirection] = false;
    }
 }

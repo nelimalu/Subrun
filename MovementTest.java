@@ -75,7 +75,7 @@ public class MovementTest implements KeyListener {
    
    class Drawing extends JComponent {
       public void paint (Graphics g) {
-         player.draw(g, buttons, obstacles);
+         //player.draw(g, buttons, obstacles);
          box.draw(g);
          
          for (int i = 0; i < obstacles.length; i++) {
