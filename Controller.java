@@ -7,7 +7,7 @@ public class Controller {
    public Drawing drawing;
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
    
-   public static int screen = 5;
+   public static int screen = 3;
    public static boolean initScreen = true;
    public static Timer timer;
    

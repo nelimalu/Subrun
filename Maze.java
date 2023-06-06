@@ -23,10 +23,33 @@ public class Maze implements KeyListener {
         });
 
         obstacles = new Obstacle[] {
-                new Obstacle(50, 50, 200, 100)
+                // start
+                new Obstacle(250, 330, 250, 50),
+                new Obstacle(250, 150, 50, 230),
+                new Obstacle(500, 150, 50, 230),
+
+                // halls
+
+                // left wing
+                new Obstacle(-500, 150, 800, 50),
+                new Obstacle(-500, -70, 50, 250),
+                new Obstacle(-1050, -70, 550, 50),
+                new Obstacle(-250, -70, 550, 50),
+                new Obstacle(-1050, -2350, 50, 2300),
+
+                // right wing
+                new Obstacle(500, 150, 800, 50),
+                new Obstacle(500, -70, 550, 50),
+                new Obstacle(1250, -70, 50, 250),
+                new Obstacle(1250, -70, 550, 50),
+                new Obstacle(1750, -1000, 50, 950),
+
+                // top wing
+                new Obstacle(250, -1000, 50, 950),
+                new Obstacle(500, -1000, 50, 950),
         };
 
-        walkingGame = new WalkingGame.SampleGame(0, 0, 700, 150);
+        walkingGame = new WalkingGame.SampleGame(-1000, -220, 1300, 150);
     }
     public void paint(Graphics g) {
 

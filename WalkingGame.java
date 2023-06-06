@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.awt.*;
 
@@ -49,7 +50,8 @@ public class WalkingGame {
 
         public void update(long frame, ArrayList<Car> cars) {
             if (isRoad && frame % (frequency * 25L) == 0) {
-                cars.add(new Car(x, y, direction, speed, new Sprite("assets/car.png", 3)));
+                int x = direction > 0 ? this.x : this.x + this.width;
+                cars.add(new Car(x, y, direction, speed, new Sprite("assets/car.png", 5)));
             }
         }
     }
@@ -71,8 +73,10 @@ public class WalkingGame {
                 g.drawImage(getSprite().getImage(), getX() + getWidth(), getY(), -getWidth(), getHeight(), null);
         }
 
-        public void move() {
+        public boolean move(int x, int width) {
             moveX(speed * direction);
+
+            return getX() < x || getX() + getWidth() > width;
         }
 
     }
@@ -81,11 +85,15 @@ public class WalkingGame {
 
         private ArrayList<Car> cars;
         private ArrayList<Lane> lanes;
+        private int x;
+        private int width;
         private long frame;
 
         public SampleGame(int x, int y, int width, int height) {
             lanes = new ArrayList<Lane>();
             cars = new ArrayList<Car>();
+            this.x = x;
+            this.width = width;
 
             boolean[] laneTypes = {false, true, false, true, true, false, true, true, false, false, true, true, true, true, false};
             int[] laneFrequencies = {3, 2, 4, 3, 5, 2, 5, 4, 2};  // 9
@@ -118,11 +126,21 @@ public class WalkingGame {
                 lane.update(frame, cars);
             }
 
-            for (Car car : cars) {
-                car.draw(g);
-                car.move();
+            ArrayList<Integer> toRemove = new ArrayList<Integer>();
+            for (int i = 0; i < cars.size(); i++) {
+                cars.get(i).draw(g);
+                if (cars.get(i).move(x, width))
+                    toRemove.add(i);
             }
 
+            System.out.println(cars);
+
+
+            for (int i = 0; i < toRemove.size(); i++)
+                toRemove.set(i, toRemove.get(i) - i);
+
+
+            for (int index : toRemove) cars.remove(index);
 
         }
     }

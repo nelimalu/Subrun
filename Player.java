@@ -12,7 +12,7 @@ public class Player {
    private int prevDirection;
    
    private static final int ANIMATION_DELAY_FACTOR = 2;
-   public static final int SPEED = 5;
+   public static final int SPEED = 30;
    
    public Player(int x, int y, Sprite[] horizontalSprites, Sprite[] verticalSprites) {
       this.width = horizontalSprites[0].getImage().getWidth();
@@ -89,8 +89,6 @@ public class Player {
 
       boolean moving = !allFalse(buttons);
 
-
-
       if (buttons[0]) {
          vDirection += 1;
          prevDirection = 0;
@@ -124,7 +122,6 @@ public class Player {
                   case "LEFT" -> moveAmountX = x + width - obstacle.getX();
                   case "RIGHT" -> moveAmountX = obstacle.getX() + obstacle.getWidth() - x;
                }
-               break;
             }
          }
 
