@@ -43,8 +43,9 @@ public class WalkingGame {
 
         public void update(long frame, ArrayList<Car> cars) {
             if (isRoad && frame % (frequency * 25L) == 0) {
-                int x = direction > 0 ? getX() : getX() + getWidth();
-                cars.add(new Car(x, getY() - getHeight() / 3, direction, speed, new Sprite("assets/car.png", 5)));
+                Sprite sprite = new Sprite("assets/car.png", 5);
+                int x = direction > 0 ? getX() : getX() + getWidth() - sprite.getImage().getWidth();
+                cars.add(new Car(x, getY() + getHeight() / 3, direction, speed, sprite));
             }
         }
     }
@@ -76,7 +77,7 @@ public class WalkingGame {
         public boolean move(int x, int width) {
             moveX(speed * direction);
 
-            return getX() < x || getX() > x + width;
+            return getX() < x || getX() + getWidth() > x + width;
         }
 
     }
