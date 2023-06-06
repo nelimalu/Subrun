@@ -65,10 +65,13 @@ public class WalkingGame {
         }
 
         public void draw(Graphics g) {
+            /*
             if (direction == 1)
                 g.drawImage(getSprite().getImage(), getX(), getY(), null);
             else
                 g.drawImage(getSprite().getImage(), getX() + getWidth(), getY(), -getWidth(), getHeight(), null);
+
+             */
         }
 
         public void move() {

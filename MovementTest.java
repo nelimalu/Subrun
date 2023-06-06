@@ -6,6 +6,7 @@ public class MovementTest implements KeyListener {
    Player player;
    Obstacle[] obstacles;
    Drawing drawing;
+   MessageBox box;
    static boolean[] buttons = {false, false, false, false};  // up down left right
 
    public MovementTest() {
@@ -25,6 +26,8 @@ public class MovementTest implements KeyListener {
       obstacles = new Obstacle[] {
          new Obstacle(50, 50, new Sprite("assets/treetest.png"))
       };
+
+      box = new MessageBox("TESTING");
       
       JFrame frame = new JFrame("Testing");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,6 +37,8 @@ public class MovementTest implements KeyListener {
       frame.add(drawing);
       frame.addKeyListener(this);
       frame.setVisible(true);
+
+
       
       Timer timer = new Timer(40, new ActionListener() {
          public void actionPerformed(ActionEvent a) {
@@ -71,6 +76,7 @@ public class MovementTest implements KeyListener {
    class Drawing extends JComponent {
       public void paint (Graphics g) {
          player.draw(g, buttons, obstacles);
+         box.draw(g);
          
          for (int i = 0; i < obstacles.length; i++) {
             obstacles[i].draw(g);
