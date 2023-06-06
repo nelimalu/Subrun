@@ -1,10 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
 
+
 public class Maze implements KeyListener {
     private Player player;
     private Obstacle[] obstacles;
     private static boolean[] buttons = {false, false, false, false};  // up down left right
+
+    private WalkingGame.SampleGame walkingGame;
     public Maze() {
         player = new Player(800 / 2, 500 / 2, new Sprite[] {
                 new Sprite("assets/rebecca0.png"),
@@ -22,12 +25,23 @@ public class Maze implements KeyListener {
         obstacles = new Obstacle[] {
                 new Obstacle(50, 50, 200, 100)
         };
+
+        walkingGame = new WalkingGame.SampleGame(0, 0, 700, 150);
     }
     public void paint(Graphics g) {
-        player.draw(g, buttons, obstacles);
 
-        for (int i = 0; i < obstacles.length; i++) {
-            obstacles[i].draw(g);
+
+
+        int[] distance = player.move(buttons, obstacles);
+        walkingGame.move(distance[0], distance[1]);
+
+        walkingGame.draw(g);
+        player.draw(g, buttons);
+
+        for (Obstacle obstacle : obstacles) {
+            obstacle.moveX(distance[0]);
+            obstacle.moveY(distance[1]);
+            obstacle.draw(g);
         }
     }
 

@@ -24,6 +24,7 @@ public class Obstacle {
    }
    
    public void draw(Graphics g) {
+      g.setColor(new Color(0, 0, 0));
       if (this.sprite == null)
          g.fillRect(x, y, width, height);
       else
@@ -44,6 +45,7 @@ public class Obstacle {
    public int getY() {
       return y;
    }
+   public Sprite getSprite() { return sprite; }
    public int getWidth() {
       return width;
    }
