@@ -135,7 +135,10 @@ public class Player {
    }
 
    public void draw(Graphics g, boolean[] buttons) {
-       //g.drawRect(x, y, width, height);
+       if (Controller.SHOW_HITBOXES) {
+          g.setColor(Color.WHITE);
+          g.drawRect(x, y, width, height);
+       }
        Sprite nextSprite = !buttons[0] ? horizontalSprites[animationCount / ANIMATION_DELAY_FACTOR] : verticalSprites[animationCount / ANIMATION_DELAY_FACTOR];
 
       boolean moving = !allFalse(buttons);

@@ -6,6 +6,8 @@ public class Maze implements KeyListener {
     private Player player;
     private Obstacle[] obstacles;
     private static boolean[] buttons = {false, false, false, false};  // up down left right
+    private int xOffset;
+    private int yOffset;
 
     private WalkingGame.SampleGame walkingGame;
     public Maze() {
@@ -52,13 +54,21 @@ public class Maze implements KeyListener {
         walkingGame = new WalkingGame.SampleGame(-1000, -220, 1300, 150);
     }
     public void paint(Graphics g) {
-
-
-
         int[] distance = player.move(buttons, obstacles);
+        xOffset += distance[0];
+        yOffset += distance[1];
         walkingGame.move(distance[0], distance[1]);
 
-        walkingGame.draw(g, player);
+        if (walkingGame.draw(g, player)) {  // dead or win
+            walkingGame.move(-xOffset, -yOffset);
+
+            for (Obstacle obstacle : obstacles) {
+                obstacle.moveX(-xOffset);
+                obstacle.moveY(-yOffset);
+            }
+            xOffset = 0;
+            yOffset = 0;
+        }
         player.draw(g, buttons);
 
         for (Obstacle obstacle : obstacles) {

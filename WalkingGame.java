@@ -60,6 +60,10 @@ public class WalkingGame {
         }
 
         public void draw(Graphics g) {
+            if (Controller.SHOW_HITBOXES) {
+                g.setColor(Color.WHITE);
+                g.drawRect(getX(), getY(), getWidth(), getHeight());
+            }
 
             if (direction == 1)
                 g.drawImage(getSprite().getImage(), getX(), getY(), null);
@@ -82,6 +86,8 @@ public class WalkingGame {
         private ArrayList<Car> cars;
         private ArrayList<Lane> lanes;
         private int x;
+        private int xOffset;
+        private int yOffset;
         private int width;
         private long frame;
 
@@ -104,6 +110,7 @@ public class WalkingGame {
         }
 
         public void move(int xDistance, int yDistance) {
+
             for (Car car : cars) {
                 car.moveX(xDistance);
                 car.moveY(yDistance);
@@ -115,7 +122,7 @@ public class WalkingGame {
             this.x = lanes.get(0).getX();
         }
 
-        public void draw(Graphics g, Player player) {
+        public boolean draw(Graphics g, Player player) {
             frame++;
 
             for (Lane lane : lanes) {
@@ -128,6 +135,7 @@ public class WalkingGame {
                 cars.get(i).draw(g);
                 if (player.collide(cars.get(i))) {
                     System.out.println("DEAD");
+                    return true;
                 }
                 if (cars.get(i).move(x, width))
                     toRemove.add(i);
@@ -141,7 +149,9 @@ public class WalkingGame {
             // check if win
             if (player.collide(lanes.get(lanes.size() - 1))) {
                 System.out.println("WINNERIASJDF");
+                return true;
             }
+            return false;
         }
     }
 }
