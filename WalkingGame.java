@@ -91,15 +91,35 @@ public class WalkingGame {
         private int yOffset;
         private int width;
         private long frame;
+        private Teacher teacher;
+        private boolean inDialogue;
+        private boolean readDialogue;
+        private MessageBox prompt;
+        public static final MessageBox[] dialogue = new MessageBox[] {
+                new MessageBox("Hey there! Welcome to the testing level for walking in the suburbs: aka surviving as a pedestrian."),
+                new MessageBox("In this game mode, you must cross the streets without getting hit by a car."),
+                new MessageBox("If you do get hit, you \"die\" and are sent back to the beginning."),
+                new MessageBox("Before I let you try to walk through the suburbs yourself, I have one quick question for you..."),
+                new MessageBox("Which of the following is NOT a reason why walking is unpleasant in the suburbs?",
+                        new String[] {
+                                "1) Inconsistent sidewalks",
+                                "2) Long travel distances",
+                                "3) Concrete sidewalks"
+                        }, '3'),
+                new MessageBox("Correct! The fact that sidewalks are made out of concrete has no significant effect on the walkability of suburbs.", 2),
+                new MessageBox("Wrong! The fact that sidewalks are made out of concrete has no significant effect on the walkability of suburbs."),
+        };
 
         public SampleGame(int x, int y, int width, int height) {
-            lanes = new ArrayList<Lane>();
-            cars = new ArrayList<Car>();
+            this.lanes = new ArrayList<Lane>();
+            this.cars = new ArrayList<Car>();
             this.x = x;
             this.width = width;
+            this.teacher = new Teacher(-375, -180, new Sprite("assets/treetest.png"));
+            this.inDialogue = false;
 
             boolean[] laneTypes = {false, true, false, true, true, false, true, true, false, false, true, true, true, true, false};
-            int[] laneFrequencies = {3, 2, 4, 3, 5, 2, 5, 4, 2};  // 9
+            int[] laneFrequencies = {3, 3, 4, 3, 5, 3, 5, 4, 3 };
             int counter = 0;
             for (int i = 0; i < 15; i++) {
                 if (laneTypes[i]) {
@@ -108,6 +128,26 @@ public class WalkingGame {
                 } else
                     lanes.add(new Lane(x, y - i * height, width, height));
             }
+        }
+
+        public boolean isInDialogue() {
+            return inDialogue;
+        }
+
+        public void setDialogue(boolean inDialogue) {
+            this.inDialogue = inDialogue;
+        }
+
+        public void setReadDialogue(boolean set) {
+            readDialogue = set;
+        }
+
+        public MessageBox getPrompt() {
+            return prompt;
+        }
+
+        public void clearPrompt() {
+            prompt = null;
         }
 
         public void move(int xDistance, int yDistance) {
@@ -120,22 +160,38 @@ public class WalkingGame {
             for (Lane lane : lanes) {
                 lane.move(xDistance, yDistance);
             }
+            teacher.moveX(xDistance);
+            teacher.moveY(yDistance);
+
             this.x = lanes.get(0).getX();
         }
 
+        /**
+         * @param g Graphics
+         * @param player Player
+         * @return If the map should be reset or not
+         */
         public boolean draw(Graphics g, Player player) {
             frame++;
+            if (teacher.inRadius(player)) {
+                clearPrompt();
+                if (!readDialogue)
+                    inDialogue = true;
+            }
 
             for (Lane lane : lanes) {
                 lane.draw(g);
                 lane.update(frame, cars);
             }
 
+            teacher.draw(g);
+
             ArrayList<Integer> toRemove = new ArrayList<Integer>();
             for (int i = 0; i < cars.size(); i++) {
                 cars.get(i).draw(g);
                 if (player.collide(cars.get(i))) {
                     System.out.println("DEAD");
+                    prompt = new MessageBox("You got hit by a car! I guess the streets aren't that safe after all...");
                     return true;
                 }
                 if (cars.get(i).move(x, width))
@@ -149,7 +205,7 @@ public class WalkingGame {
 
             // check if win
             if (player.collide(lanes.get(lanes.size() - 1))) {
-                System.out.println("WINNERIASJDF");
+                prompt = new MessageBox("Congratulations! You survived as a pedestrian!");
                 return true;
             }
             return false;

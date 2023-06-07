@@ -170,4 +170,12 @@ public class Player {
       if (!moving)
          buttons[prevDirection] = false;
    }
+
+   public int getX() {
+      return x;
+   }
+
+   public int getY() {
+      return y;
+   }
 }

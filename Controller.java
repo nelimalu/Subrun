@@ -103,6 +103,7 @@ public class Controller {
             case 3: // Maze
                if (initScreen) {
                   removeListeners();
+                  frame.addMouseListener(maze);
                   frame.addKeyListener(maze);
                   initScreen = false;
                }
