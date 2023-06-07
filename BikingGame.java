@@ -54,7 +54,26 @@ public class BikingGame {
         private Lane[] lanes;
         private ArrayList<Vehicle> vehicles;
         private Teacher teacher;
+        private Teacher enterRadius;
         private int y;
+        private boolean readDialogue;
+        private boolean inDialogue;
+        private boolean playing;
+
+        public static final MessageBox[] dialogue = new MessageBox[] {
+                new MessageBox("Howdy! Welcome to the testing level for biking in the suburbs: aka surviving as a cyclist."),
+                new MessageBox("In this game mode, you must use left and right arrow keys to bike on a car filled road and make it to your destination."),
+                new MessageBox("If you do get hit, you \"die\" and are sent back to the beginning."),
+                new MessageBox("Before I let you try to bike through the suburbs yourself, I have one quick question for you..."),
+                new MessageBox("In which location is it illegal to bike?",
+                        new String[] {
+                                "1) Road",
+                                "2) Sidewalk",
+                                "3) Bike Lane"
+                        }, '2'),
+                new MessageBox("Correct! In Canada, it is illegal for a cyclist to bike on a sidewalk.", 2),
+                new MessageBox("Wrong! Feel free to try again!"),
+        };
         public SampleGame(int x, int y, int width, int height) {
             lanes = new Lane[] {
                     new Lane(x, y, 100, 2000, new Color(70, 70, 70)),
@@ -62,9 +81,25 @@ public class BikingGame {
                     new Lane(x + 200, y, 100, 2000, new Color(70, 70, 70)),
             };
             this.y = y + height;
+            readDialogue = false;
+            inDialogue = false;
+            playing = false;
             vehicles = new ArrayList<Vehicle>();
             teacher = new Teacher(655, -80, new Sprite("assets/bikingMan.png", 6));
+            enterRadius = new Teacher(655, -150);
         }
+
+        public boolean isInDialogue() {
+            return inDialogue;
+        }
+
+        public void setDialogue(boolean set) {
+            inDialogue = set;
+        }
+        public void setReadDialogue(boolean set) {
+            readDialogue = set;
+        }
+        public boolean isPlaying() { return playing; }
 
         public void move(int xDistance, int yDistance) {
 
@@ -78,11 +113,29 @@ public class BikingGame {
             }
             teacher.moveX(xDistance);
             teacher.moveY(yDistance);
+            enterRadius.moveX(xDistance);
+            enterRadius.moveY(yDistance);
 
             y += yDistance;
         }
 
-        public void draw(Graphics g) {
+        public void draw(Graphics g, Player player, int xOffset, int yOffset, Maze maze) {
+            if (teacher.inRadius(player)) {
+                if (!readDialogue)
+                    inDialogue = true;
+            }
+
+            System.out.println(playing);
+
+            if (!playing && enterRadius.inRadius(player)) {
+                playing = true;
+                maze.move(-300 - xOffset, 0);
+            }
+
+            if (playing) {
+                if (yOffset < 600)
+                    maze.move(0, 5);
+            }
 
             for (Lane lane : lanes) {
                 lane.draw(g);

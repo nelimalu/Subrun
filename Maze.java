@@ -64,7 +64,7 @@ public class Maze implements KeyListener, MouseListener {
     }
 
     public void handleDialogue(Graphics g, MessageBox prompt) {
-        isInDialogue = walkingGame.isInDialogue();
+        isInDialogue = walkingGame.isInDialogue() || bikingGame.isInDialogue();
 
         if (prompt != null) {
             prompt.draw(g);
@@ -91,27 +91,58 @@ public class Maze implements KeyListener, MouseListener {
                 lastKeyPressed = 0;
                 walkingGame.setDialogue(false);
             }
+        }
 
+        if (bikingGame.isInDialogue()) {
+            if (dialogueIndex < BikingGame.SampleGame.dialogue.length) {
+                BikingGame.SampleGame.dialogue[dialogueIndex].draw(g);
+                if (BikingGame.SampleGame.dialogue[dialogueIndex].isQuestion()) {
+                    if (lastKeyPressed == '1' || lastKeyPressed == '2' || lastKeyPressed == '3') {
+                        if (lastKeyPressed == BikingGame.SampleGame.dialogue[dialogueIndex].getAnswer()) {
+                            bikingGame.setReadDialogue(true);
+                            dialogueIndex++;
+                        } else {
+                            dialogueIndex += 2;
+                            sendBack = true;
+                        }
+
+                    }
+                }
+            } else {
+                dialogueIndex = 0;
+                lastKeyPressed = 0;
+                bikingGame.setDialogue(false);
+            }
+        }
+    }
+
+    public void move(int xDistance, int yDistance) {
+        xOffset += xDistance;
+        yOffset += yDistance;
+
+        walkingGame.move(xDistance, yDistance);
+        bikingGame.move(xDistance, yDistance);
+        for (Obstacle obstacle : obstacles) {
+            obstacle.moveX(xDistance);
+            obstacle.moveY(yDistance);
         }
     }
 
     public void paint(Graphics g) {
 
         int[] distance = new int[] {0, 0};
-        if (!walkingGame.isInDialogue())
+        if (!isInDialogue && !bikingGame.isPlaying())
             distance = player.move(buttons, obstacles);
 
-        xOffset += distance[0];
-        yOffset += distance[1];
-        walkingGame.move(distance[0], distance[1]);
-        bikingGame.move(distance[0], distance[1]);
+        move(distance[0], distance[1]);
 
-        bikingGame.draw(g);
+        bikingGame.draw(g, player, xOffset, yOffset, this);
         if (walkingGame.draw(g, player))
             sendBack = true;
 
         if (sendBack) {  // dead or win
             walkingGame.move(-xOffset, -yOffset);
+            bikingGame.move(-xOffset, -yOffset);
 
             for (Obstacle obstacle : obstacles) {
                 obstacle.moveX(-xOffset);
@@ -125,8 +156,6 @@ public class Maze implements KeyListener, MouseListener {
         player.draw(g, buttons);
 
         for (Obstacle obstacle : obstacles) {
-            obstacle.moveX(distance[0]);
-            obstacle.moveY(distance[1]);
             obstacle.draw(g);
         }
 
@@ -143,7 +172,7 @@ public class Maze implements KeyListener, MouseListener {
             buttons[2] = true;
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D)
             buttons[3] = true;
-        if (walkingGame.isInDialogue())
+        if (isInDialogue)
             lastKeyPressed = e.getKeyChar();
     }
 

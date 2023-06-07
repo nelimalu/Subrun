@@ -107,7 +107,7 @@ public class WalkingGame {
                                 "3) Concrete sidewalks"
                         }, '3'),
                 new MessageBox("Correct! The fact that sidewalks are made out of concrete has no significant effect on the walkability of suburbs.", 2),
-                new MessageBox("Wrong! The fact that sidewalks are made out of concrete has no significant effect on the walkability of suburbs."),
+                new MessageBox("Wrong! Feel free to try again!"),
         };
 
         public SampleGame(int x, int y, int width, int height) {
