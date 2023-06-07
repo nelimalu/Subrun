@@ -153,7 +153,11 @@ public class Maze implements KeyListener, MouseListener {
 
             sendBack = false;
         }
-        player.draw(g, buttons);
+
+        if (bikingGame.isPlaying())
+            player.drawUp(g);
+        else
+            player.draw(g, buttons);
 
         for (Obstacle obstacle : obstacles) {
             obstacle.draw(g);

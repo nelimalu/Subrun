@@ -134,6 +134,15 @@ public class Player {
       return new int[] {0, 0};
    }
 
+   public void drawUp(Graphics g) {
+      Sprite nextSprite = verticalSprites[animationCount / ANIMATION_DELAY_FACTOR];
+      g.drawImage(nextSprite.getImage(), x, y, null);
+      animationCount++;
+      if (animationCount > 4)  // TODO FIX THIS ANIMATION SHIT
+         animationCount = 0;
+
+   }
+
    public void draw(Graphics g, boolean[] buttons) {
        if (Controller.SHOW_HITBOXES) {
           g.setColor(Color.WHITE);
