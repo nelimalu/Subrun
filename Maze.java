@@ -14,6 +14,7 @@ public class Maze implements KeyListener, MouseListener {
     private boolean sendBack;
 
     private WalkingGame.SampleGame walkingGame;
+    private BikingGame.SampleGame bikingGame;
     public Maze() {
         player = new Player(800 / 2, 500 / 2, new Sprite[] {
                 new Sprite("assets/rebecca0.png"),
@@ -42,23 +43,24 @@ public class Maze implements KeyListener, MouseListener {
                 new Obstacle(-1050, -70, 550, 50),
                 new Obstacle(-250, -70, 550, 50),
                 new Obstacle(-1050, -2350, 300, 2300),
+                new Obstacle(-1050, -2350, 1100, 50),
 
                 // right wing
-                new Obstacle(500, 150, 800, 50),
-                new Obstacle(500, -70, 550, 50),
-                new Obstacle(1250, -70, 50, 250),
-                new Obstacle(1250, -70, 550, 50),
-                new Obstacle(1750, -1000, 50, 950),
+                new Obstacle(500, 150, 400, 50),  // bottom one
+                new Obstacle(500, -70, 150, 50),  // left side
+                new Obstacle(750, -70, 150, 50),  // right side
+                new Obstacle(850, -2350, 50, 2500),  // big wall
 
                 // top wing
                 new Obstacle(50, -2350, 250, 2300),
-                new Obstacle(500, -1000, 50, 950),
+                new Obstacle(500, -2350, 50, 2300),
         };
 
         dialogueIndex = 0;
         lastKeyPressed = 0;
         sendBack = false;
         walkingGame = new WalkingGame.SampleGame(-1000, -220, 1300, 150);
+        bikingGame = new BikingGame.SampleGame(550, -2050, 100, 2000);
     }
 
     public void handleDialogue(Graphics g, MessageBox prompt) {
@@ -102,7 +104,9 @@ public class Maze implements KeyListener, MouseListener {
         xOffset += distance[0];
         yOffset += distance[1];
         walkingGame.move(distance[0], distance[1]);
+        bikingGame.move(distance[0], distance[1]);
 
+        bikingGame.draw(g);
         if (walkingGame.draw(g, player))
             sendBack = true;
 
