@@ -63,7 +63,7 @@ public class Maze implements KeyListener, MouseListener {
 
     public void handleDialogue(Graphics g, MessageBox prompt) {
         isInDialogue = walkingGame.isInDialogue();
-        
+
         if (prompt != null) {
             prompt.draw(g);
             return;

@@ -115,7 +115,7 @@ public class WalkingGame {
             this.cars = new ArrayList<Car>();
             this.x = x;
             this.width = width;
-            this.teacher = new Teacher(-375, -180, new Sprite("assets/treetest.png"));
+            this.teacher = new Teacher(-390, -200, new Sprite("assets/walkingMan.png", 7));
             this.inDialogue = false;
 
             boolean[] laneTypes = {false, true, false, true, true, false, true, true, false, false, true, true, true, true, false};
