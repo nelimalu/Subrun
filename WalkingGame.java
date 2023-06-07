@@ -190,7 +190,6 @@ public class WalkingGame {
             for (int i = 0; i < cars.size(); i++) {
                 cars.get(i).draw(g);
                 if (player.collide(cars.get(i))) {
-                    System.out.println("DEAD");
                     prompt = new MessageBox("You got hit by a car! I guess the streets aren't that safe after all...");
                     return true;
                 }

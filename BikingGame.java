@@ -26,27 +26,42 @@ public class BikingGame {
             g.setColor(colour);
             g.fillRect(getX(), getY(), getWidth(), getHeight());
         }
+
+        public void update(ArrayList<Vehicle> vehicles) {
+            if (Math.random() < 0.02) {
+                Sprite sprite = new Sprite("assets/frontFacingCar.png", 3);
+                int speed = (int) (Math.random() * 5) + 5;
+                vehicles.add(new Vehicle(getX(), getY(), speed, sprite));
+            }
+        }
     }
 
     private static class Vehicle extends Obstacle {
-
-        public Vehicle(int x, int y, Sprite sprite) {
+        private int speed;
+        public Vehicle(int x, int y, int speed, Sprite sprite) {
             super(x, y, sprite);
+            this.speed = speed;
+        }
+
+        public boolean move(int y) {
+            moveY(speed);
+
+            return getY() > y;
         }
     }
 
     public static class SampleGame {
-        private long frame;
         private Lane[] lanes;
         private ArrayList<Vehicle> vehicles;
         private Teacher teacher;
+        private int y;
         public SampleGame(int x, int y, int width, int height) {
             lanes = new Lane[] {
                     new Lane(x, y, 100, 2000, new Color(70, 70, 70)),
                     new Lane(x + 100, y, 100, 2000, new Color(100, 100, 100)),
                     new Lane(x + 200, y, 100, 2000, new Color(70, 70, 70)),
             };
-            frame = 0;
+            this.y = y + height;
             vehicles = new ArrayList<Vehicle>();
             teacher = new Teacher(655, -80, new Sprite("assets/bikingMan.png", 6));
         }
@@ -64,15 +79,27 @@ public class BikingGame {
             teacher.moveX(xDistance);
             teacher.moveY(yDistance);
 
-            //this.x = lanes.get(0).getX();
+            y += yDistance;
         }
 
         public void draw(Graphics g) {
-            frame++;
 
             for (Lane lane : lanes) {
                 lane.draw(g);
+                lane.update(vehicles);
             }
+
+            ArrayList<Integer> toRemove = new ArrayList<Integer>();
+            for (int i = 0; i < vehicles.size(); i++) {
+                vehicles.get(i).draw(g);
+                if (vehicles.get(i).move(y)) // out of bounds
+                    toRemove.add(i);
+            }
+
+            for (int i = 0; i < toRemove.size(); i++)
+                toRemove.set(i, toRemove.get(i) - i);
+
+            for (int index : toRemove) vehicles.remove(index);
 
             teacher.draw(g);
 
