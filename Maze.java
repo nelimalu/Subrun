@@ -6,6 +6,7 @@ public class Maze implements KeyListener, MouseListener {
     private Player player;
     private Obstacle[] obstacles;
     private static boolean[] buttons = {false, false, false, false};  // up down left right
+    private static boolean[] pressedButtons = {false, false, false, false};
     private int xOffset;
     private int yOffset;
     private int dialogueIndex;
@@ -15,21 +16,22 @@ public class Maze implements KeyListener, MouseListener {
 
     private WalkingGame.SampleGame walkingGame;
     private BikingGame.SampleGame bikingGame;
+
     public Maze() {
-        player = new Player(800 / 2, 500 / 2, new Sprite[] {
+        player = new Player(800 / 2, 500 / 2, new Sprite[]{
                 new Sprite("assets/rebecca0.png"),
                 new Sprite("assets/rebecca1.png"),
                 new Sprite("assets/rebecca0.png"),
                 new Sprite("assets/rebecca2.png")
         },
-        new Sprite[] {
-                new Sprite("assets/rebecca3.png"),
-                new Sprite("assets/rebecca4.png"),
-                new Sprite("assets/rebecca3.png"),
-                new Sprite("assets/rebecca5.png")
-        });
+                new Sprite[]{
+                        new Sprite("assets/rebecca3.png"),
+                        new Sprite("assets/rebecca4.png"),
+                        new Sprite("assets/rebecca3.png"),
+                        new Sprite("assets/rebecca5.png")
+                });
 
-        obstacles = new Obstacle[] {
+        obstacles = new Obstacle[]{
                 // start
                 new Obstacle(250, 330, 250, 50),
                 new Obstacle(250, 150, 50, 230),
@@ -133,6 +135,10 @@ public class Maze implements KeyListener, MouseListener {
         int[] distance = new int[] {0, 0};
         if (!isInDialogue && !bikingGame.isPlaying())
             distance = player.move(buttons, obstacles);
+        if (bikingGame.isPlaying()) {
+            player.bikingMove(pressedButtons, bikingGame.getCurrentLane(), bikingGame);
+        }
+        pressedButtons = new boolean[] {false, false, false, false};
 
         move(distance[0], distance[1]);
 
@@ -168,15 +174,19 @@ public class Maze implements KeyListener, MouseListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W)
+        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
             buttons[0] = true;
-        if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S)
+            pressedButtons[0] = true;
+        } if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
             buttons[1] = true;
-        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A)
+            pressedButtons[1] = true;
+        } if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
             buttons[2] = true;
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D)
+            pressedButtons[2] = true;
+        } if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
             buttons[3] = true;
-        if (isInDialogue)
+            pressedButtons[3] = true;
+        } if (isInDialogue)
             lastKeyPressed = e.getKeyChar();
     }
 

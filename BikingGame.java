@@ -31,7 +31,7 @@ public class BikingGame {
             if (Math.random() < 0.02) {
                 Sprite sprite = new Sprite("assets/frontFacingCar.png", 3);
                 int speed = (int) (Math.random() * 5) + 5;
-                vehicles.add(new Vehicle(getX(), getY(), speed, sprite));
+                vehicles.add(new Vehicle(getX() + 5, getY(), speed, sprite));
             }
         }
     }
@@ -59,6 +59,7 @@ public class BikingGame {
         private boolean readDialogue;
         private boolean inDialogue;
         private boolean playing;
+        private int currentLane;
 
         public static final MessageBox[] dialogue = new MessageBox[] {
                 new MessageBox("Howdy! Welcome to the testing level for biking in the suburbs: aka surviving as a cyclist."),
@@ -84,6 +85,7 @@ public class BikingGame {
             readDialogue = false;
             inDialogue = false;
             playing = false;
+            currentLane = 1;
             vehicles = new ArrayList<Vehicle>();
             teacher = new Teacher(655, -80, new Sprite("assets/bikingMan.png", 6));
             enterRadius = new Teacher(655, -150);
@@ -99,6 +101,15 @@ public class BikingGame {
         public void setReadDialogue(boolean set) {
             readDialogue = set;
         }
+
+        public int getCurrentLane() {
+            return currentLane;
+        }
+
+        public void setCurrentLane(int amount) {
+            currentLane = amount;
+        }
+
         public boolean isPlaying() { return playing; }
 
         public void move(int xDistance, int yDistance) {
@@ -124,9 +135,6 @@ public class BikingGame {
                 if (!readDialogue)
                     inDialogue = true;
             }
-
-            System.out.println(playing);
-
             if (!playing && enterRadius.inRadius(player)) {
                 playing = true;
                 maze.move(-300 - xOffset, 0);

@@ -86,6 +86,11 @@ public class Player {
       return "NONE";
    }
 
+   public void moveReal(int xDistance, int yDistance) {
+      x += xDistance;
+      y += yDistance;
+   }
+
    public int[] move(boolean[] buttons, Obstacle[] obstacles) {
       int vDirection = 0;  // vertical direction
       int hDirection = 0;  // horizontal direction
@@ -134,11 +139,24 @@ public class Player {
       return new int[] {0, 0};
    }
 
+   public void bikingMove(boolean[] buttons, int lane, BikingGame.SampleGame bikingGame) {
+      if (buttons[2] && lane < 2) {
+         bikingGame.setCurrentLane(bikingGame.getCurrentLane() + 1);
+         moveReal(-100, 0);
+      }
+
+      if (buttons[3] && lane > 0) {
+         bikingGame.setCurrentLane(bikingGame.getCurrentLane() - 1);
+         moveReal(100, 0);
+      }
+   }
+
    public void drawUp(Graphics g) {
       Sprite nextSprite = verticalSprites[animationCount / ANIMATION_DELAY_FACTOR];
       g.drawImage(nextSprite.getImage(), x, y, null);
+
       animationCount++;
-      if (animationCount > 4)  // TODO FIX THIS ANIMATION SHIT
+      if (animationCount > 3 * ANIMATION_DELAY_FACTOR)
          animationCount = 0;
 
    }
