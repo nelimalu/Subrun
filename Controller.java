@@ -132,9 +132,10 @@ public class Controller {
                }
                learning.drawing.paint(g);
                break;
-            case 8:
+            case 8:  // escape room
                if (initScreen) {
                   removeListeners();
+                  frame.addMouseListener(escapeRoom);
                   frame.addKeyListener(escapeRoom);
                   initScreen = false;
                }

@@ -7,6 +7,7 @@ public class MessageBox {
     private boolean question;
     private char answer;
     private int change;
+    private boolean displayClick;
     private static final int X = 5;
     private static final int Y = 300;
     private static final int WIDTH = 775;
@@ -21,6 +22,7 @@ public class MessageBox {
         this.answers = new String[0];
         this.question = false;
         this.change = 1;
+        this.displayClick = true;
 
         this.textArray = new String[text.length() / MAX_CHARS + 1];
         for (int i = 0; i < text.length() / MAX_CHARS + 1; i++) {
@@ -34,12 +36,21 @@ public class MessageBox {
 
     }
 
+    public MessageBox(String[] text) {
+        this.answers = new String[0];
+        this.question = false;
+        this.change = 1;
+        this.textArray = text;
+        this.displayClick = false;
+    }
+
     public MessageBox(String text, String[] answers, char answer) {
         this.text = text;
         this.answers = answers;
         this.question = true;
         this.answer = answer;
         this.change = 1;
+        this.displayClick = true;
 
         this.textArray = new String[(text.length() / (MAX_CHARS / 2))+ 1];
         for (int i = 0; i < textArray.length; i++) {
@@ -85,8 +96,10 @@ public class MessageBox {
         }
 
         if (answers.length == 0) {
-            g.setFont(smallFont);
-            g.drawString("click anywhere to continue...", X + 305, Y + 140);
+            if (displayClick) {
+                g.setFont(smallFont);
+                g.drawString("click anywhere to continue...", X + 305, Y + 140);
+            }
         } else {
             for (int i = 0; i < answers.length; i++) {
                 g.drawString(answers[i], X + 420, Y + (i * 30) + 50);

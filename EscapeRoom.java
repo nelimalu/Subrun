@@ -2,16 +2,21 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class EscapeRoom implements KeyListener {
+public class EscapeRoom implements KeyListener, MouseListener {
     private static boolean[] buttons = {false, false, false, false};  // up down left right
     private static boolean[] pressedButtons = {false, false, false, false};
     private Player player;
     private Obstacle[] obstacles;
     private Obstacle[] background;
     private Obstacle[] foreground;
+    private Teacher walkPerson;
+    private Teacher bikePerson;
+    private Teacher busPerson;
     private int xOffset;
     private int yOffset;
+    private String game;
 
     public EscapeRoom() {
         player = new Player(800 / 2, 500 / 2, new Sprite[] {
@@ -61,12 +66,25 @@ public class EscapeRoom implements KeyListener {
         };
 
         foreground = new Obstacle[] {
+                new Obstacle(-350, 335, new Sprite("assets/car.png")),
+                new Obstacle(200, 335, new Sprite("assets/car.png")),
+                new Obstacle(1000, 335, new Sprite("assets/car.png")),
                 new Obstacle(100, 350, new Sprite("assets/treetest.png", 12)),
                 new Obstacle(-200, 390, new Sprite("assets/treetest.png", 10)),
                 new Obstacle(900, 370, new Sprite("assets/treetest.png", 11)),
                 new Obstacle(-700, 370, new Sprite("assets/treetest.png", 11)),
                 new Obstacle(1300, 410, new Sprite("assets/treetest.png", 10)),
+
         };
+
+        game = "DEFAULT";
+
+        walkPerson = new Teacher(-350, 200, new Sprite("assets/walkingMan.png", 7),
+                new String[] {"CLICK TO PLAY WALK GAME", "> HIGHSCORE: "});  // TODO ADD HIGH SCORE
+        bikePerson = new Teacher(555, 50, new Sprite("assets/bikingMan.png", 7),
+                new String[] {"CLICK TO PLAY BIKE GAME", "> HIGHSCORE: "});
+        busPerson = new Teacher(1050, 200, new Sprite("assets/BusMan.png", 7),
+                new String[] {"CLICK TO PLAY BUS GAME", "> HIGHSCORE: "});
     }
 
     public void move(int xDistance, int yDistance) {
@@ -85,9 +103,15 @@ public class EscapeRoom implements KeyListener {
             obstacle.moveX(xDistance);
             obstacle.moveY(yDistance);
         }
+        walkPerson.moveX(xDistance);
+        walkPerson.moveY(yDistance);
+        bikePerson.moveX(xDistance);
+        bikePerson.moveY(yDistance);
+        busPerson.moveX(xDistance);
+        busPerson.moveY(yDistance);
     }
 
-    public void paint(Graphics g) {
+    public void updateDefault(Graphics g) {
         g.setColor(new Color(93, 199, 77));
         g.fillRect(0, 0, 800, 500);
 
@@ -98,10 +122,40 @@ public class EscapeRoom implements KeyListener {
         for (Obstacle obstacle : background)
             obstacle.draw(g);
 
+        walkPerson.draw(g);
+        bikePerson.draw(g);
+        busPerson.draw(g);
+
         player.draw(g, buttons);
         for (Obstacle obstacle : foreground)
             obstacle.draw(g);
 
+        walkPerson.paintPrompt(g, player);
+        bikePerson.paintPrompt(g, player);
+        busPerson.paintPrompt(g, player);
+    }
+
+    public void updateWalkGame(Graphics g) {
+        
+    }
+
+    public void updateBikeGame(Graphics g) {
+
+    }
+
+    public void updateBusGame(Graphics g) {
+
+    }
+
+    public void paint(Graphics g) {
+        if (game.equals("DEFAULT"))
+            updateDefault(g);
+        if (game.equals("WALK"))
+            updateWalkGame(g);
+        if (game.equals("BIKE"))
+            updateBikeGame(g);
+        if (game.equals("BUS"))
+            updateBusGame(g);
     }
 
     @Override
@@ -134,4 +188,34 @@ public class EscapeRoom implements KeyListener {
     }
     @Override
     public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (walkPerson.inRadius(player))
+            game = "WALK";
+        else if (bikePerson.inRadius(player))
+            game = "BIKE";
+        else if (busPerson.inRadius(player))
+            game = "BUS";
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
