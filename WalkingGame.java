@@ -87,8 +87,6 @@ public class WalkingGame {
         private ArrayList<Car> cars;
         private ArrayList<Lane> lanes;
         private int x;
-        private int xOffset;
-        private int yOffset;
         private int width;
         private long frame;
         private Teacher teacher;

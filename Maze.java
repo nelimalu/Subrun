@@ -19,6 +19,7 @@ public class Maze implements KeyListener, MouseListener {
     private MessageBox prompt;
     private WalkingGame.SampleGame walkingGame;
     private BikingGame.SampleGame bikingGame;
+    private BusGame.SampleGame busGame;
 
     public Maze() {
         player = new Player(800 / 2, 500 / 2, new Sprite[]{
@@ -59,10 +60,15 @@ public class Maze implements KeyListener, MouseListener {
                 new Obstacle(500, -70, 150, 50),  // left side
                 new Obstacle(750, -70, 150, 50),  // right side
                 new Obstacle(850, -2350, 50, 2500),  // big wall
+                new Obstacle(500, -2350, 400, 300),
 
                 // top wing
                 new Obstacle(50, -2350, 250, 2300),
                 new Obstacle(500, -2350, 50, 2300),
+                new Obstacle(-500, -2850, 50, 500),
+                new Obstacle(-500, -2900, 4000, 50),
+                new Obstacle(3500, -2850, 50, 500),
+                new Obstacle(550, -2350, 3000, 50),
         };
 
         dialogueIndex = 0;
@@ -70,10 +76,11 @@ public class Maze implements KeyListener, MouseListener {
         sendBack = false;
         walkingGame = new WalkingGame.SampleGame(-1000, -220, 1300, 150);
         bikingGame = new BikingGame.SampleGame(550, -2050, 100, 2000);
+        busGame = new BusGame.SampleGame(-500, -2800, 4000, 450);
     }
 
     public void handleDialogue(Graphics g, MessageBox prompt) {
-        isInDialogue = walkingGame.isInDialogue() || bikingGame.isInDialogue();
+        isInDialogue = walkingGame.isInDialogue() || bikingGame.isInDialogue() || busGame.isInDialogue();
 
         if (prompt != null) {
             prompt.draw(g);
@@ -123,6 +130,29 @@ public class Maze implements KeyListener, MouseListener {
                 bikingGame.setDialogue(false);
             }
         }
+
+        if (busGame.isInDialogue()) {
+            if (dialogueIndex < BusGame.SampleGame.dialogue.length) {
+                BusGame.SampleGame.dialogue[dialogueIndex].draw(g);
+                if (BusGame.SampleGame.dialogue[dialogueIndex].isQuestion()) {
+                    if (lastKeyPressed == '1' || lastKeyPressed == '2' || lastKeyPressed == '3') {
+                        if (lastKeyPressed == BusGame.SampleGame.dialogue[dialogueIndex].getAnswer()) {
+                            busGame.setReadDialogue(true);
+                            dialogueIndex++;
+                        } else {
+                            dialogueIndex += 2;
+                            sendBack = true;
+                        }
+
+                    }
+                }
+
+            } else {
+                dialogueIndex = 0;
+                lastKeyPressed = 0;
+                busGame.setDialogue(false);
+            }
+        }
     }
 
     public void move(int xDistance, int yDistance) {
@@ -131,17 +161,33 @@ public class Maze implements KeyListener, MouseListener {
 
         walkingGame.move(xDistance, yDistance);
         bikingGame.move(xDistance, yDistance);
+        busGame.move(xDistance, yDistance);
         for (Obstacle obstacle : obstacles) {
             obstacle.moveX(xDistance);
             obstacle.moveY(yDistance);
         }
     }
 
+    public void resetPositions() {
+        walkingGame.move(-xOffset, -yOffset);
+        bikingGame.move(-xOffset, -yOffset);
+        busGame.move(-xOffset, -yOffset);
+
+        for (Obstacle obstacle : obstacles) {
+            obstacle.moveX(-xOffset);
+            obstacle.moveY(-yOffset);
+        }
+        xOffset = 0;
+        yOffset = 0;
+    }
+
+    public void clearPrompt() {
+        prompt = null;
+    }
+
     public void paint(Graphics g) {
-
-
         int[] distance = new int[] {0, 0};
-        if (!isInDialogue && !bikingGame.isPlaying())
+        if (!isInDialogue && !bikingGame.isPlaying() && !busGame.isPlaying())
             distance = player.move(buttons, obstacles);
         if (bikingGame.isPlaying()) {
             prompt = null;
@@ -155,28 +201,23 @@ public class Maze implements KeyListener, MouseListener {
             prompt = walkingGame.getPrompt();
         if (bikingGame.getPrompt() != null)
             prompt = bikingGame.getPrompt();
+        if (busGame.getPrompt() != null)
+            prompt = busGame.getPrompt();
         if (bikingGame.draw(g, player, xOffset, yOffset, this))
             sendBack = true;
         if (walkingGame.draw(g, player))
             sendBack = true;
+        busGame.draw(g, player, xOffset, yOffset, this);
 
         if (sendBack) {  // dead or win
-            walkingGame.move(-xOffset, -yOffset);
-            bikingGame.move(-xOffset, -yOffset);
-
-            for (Obstacle obstacle : obstacles) {
-                obstacle.moveX(-xOffset);
-                obstacle.moveY(-yOffset);
-            }
-            xOffset = 0;
-            yOffset = 0;
+            resetPositions();
 
             sendBack = false;
         }
 
         if (bikingGame.isPlaying())
             player.drawUp(g);
-        else
+        else if (!busGame.isPlaying())
             player.draw(g, buttons);
 
         for (Obstacle obstacle : obstacles) {
@@ -227,9 +268,20 @@ public class Maze implements KeyListener, MouseListener {
     public void mouseClicked(MouseEvent e) {
         walkingGame.clearPrompt();
         bikingGame.clearPrompt();
+        busGame.clearPrompt();
         prompt = null;
-        if (isInDialogue && !WalkingGame.SampleGame.dialogue[dialogueIndex].isQuestion() && !BikingGame.SampleGame.dialogue[dialogueIndex].isQuestion())
+        if (isInDialogue && !WalkingGame.SampleGame.dialogue[dialogueIndex].isQuestion() && !BikingGame.SampleGame.dialogue[dialogueIndex].isQuestion() && !BusGame.SampleGame.dialogue[dialogueIndex].isQuestion())
             dialogueIndex += WalkingGame.SampleGame.dialogue[dialogueIndex].getChange();
+
+        if (busGame.isPlaying()) {
+            resetPositions();
+            if (busGame.isAtStop()) {
+                busGame.handleWin();
+                finishedLevels[2] = true;
+            } else {
+                busGame.handleLoss();
+            }
+        }
     }
 
     @Override
