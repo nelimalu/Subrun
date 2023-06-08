@@ -15,6 +15,10 @@ public class Maze implements KeyListener, MouseListener {
 
     private WalkingGame.SampleGame walkingGame;
     private BikingGame.SampleGame bikingGame;
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of dc10218 (finished bus game)
     public Maze() {
         player = new Player(800 / 2, 500 / 2, new Sprite[] {
                 new Sprite("assets/rebecca0.png"),
@@ -64,7 +68,11 @@ public class Maze implements KeyListener, MouseListener {
     }
 
     public void handleDialogue(Graphics g, MessageBox prompt) {
+<<<<<<< HEAD
         isInDialogue = walkingGame.isInDialogue();
+=======
+        isInDialogue = walkingGame.isInDialogue() || bikingGame.isInDialogue();
+>>>>>>> parent of dc10218 (finished bus game)
 
         if (prompt != null) {
             prompt.draw(g);
@@ -93,12 +101,55 @@ public class Maze implements KeyListener, MouseListener {
             }
 
         }
+<<<<<<< HEAD
+=======
+
+        if (bikingGame.isInDialogue()) {
+            if (dialogueIndex < BikingGame.SampleGame.dialogue.length) {
+                BikingGame.SampleGame.dialogue[dialogueIndex].draw(g);
+                if (BikingGame.SampleGame.dialogue[dialogueIndex].isQuestion()) {
+                    if (lastKeyPressed == '1' || lastKeyPressed == '2' || lastKeyPressed == '3') {
+                        if (lastKeyPressed == BikingGame.SampleGame.dialogue[dialogueIndex].getAnswer()) {
+                            bikingGame.setReadDialogue(true);
+                            dialogueIndex++;
+                        } else {
+                            dialogueIndex += 2;
+                            sendBack = true;
+                        }
+
+                    }
+                }
+            } else {
+                dialogueIndex = 0;
+                lastKeyPressed = 0;
+                bikingGame.setDialogue(false);
+            }
+        }
+    }
+
+    public void move(int xDistance, int yDistance) {
+        xOffset += xDistance;
+        yOffset += yDistance;
+
+        walkingGame.move(xDistance, yDistance);
+        bikingGame.move(xDistance, yDistance);
+        for (Obstacle obstacle : obstacles) {
+            obstacle.moveX(xDistance);
+            obstacle.moveY(yDistance);
+        }
+>>>>>>> parent of dc10218 (finished bus game)
     }
 
     public void paint(Graphics g) {
 
+<<<<<<< HEAD
         int[] distance = new int[] {0, 0};
         if (!walkingGame.isInDialogue())
+=======
+
+        int[] distance = new int[] {0, 0};
+        if (!isInDialogue && !bikingGame.isPlaying())
+>>>>>>> parent of dc10218 (finished bus game)
             distance = player.move(buttons, obstacles);
 
         xOffset += distance[0];
@@ -106,12 +157,25 @@ public class Maze implements KeyListener, MouseListener {
         walkingGame.move(distance[0], distance[1]);
         bikingGame.move(distance[0], distance[1]);
 
+<<<<<<< HEAD
         bikingGame.draw(g);
+=======
+        if (walkingGame.getPrompt() != null)
+            prompt = walkingGame.getPrompt();
+        if (bikingGame.getPrompt() != null)
+            prompt = bikingGame.getPrompt();
+        if (bikingGame.draw(g, player, xOffset, yOffset, this))
+            sendBack = true;
+>>>>>>> parent of dc10218 (finished bus game)
         if (walkingGame.draw(g, player))
             sendBack = true;
 
         if (sendBack) {  // dead or win
             walkingGame.move(-xOffset, -yOffset);
+<<<<<<< HEAD
+=======
+            bikingGame.move(-xOffset, -yOffset);
+>>>>>>> parent of dc10218 (finished bus game)
 
             for (Obstacle obstacle : obstacles) {
                 obstacle.moveX(-xOffset);
@@ -122,7 +186,15 @@ public class Maze implements KeyListener, MouseListener {
 
             sendBack = false;
         }
+<<<<<<< HEAD
         player.draw(g, buttons);
+=======
+
+        if (bikingGame.isPlaying())
+            player.drawUp(g);
+        else
+            player.draw(g, buttons);
+>>>>>>> parent of dc10218 (finished bus game)
 
         for (Obstacle obstacle : obstacles) {
             obstacle.moveX(distance[0]);
@@ -162,7 +234,13 @@ public class Maze implements KeyListener, MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         walkingGame.clearPrompt();
+<<<<<<< HEAD
         if (isInDialogue && !WalkingGame.SampleGame.dialogue[dialogueIndex].isQuestion())
+=======
+        bikingGame.clearPrompt();
+        prompt = null;
+        if (isInDialogue && !WalkingGame.SampleGame.dialogue[dialogueIndex].isQuestion() && !BikingGame.SampleGame.dialogue[dialogueIndex].isQuestion())
+>>>>>>> parent of dc10218 (finished bus game)
             dialogueIndex += WalkingGame.SampleGame.dialogue[dialogueIndex].getChange();
     }
 
