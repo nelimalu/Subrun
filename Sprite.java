@@ -14,7 +14,7 @@ public class Sprite {
          Image scaled = image.getScaledInstance(image.getWidth() * scale, image.getHeight() * scale, Image.SCALE_DEFAULT);
          image = convertToBufferedImage(scaled);
       } catch (IOException e) {
-         System.out.println("hekp");
+         System.out.println("[ERROR] Failed to load image with path: " + path);
       }
       
    }
@@ -26,7 +26,7 @@ public class Sprite {
          Image scaled = image.getScaledInstance(image.getWidth() * scale, image.getHeight() * scale, Image.SCALE_DEFAULT);
          image = convertToBufferedImage(scaled);
       } catch (IOException e) {
-         System.out.println("hekp");
+         System.out.println("[ERROR] Failed to load image with path: " + path);
       }
    }
    
