@@ -7,6 +7,7 @@ public class Obstacle {
    private int width;
    private int height;
    private Sprite sprite;
+   private Color colour;
    
    public Obstacle(int x, int y, Sprite sprite) {
       this.x = x;
@@ -14,6 +15,7 @@ public class Obstacle {
       this.width = sprite.getImage().getWidth();
       this.height = sprite.getImage().getHeight();
       this.sprite = sprite;
+      this.colour = Color.BLACK;
    }
 
    public Obstacle(int x, int y, int width, int height) {
@@ -21,10 +23,16 @@ public class Obstacle {
       this.y = y;
       this.width = width;
       this.height = height;
+      this.colour = Color.BLACK;
+   }
+
+   public Obstacle(int x, int y, int width, int height, Color colour) {
+      this(x, y, width, height);
+      this.colour = colour;
    }
    
    public void draw(Graphics g) {
-      g.setColor(new Color(0, 0, 0));
+      g.setColor(colour);
       if (this.sprite == null)
          g.fillRect(x, y, width, height);
       else

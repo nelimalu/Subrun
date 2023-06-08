@@ -83,8 +83,4 @@ public class Menu implements MouseListener, MouseMotionListener {
       g.drawString("Exit", 353, 390);
 
    }
-
-   public static void main(String[] args) {
-      new Menu();
-   }
 }

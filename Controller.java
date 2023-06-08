@@ -6,10 +6,10 @@ import java.awt.event.*;
 public class Controller {
    public Drawing drawing;
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
-   public static int screen = 5;
+   public static int screen = 8;  // default 5
    public static boolean initScreen = true;
    public static Timer timer;
-   public static final boolean SHOW_HITBOXES = true;
+   public static final boolean SHOW_HITBOXES = false;
 
    public static String character = "Rebecca";
 
@@ -20,11 +20,13 @@ public class Controller {
    Splash splash = new Splash(new Sprite("assets/bike.png", 5), new Sprite("assets/bus.png", 7));
    Exit exit = new Exit(new Sprite("assets/car.png", 5));
    Maze maze = new Maze();
+   EscapeRoom escapeRoom = new EscapeRoom();
    LevelSelect levelSelect = new LevelSelect();
    Learning learning = new Learning(new Sprite("assets/laptop.png", 1),new Sprite("assets/redHouse.png", 7),new Sprite("assets/blueHouse.png", 7),new Sprite("assets/orangeHouse.png", 7), new Sprite("assets/chalkboard.png", 4), new Sprite("assets/suburbs.png", 1), new Sprite("assets/bike.png", 6), new Sprite("assets/car.png", 6),new Sprite("assets/bus.png", 6), new Sprite("assets/benji.png", 8));
    public Controller() {
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setSize(800, 500);
+      frame.setResizable(false);
 
       drawing = new Drawing();
       frame.add(drawing);
@@ -129,6 +131,14 @@ public class Controller {
                   initScreen = false;
                }
                learning.drawing.paint(g);
+               break;
+            case 8:
+               if (initScreen) {
+                  removeListeners();
+                  frame.addKeyListener(escapeRoom);
+                  initScreen = false;
+               }
+               escapeRoom.paint(g);
                break;
 
 
