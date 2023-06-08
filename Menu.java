@@ -22,13 +22,13 @@ public class Menu implements MouseListener, MouseMotionListener {
    }
    
    public void mouseClicked(MouseEvent e) {
-      if (xHover>270 && xHover<480 && yHover>150 && yHover < 210) {
+      if (xHover>270 && xHover<480 && yHover>175 && yHover < 235) {
          System.out.println("PLAY");
          Controller.changeScreen(1);
-      } if (xHover>270 && xHover<480 && yHover>250 && yHover < 310) {
+      } if (xHover>270 && xHover<480 && yHover>275 && yHover < 335) {
          System.out.println("INFO");
          Controller.changeScreen(2);
-      } if (xHover>270 && xHover<480 && yHover>350 && yHover < 410) {
+      } if (xHover>270 && xHover<480 && yHover>375 && yHover < 435) {
          System.out.println("EXIT");
          Controller.changeScreen(4);
       }
@@ -66,11 +66,11 @@ public class Menu implements MouseListener, MouseMotionListener {
       g.fillRect(270,250,210,60);
       g.fillRect(270,350,210,60);
       g.setColor(Color.red);
-      if (xHover>270 && xHover<480 && yHover>150 && yHover < 210) 
+      if (xHover>270 && xHover<480 && yHover>175 && yHover < 235)
          g.fillRect(270,150,210,60);
-      if (xHover>270 && xHover<480 && yHover>250 && yHover < 310) 
+      if (xHover>270 && xHover<480 && yHover>275 && yHover < 335)
          g.fillRect(270,250,210,60);
-      if (xHover>270 && xHover<480 && yHover>350 && yHover < 410)
+      if (xHover>270 && xHover<480 && yHover>375 && yHover < 435)
          g.fillRect(270,350,210,60);
       
       g.setColor(Color.black);

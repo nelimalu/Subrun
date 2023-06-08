@@ -23,9 +23,9 @@ public class Exit {
          g.setColor(new Color(217, 210, 233));
          g.drawString("To be continued...", 365, 420);
          if (i < 900) {
-           g.drawImage(car.getImage(), -100+i, 0, null);
-           g.drawImage(car.getImage(), i+150, 75, null);
-           g.drawImage(car.getImage(), i, 200, null);
+           g.drawImage(car.getImage(), -100+i, 95, null);
+           g.drawImage(car.getImage(), i+150, 195, null);
+           g.drawImage(car.getImage(), i, 270, null);
            i+=6;
          } else {
             System.exit(0);

@@ -3,13 +3,10 @@ import java.awt.*;
 public class Player {
    private int x;
    private int y;
-   private int originalX;
-   private int originalY;
    private int width;
    private int height;
    private Sprite[] horizontalSprites;
    private Sprite[] verticalSprites;
-   private Sprite[] bikeSprites;
    private int animationCount;
    private int animationDirection;
    private int prevDirection;
@@ -19,24 +16,12 @@ public class Player {
    public Player(int x, int y, Sprite[] horizontalSprites, Sprite[] verticalSprites) {
       this.width = horizontalSprites[0].getImage().getWidth();
       this.height = horizontalSprites[0].getImage().getHeight();
-      this.originalX = x;
-      this.originalY = y;
       this.x = x - width / 2;
       this.y = y - height / 2;
       this.horizontalSprites = horizontalSprites;
       this.verticalSprites = verticalSprites;
       this.animationCount = 0;
       this.animationDirection = 1;
-   }
-
-   public Player(int x, int y, Sprite[] horizontalSprites, Sprite[] verticalSprites, Sprite[] bikeSprites) {
-      this(x, y, horizontalSprites, verticalSprites);
-      this.bikeSprites = bikeSprites;
-   }
-
-   public void resetPosition() {
-      this.x = originalX - width / 2;
-      this.y = originalY - height / 2;
    }
    
    public static boolean allFalse(boolean[] array) {
@@ -51,13 +36,6 @@ public class Player {
               x + this.width > obstacle.getX() &&
               y < obstacle.getY() + obstacle.getHeight() &&
               this.height + y > obstacle.getY();
-   }
-
-   public boolean collideSmall(Obstacle obstacle) {
-      return x < obstacle.getX() + obstacle.getWidth() &&
-              x + bikeSprites[0].getImage().getWidth() > obstacle.getX() &&
-              y + bikeSprites[0].getImage().getHeight() / 2 < obstacle.getY() + obstacle.getHeight() &&
-              bikeSprites[0].getImage().getHeight() / 2 + y > obstacle.getY();
    }
 
    public boolean collide(Obstacle obstacle) {
@@ -108,15 +86,6 @@ public class Player {
       return "NONE";
    }
 
-   public void moveReal(int xDistance, int yDistance) {
-      x += xDistance;
-      y += yDistance;
-   }
-
-   public void resetAnimationCount() {
-      animationCount = 0;
-   }
-
    public int[] move(boolean[] buttons, Obstacle[] obstacles) {
       int vDirection = 0;  // vertical direction
       int hDirection = 0;  // horizontal direction
@@ -163,28 +132,6 @@ public class Player {
       }
 
       return new int[] {0, 0};
-   }
-
-   public void bikingMove(boolean[] buttons, int lane, BikingGame.SampleGame bikingGame) {
-      if (buttons[2] && lane < 2) {
-         bikingGame.setCurrentLane(bikingGame.getCurrentLane() + 1);
-         moveReal(-100, 0);
-      }
-
-      if (buttons[3] && lane > 0) {
-         bikingGame.setCurrentLane(bikingGame.getCurrentLane() - 1);
-         moveReal(100, 0);
-      }
-   }
-
-   public void drawUp(Graphics g) {
-      Sprite nextSprite = bikeSprites[animationCount / ANIMATION_DELAY_FACTOR];
-      g.drawImage(nextSprite.getImage(), x, y, null);
-
-      animationCount++;
-      if (animationCount > ANIMATION_DELAY_FACTOR)
-         animationCount = 0;
-
    }
 
    public void draw(Graphics g, boolean[] buttons) {

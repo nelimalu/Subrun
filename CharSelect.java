@@ -23,6 +23,11 @@ public class CharSelect implements MouseListener, MouseMotionListener {
    public void mouseClicked (MouseEvent e) {
       if (xHover < 120 && yHover > 415) 
          Controller.changeScreen(0);
+      if (xHover>125 && xHover<355 && yHover>350 && yHover < 425) {
+         Controller.changeScreen(6);
+      } if (xHover>425 && xHover<655 && yHover>350 && yHover < 425) {
+         Controller.changeScreen(6);
+      }
    }
 
    public void mousePressed (MouseEvent e) {
@@ -69,10 +74,15 @@ public class CharSelect implements MouseListener, MouseMotionListener {
       g.fillRect(425,330,230,75);
 
       g.setColor(new Color(209, 196, 56));
-      if (xHover>125 && xHover<355 && yHover>350 && yHover < 425) 
-         g.fillRect(125,330,230,75);
-      if (xHover>425 && xHover<655 && yHover>350 && yHover < 425) 
-         g.fillRect(425,330,230,75);         
+      if (xHover>125 && xHover<355 && yHover>350 && yHover < 425) {
+         g.fillRect(125, 330, 230, 75);
+         Controller.setCharacter("Benji");
+
+      }
+      if (xHover>425 && xHover<655 && yHover>350 && yHover < 425) {
+         g.fillRect(425, 330, 230, 75);
+         Controller.setCharacter("Rebecca");
+      }
       
       g.setColor(Color.black);
       g.drawRect(125,330,230,75);
