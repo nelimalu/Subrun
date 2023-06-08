@@ -16,7 +16,10 @@ public class Maze implements KeyListener, MouseListener {
     private WalkingGame.SampleGame walkingGame;
     private BikingGame.SampleGame bikingGame;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of dc10218 (finished bus game)
 
 >>>>>>> parent of dc10218 (finished bus game)
     public Maze() {
@@ -69,7 +72,11 @@ public class Maze implements KeyListener, MouseListener {
 
     public void handleDialogue(Graphics g, MessageBox prompt) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         isInDialogue = walkingGame.isInDialogue();
+=======
+        isInDialogue = walkingGame.isInDialogue() || bikingGame.isInDialogue();
+>>>>>>> parent of dc10218 (finished bus game)
 =======
         isInDialogue = walkingGame.isInDialogue() || bikingGame.isInDialogue();
 >>>>>>> parent of dc10218 (finished bus game)
@@ -137,14 +144,23 @@ public class Maze implements KeyListener, MouseListener {
             obstacle.moveX(xDistance);
             obstacle.moveY(yDistance);
         }
+<<<<<<< HEAD
+>>>>>>> parent of dc10218 (finished bus game)
+=======
 >>>>>>> parent of dc10218 (finished bus game)
     }
 
     public void paint(Graphics g) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         int[] distance = new int[] {0, 0};
         if (!walkingGame.isInDialogue())
+=======
+
+        int[] distance = new int[] {0, 0};
+        if (!isInDialogue && !bikingGame.isPlaying())
+>>>>>>> parent of dc10218 (finished bus game)
 =======
 
         int[] distance = new int[] {0, 0};
@@ -173,6 +189,10 @@ public class Maze implements KeyListener, MouseListener {
         if (sendBack) {  // dead or win
             walkingGame.move(-xOffset, -yOffset);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            bikingGame.move(-xOffset, -yOffset);
+>>>>>>> parent of dc10218 (finished bus game)
 =======
             bikingGame.move(-xOffset, -yOffset);
 >>>>>>> parent of dc10218 (finished bus game)
@@ -240,6 +260,9 @@ public class Maze implements KeyListener, MouseListener {
         bikingGame.clearPrompt();
         prompt = null;
         if (isInDialogue && !WalkingGame.SampleGame.dialogue[dialogueIndex].isQuestion() && !BikingGame.SampleGame.dialogue[dialogueIndex].isQuestion())
+<<<<<<< HEAD
+>>>>>>> parent of dc10218 (finished bus game)
+=======
 >>>>>>> parent of dc10218 (finished bus game)
             dialogueIndex += WalkingGame.SampleGame.dialogue[dialogueIndex].getChange();
     }
