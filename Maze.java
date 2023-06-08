@@ -185,6 +185,7 @@ public class Maze implements KeyListener, MouseListener {
 
         handleDialogue(g, prompt);
 
+        g.setColor(Color.BLACK);
         g.setFont(font);
         g.drawString("Collect all three stars by playing the games to unlock escape room", 10, 15);
         for (int i = 0; i < finishedLevels.length; i++) {

@@ -48,6 +48,13 @@ public class Player {
 
    public boolean collide(int x, int y, Obstacle obstacle) {
       return x < obstacle.getX() + obstacle.getWidth() &&
+              x + this.width > obstacle.getX() &&
+              y < obstacle.getY() + obstacle.getHeight() &&
+              this.height + y > obstacle.getY();
+   }
+
+   public boolean collideSmall(Obstacle obstacle) {
+      return x < obstacle.getX() + obstacle.getWidth() &&
               x + bikeSprites[0].getImage().getWidth() > obstacle.getX() &&
               y + bikeSprites[0].getImage().getHeight() / 2 < obstacle.getY() + obstacle.getHeight() &&
               bikeSprites[0].getImage().getHeight() / 2 + y > obstacle.getY();
@@ -55,13 +62,6 @@ public class Player {
 
    public boolean collide(Obstacle obstacle) {
       return collide(x, y, obstacle);
-   }
-
-   public boolean collideSmall(Obstacle obstacle) {
-      return x < obstacle.getX() + obstacle.getWidth() &&
-              x + this.width > obstacle.getX() &&
-              y + this.height / 2 < obstacle.getY() + obstacle.getHeight() &&
-              this.height / 2 + y > obstacle.getY();
    }
 
    public String getSide(int x, int y, Obstacle obstacle) {
