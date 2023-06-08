@@ -87,8 +87,6 @@ public class WalkingGame {
         private ArrayList<Car> cars;
         private ArrayList<Lane> lanes;
         private int x;
-        private int xOffset;
-        private int yOffset;
         private int width;
         private long frame;
         private Teacher teacher;
@@ -107,7 +105,7 @@ public class WalkingGame {
                                 "3) Concrete sidewalks"
                         }, '3'),
                 new MessageBox("Correct! The fact that sidewalks are made out of concrete has no significant effect on the walkability of suburbs.", 2),
-                new MessageBox("Wrong! The fact that sidewalks are made out of concrete has no significant effect on the walkability of suburbs."),
+                new MessageBox("Wrong! Feel free to try again!"),
         };
 
         public SampleGame(int x, int y, int width, int height) {
@@ -205,6 +203,7 @@ public class WalkingGame {
             // check if win
             if (player.collide(lanes.get(lanes.size() - 1))) {
                 prompt = new MessageBox("Congratulations! You survived as a pedestrian!");
+                Maze.finishedLevels[0] = true;
                 return true;
             }
             return false;
