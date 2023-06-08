@@ -13,22 +13,26 @@ public class Maze implements KeyListener, MouseListener {
     private boolean isInDialogue;
     private char lastKeyPressed;
     private boolean sendBack;
-
+    private MessageBox prompt;
     private WalkingGame.SampleGame walkingGame;
     private BikingGame.SampleGame bikingGame;
 
     public Maze() {
         player = new Player(800 / 2, 500 / 2, new Sprite[]{
-                new Sprite("assets/rebecca0.png"),
-                new Sprite("assets/rebecca1.png"),
-                new Sprite("assets/rebecca0.png"),
-                new Sprite("assets/rebecca2.png")
-        },
-                new Sprite[]{
+                        new Sprite("assets/rebecca0.png"),
+                        new Sprite("assets/rebecca1.png"),
+                        new Sprite("assets/rebecca0.png"),
+                        new Sprite("assets/rebecca2.png")
+                },
+                new Sprite[] {
                         new Sprite("assets/rebecca3.png"),
                         new Sprite("assets/rebecca4.png"),
                         new Sprite("assets/rebecca3.png"),
                         new Sprite("assets/rebecca5.png")
+                },
+                new Sprite[]{
+                        new Sprite("assets/rebeccaBiking0.png"),
+                        new Sprite("assets/rebeccaBiking1.png"),
                 });
 
         obstacles = new Obstacle[]{
@@ -136,13 +140,19 @@ public class Maze implements KeyListener, MouseListener {
         if (!isInDialogue && !bikingGame.isPlaying())
             distance = player.move(buttons, obstacles);
         if (bikingGame.isPlaying()) {
+            prompt = null;
             player.bikingMove(pressedButtons, bikingGame.getCurrentLane(), bikingGame);
         }
         pressedButtons = new boolean[] {false, false, false, false};
 
         move(distance[0], distance[1]);
 
-        bikingGame.draw(g, player, xOffset, yOffset, this);
+        if (walkingGame.getPrompt() != null)
+            prompt = walkingGame.getPrompt();
+        if (bikingGame.getPrompt() != null)
+            prompt = bikingGame.getPrompt();
+        if (bikingGame.draw(g, player, xOffset, yOffset, this))
+            sendBack = true;
         if (walkingGame.draw(g, player))
             sendBack = true;
 
@@ -169,7 +179,7 @@ public class Maze implements KeyListener, MouseListener {
             obstacle.draw(g);
         }
 
-        handleDialogue(g, walkingGame.getPrompt());
+        handleDialogue(g, prompt);
     }
 
     @Override
@@ -205,7 +215,9 @@ public class Maze implements KeyListener, MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         walkingGame.clearPrompt();
-        if (isInDialogue && !WalkingGame.SampleGame.dialogue[dialogueIndex].isQuestion())
+        bikingGame.clearPrompt();
+        prompt = null;
+        if (isInDialogue && !WalkingGame.SampleGame.dialogue[dialogueIndex].isQuestion() && !BikingGame.SampleGame.dialogue[dialogueIndex].isQuestion())
             dialogueIndex += WalkingGame.SampleGame.dialogue[dialogueIndex].getChange();
     }
 

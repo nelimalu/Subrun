@@ -41,8 +41,8 @@ public class MessageBox {
         this.answer = answer;
         this.change = 1;
 
-        this.textArray = new String[(text.length() / MAX_CHARS) * 2 + 1];
-        for (int i = 0; i < text.length() / MAX_CHARS * 2 + 1; i++) {
+        this.textArray = new String[(text.length() / (MAX_CHARS / 2))+ 1];
+        for (int i = 0; i < textArray.length; i++) {
             try {
                 textArray[i] = text.substring(i * MAX_CHARS / 2, (i + 1) * MAX_CHARS / 2);
                 textArray[i] += "-";
@@ -79,6 +79,7 @@ public class MessageBox {
 
         g.setColor(Color.WHITE);
         g.setFont(font);
+
         for (int i = 0; i < textArray.length; i++) {
             g.drawString(textArray[i], X + 20, Y + (i * 30) + 40);
         }
