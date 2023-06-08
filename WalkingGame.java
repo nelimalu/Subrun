@@ -205,6 +205,7 @@ public class WalkingGame {
             // check if win
             if (player.collide(lanes.get(lanes.size() - 1))) {
                 prompt = new MessageBox("Congratulations! You survived as a pedestrian!");
+                Maze.finishedLevels[0] = true;
                 return true;
             }
             return false;

@@ -147,6 +147,7 @@ public class BikingGame {
                 playing = false;
                 frame = 0;
                 player.resetPosition();
+                Maze.finishedLevels[1] = true;
                 prompt = new MessageBox("Congratulations! You made it to your destination!");
                 return true;
             }

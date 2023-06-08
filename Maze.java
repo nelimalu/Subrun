@@ -7,6 +7,9 @@ public class Maze implements KeyListener, MouseListener {
     private Obstacle[] obstacles;
     private static boolean[] buttons = {false, false, false, false};  // up down left right
     private static boolean[] pressedButtons = {false, false, false, false};
+    public static boolean[] finishedLevels = {false, false, false};
+    public static Sprite[] starSprites = {new Sprite("assets/emptyStar.png", 2), new Sprite("assets/filledStar.png", 2)};
+    private static final Font font = new Font("Monospaced", Font.BOLD, 10);
     private int xOffset;
     private int yOffset;
     private int dialogueIndex;
@@ -136,6 +139,7 @@ public class Maze implements KeyListener, MouseListener {
 
     public void paint(Graphics g) {
 
+
         int[] distance = new int[] {0, 0};
         if (!isInDialogue && !bikingGame.isPlaying())
             distance = player.move(buttons, obstacles);
@@ -180,6 +184,12 @@ public class Maze implements KeyListener, MouseListener {
         }
 
         handleDialogue(g, prompt);
+
+        g.setFont(font);
+        g.drawString("Collect all three stars by playing the games to unlock escape room", 10, 15);
+        for (int i = 0; i < finishedLevels.length; i++) {
+            g.drawImage(starSprites[finishedLevels[i] ? 1 : 0].getImage(), 10 + i * 40, 20, null);
+        }
     }
 
     @Override
