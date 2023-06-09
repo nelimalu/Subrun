@@ -25,24 +25,61 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
     /** obstacle objects to create level boundaries */
     private Obstacle[] obstacles;
 
-    /** obstacle objects to create level boundaries */
+    /** collisionless obstacle objects decorate the background */
     private Obstacle[] background;
+
+    /** collisionless obstacle objects to decorate the foreground */
     private Obstacle[] foreground;
+
+    /** NPC to enter the walking game */
     public Teacher walkPerson;
+
+    /** NPC to enter the biking game */
     public Teacher bikePerson;
+
+    /** NPC to enter the bus game */
     public Teacher busPerson;
+
+    /** Instance of the walking game */
     private WalkingGame walkGame;
+
+    /** Instance of the biking game */
     private BikingGame bikeGame;
+
+    /** Instance of the bus game */
     private BusGame busGame;
+
+    /** Keep track of the highest score in the walking game */
     private int walkHighScore;
+
+    /** Keep track of the highest score in the biking game */
     private int bikeHighScore;
+
+    /** Keep track of the highest score in the bus game */
     private int busHighScore;
+
+    /** Keep track of the X distance travelled by the player */
     private int xOffset;
+
+    /** Keep track of the Y distance travelled by the player */
     private int yOffset;
+
+    /** Which game to render */
     private String game;
+
+    /** X position of the mouse */
     private int xHover;
+
+    /** Y position of the mouse */
     private int yHover;
 
+    /**
+     * Escape room constructor:
+     * creates a player object based on character selected previously
+     * creates borders with collision to make sure player stays in the required zone
+     * creates foreground & background objects for decoration
+     * creates NPCs to enter games
+     */
     public EscapeRoom() {
         if (Controller.CHARACTER.equals("Rebecca")) {
             player = new Player(800 / 2, 500 / 2, new Sprite[]{
@@ -128,7 +165,7 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         game = "DEFAULT";
 
         walkPerson = new Teacher(-350, 200, new Sprite("assets/walkingMan.png", 7),
-                new String[] {"CLICK TO PLAY WALK GAME", "Reach a score of 5000 to finish this task."});  // TODO ADD HIGH SCORE
+                new String[] {"CLICK TO PLAY WALK GAME", "Reach a score of 5000 to finish this task."});
         bikePerson = new Teacher(555, 50, new Sprite("assets/bikingMan.png", 7),
                 new String[] {"CLICK TO PLAY BIKE GAME", "Reach a score of 1200 to finish this task."});
         busPerson = new Teacher(1050, 200, new Sprite("assets/BusMan.png", 7),
@@ -137,26 +174,48 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
 
     }
 
+    /**
+     * Sets which game or screen to render within the escape room
+     * @param game Screen to switch to
+     */
     public void setGame(String game) {
         this.game = game;
     }
 
+    /**
+     * Sets the high score of the bike game
+     * @param amount Amount to set the high score to
+     */
     public void setBikeHighScore(int amount) {
         bikeHighScore = amount;
     }
 
+    /**
+     * Sets the high score of the walk game
+     * @param amount Amount to set the high score to
+     */
     public void setWalkHighScore(int amount) {
         walkHighScore = amount;
     }
 
+    /**
+     * Increments the amount of bus games won by 1
+     */
     public void incrementBusHighScore() {
         busHighScore++;
     }
 
+    /**
+     * Moves all objects on the screen in relation to player movements
+     * @param xDistance X distance travelled by the player
+     * @param yDistance Y distance travelled by the player
+     */
     public void move(int xDistance, int yDistance) {
+        // keep track of distance travelled
         xOffset += xDistance;
         yOffset += yDistance;
 
+        // move all objects individually
         for (Obstacle obstacle : obstacles) {
             obstacle.moveX(xDistance);
             obstacle.moveY(yDistance);
@@ -177,32 +236,44 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         busPerson.moveY(yDistance);
     }
 
+    /**
+     * Game loop for the main screen where game selection happens
+     * @param g Graphics object for drawing
+     */
     public void updateDefault(Graphics g) {
+        // consistent green background
         g.setColor(new Color(93, 199, 77));
         g.fillRect(0, 0, 800, 500);
 
-        int[] distance = player.move(buttons, obstacles);
-        pressedButtons = new boolean[] {false, false, false, false};
+        int[] distance = player.move(buttons, obstacles);  // get distance moved by the player
+        pressedButtons = new boolean[] {false, false, false, false};  // make pressed buttons only detect for one frame
 
-        move(distance[0], distance[1]);
+        move(distance[0], distance[1]);  // move everything on the screen
         for (Obstacle obstacle : background)
-            obstacle.draw(g);
+            obstacle.draw(g);  // draw each object in the background
 
+        // draw each npc
         walkPerson.draw(g);
         bikePerson.draw(g);
         busPerson.draw(g);
 
-        player.draw(g, buttons);
+        player.draw(g, buttons);  // draw player
         for (Obstacle obstacle : foreground)
-            obstacle.draw(g);
+            obstacle.draw(g);  // draw everything in the foreground
 
+        // draw prompts of each npc if player is in the viscinity
         walkPerson.paintPrompt(g, player);
         bikePerson.paintPrompt(g, player);
         busPerson.paintPrompt(g, player);
     }
 
+    /**
+     * Game loop for the walking game
+     * @param g Graphics object for drawing
+     */
     public void updateWalkGame(Graphics g) {
-        int[] distance = player.move(buttons, walkGame.getObstacles());
+        int[] distance = player.move(buttons, walkGame.getObstacles());  // get distance travelled by player
+        // keep player within bounding area
         if (xOffset < -500)
             distance[0] += Player.SPEED;
         if (xOffset > 500)
@@ -210,30 +281,41 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         if (yOffset < Math.max(0,  walkGame.getScore() - 200))
             distance[1] += Player.SPEED;
 
+        // keep track of distance travelled
         xOffset += distance[0];
         yOffset += distance[1];
-        pressedButtons = new boolean[] {false, false, false, false};
+        pressedButtons = new boolean[] {false, false, false, false};  // make pressed buttons only detect for one frame
 
+        walkGame.move(distance[0], distance[1]);  // move player
 
-        walkGame.move(distance[0], distance[1]);
-
-        walkGame.paint(g, yOffset, player, this);
-        player.draw(g, buttons);
+        walkGame.paint(g, yOffset, player, this);  // draw the game
+        player.draw(g, buttons); // draw the player on top of game
     }
 
+    /**
+     * Game loop for the biking game
+     * @param g Graphics object for drawing
+     */
     public void updateBikeGame(Graphics g) {
-        bikeGame.paint(g, player, this);
-        player.bikingMove(pressedButtons, bikeGame.getCurrentLane(), bikeGame);
+        bikeGame.paint(g, player, this);  // draw the biking game
+        player.bikingMove(pressedButtons, bikeGame.getCurrentLane(), bikeGame);  // move player within the lanes
 
-        pressedButtons = new boolean[] {false, false, false, false};
-        player.drawUp(g);
+        pressedButtons = new boolean[] {false, false, false, false};  // make pressed buttons only detect for one frame
+        player.drawUp(g);  // draw the player, but in terms of the biking game
     }
 
+    /**
+     * Game loop for the bus game
+     * @param g Graphics object for drawing
+     */
     public void updateBusGame(Graphics g) {
-        busGame.paint(g, this);
-
-
+        busGame.paint(g, this);  // draw the bus game
     }
+
+    /**
+     * Info screen after player death
+     * @param g Graphics object for drawing
+     */
     public void updateDead(Graphics g) {
         g.setColor(new Color(247, 163, 174));
         g.fillRect(0,0,800,500);
@@ -245,6 +327,10 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         g.drawImage(player.getDeadSprite().scaleImage(2), 320, 165, null);
     }
 
+    /**
+     * Info screen after player death for bus game
+     * @param g Graphics object for drawing
+     */
     public void updateBusLoss(Graphics g) {
         g.setColor(new Color(247, 163, 174));
         g.fillRect(0,0,800,500);
@@ -256,6 +342,10 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         g.drawImage(player.getDeadSprite().scaleImage(2), 320, 165, null);
     }
 
+    /**
+     * Info screen after player successfully completes a task
+     * @param g Graphics object for drawing
+     */
     public void updateAlive(Graphics g) {
         g.setColor(new Color(194, 247, 163));
         g.fillRect(0,0,800,500);
@@ -267,6 +357,10 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         g.drawImage(player.getSprite().scaleImage(2), 320, 165, null);
     }
 
+    /**
+     * Info screen after player finishes all tasks
+     * @param g Graphics object for drawing
+     */
     public void finishGame(Graphics g) {
         g.setColor(new Color(194, 247, 163));
         g.fillRect(0,0,800,500);
@@ -277,16 +371,16 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         g.drawImage(player.getSprite().scaleImage(2), 320, 165, null);
         g.setColor(Color.white);
 
+        // fill buttons
         g.fillRect(125,355,230,75);
         g.fillRect(425,355,230,75);
         g.setFont(new Font("Helvetica Neue", Font.PLAIN, 24));
 
-
         g.setColor(new Color(201, 201, 201));
-        if (xHover>125 && xHover<355 && yHover>375 && yHover < 450) {  // EXIT
+        if (xHover>125 && xHover<355 && yHover>375 && yHover < 450) {  // Highlight EXIT button on hover
             g.fillRect(125, 355, 230, 75);
         }
-        if (xHover>425 && xHover<655 && yHover>375 && yHover < 450) {  // MENU
+        if (xHover>425 && xHover<655 && yHover>375 && yHover < 450) {  // Highlight MENU button on hover
             g.fillRect(425, 355, 230, 75);
         }
 
@@ -294,12 +388,17 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         g.drawString("Exit", 215, 400);
         g.drawString("Menu", 515, 400);
 
+        // outline buttons
         g.drawRect(125,355,230,75);
         g.drawRect(425,355,230,75);
     }
 
+    /**
+     * Controlling method to manage which frame to draw
+     * @param g Graphics object for drawing
+     */
     public void paint(Graphics g) {
-        if (busHighScore > 0 && bikeHighScore >= 1200 && walkHighScore >= 5000)
+        if (busHighScore > 0 && bikeHighScore >= 1200 && walkHighScore >= 5000)  // if all tasks are completed
             finishGame(g);
         else if (game.equals("DEFAULT"))
             updateDefault(g);
@@ -317,6 +416,11 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
             updateBusLoss(g);
     }
 
+    /**
+     * Handle all key presses
+     * When a key is pressed down, the corresponding boolean is set to true. It remains true until the button is released
+     * @param e the event to be processed
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
@@ -334,6 +438,11 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         }
     }
 
+    /**
+     * Handle all key releases
+     * When a key is pressed down, the corresponding boolean is set to true. It remains true until the button is released
+     * @param e the event to be processed
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W)
@@ -345,12 +454,22 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D)
             buttons[3] = false;
     }
+
+    /**
+     * Handle all keys typed
+     * @param e the event to be processed
+     */
     @Override
     public void keyTyped(KeyEvent e) {}
 
+    /**
+     * Handle all mouse clicks
+     * Used to enter minigames, restarting after death, and selecting EXIT or MENU when all tasks are completed
+     * @param e the event to be processed
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (busHighScore > 0 && bikeHighScore >= 1200 && walkHighScore >= 5000) {
+        if (busHighScore > 0 && bikeHighScore >= 1200 && walkHighScore >= 5000) {  // all tasks completed
             if (xHover > 125 && xHover < 355 && yHover > 375 && yHover < 450) {  // EXIT
                 Controller.changeScreen(4);  // exit screen
             }
@@ -358,13 +477,14 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
                 Controller.changeScreen(0);  // menu screen
             }
         }
-        if (game.equals("ALIVE") || game.equals("DEAD") || game.equals("BUSLOSS")) {
+        if (game.equals("ALIVE") || game.equals("DEAD") || game.equals("BUSLOSS")) {  // task completed or died
             player.resetPosition();
-            game = "DEFAULT";
+            game = "DEFAULT";  // go back to default escape room
         }
-        else if (game.equals("BUS")) {
+        else if (game.equals("BUS")) {  // if you click while in the bus game, it registers as exiting the bus
             busGame.checkWin(this);
         }
+        // if you click near an npc, you enter the game
         else if (walkPerson.inRadius(player)) {
             walkGame = new WalkingGame();
             xOffset = 0;
@@ -387,31 +507,55 @@ public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListen
 
     }
 
+    /**
+     * Handles all mouse presses
+     * @param e the event to be processed
+     */
     @Override
     public void mousePressed(MouseEvent e) {
 
     }
 
+    /**
+     * Handles all mouse releases
+     * @param e the event to be processed
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
 
+    /**
+     * Handles all mouse enters
+     * @param e the event to be processed
+     */
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
 
+    /**
+     * Handles all mouse exits
+     * @param e the event to be processed
+     */
     @Override
     public void mouseExited(MouseEvent e) {
 
     }
 
+    /**
+     * Handles all mouse drags
+     * @param e the event to be processed
+     */
     @Override
     public void mouseDragged(MouseEvent e) {
 
     }
 
+    /**
+     * Handles all mouse moves
+     * @param e the event to be processed
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         xHover = e.getX();
