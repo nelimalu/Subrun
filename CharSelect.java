@@ -1,16 +1,40 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+/**
+ * CharSelect class presents user with the 2 playable character options to choose from.
+ * It assigns the character chosen to the controller to be used for the level entered.
+ *
+ * <strong>Course info:</strong>
+ * ICS4U0 with V. Krasteva
+ *
+ * @version 1.0
+ * @author Luka Jovanovic & Brian Song
+ * Created on 2023/06/01
+ */
 public class CharSelect implements MouseListener, MouseMotionListener {
-
+   /** stores x value of the mouse in real-time as it moves for interactive button hovers **/
    int xHover;
+   /** stores y value of the mouse in real-time as it moves for interactive button hovers **/
    int yHover;
+   /** stores x value on mouse click for button interaction **/
    int xClick;
+   /** stores y value on mouse click for button interaction **/
    int yClick;
+   /** Sprite for rebecca **/
    Sprite rebecca;
+   /** Sprite for benji **/
    Sprite benji;
 
+   /**
+    * CharSelect constructor
+    *
+    * imports both characters sprites
+    * assigns base values to hover and click variables
+    *
+    * @param rebecca Sprite for rebecca
+    * @param benji Sprite for benji
+    */
    public CharSelect(Sprite rebecca, Sprite benji) {
       this.rebecca = rebecca;
       this.benji = benji;
@@ -20,6 +44,12 @@ public class CharSelect implements MouseListener, MouseMotionListener {
       yClick = 0;
    }
 
+   /**
+    * Handle all mouse clicks
+    * When the mouse is clicked at respective position, game is exited, or game proceeds to level select
+    *
+    * @param e the event to be processed
+    */
    public void mouseClicked (MouseEvent e) {
       if (xHover < 120 && yHover > 415)
          Controller.changeScreen(0);
@@ -44,6 +74,12 @@ public class CharSelect implements MouseListener, MouseMotionListener {
 
    }
 
+   /**
+    * Stores all mouse movements
+    * Tracks coordinates of mouse in real time
+    *
+    * @param e the event to be processed
+    */
    public void mouseMoved (MouseEvent e) {
       xHover = e.getX();
       yHover = e.getY();
@@ -52,6 +88,12 @@ public class CharSelect implements MouseListener, MouseMotionListener {
    public void mouseDragged (MouseEvent e) {
    }
 
+   /**
+    * Paint method
+    * Prints out the sprites of both character options with buttons below to choose which one
+    *
+    * @param g the Graphics object to be painted
+    */
    public void paint (Graphics g) {
 
 
