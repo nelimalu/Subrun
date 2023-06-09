@@ -13,7 +13,7 @@ public class Controller {
    public static boolean mazeUnlocked = false;
    public static boolean escapeUnlocked = false;
 
-   public static String CHARACTER = "Benji";
+   public static String CHARACTER = "Rebecca";
 
    /* INITIALIZE SCREENS */
    Menu menu = new Menu();
@@ -21,10 +21,10 @@ public class Controller {
    Info info = new Info(new Sprite("assets/money.png", 5), new Sprite("assets/benji0.png", 10));
    Splash splash = new Splash(new Sprite("assets/bike.png", 5), new Sprite("assets/bus.png", 7));
    Exit exit = new Exit(new Sprite("assets/car.png", 5));
-   Maze maze = new Maze();
-   EscapeRoom escapeRoom = new EscapeRoom();
+   public static Maze maze = new Maze();
+   public static EscapeRoom escapeRoom = new EscapeRoom();
    LevelSelect levelSelect = new LevelSelect();
-   Learning learning = new Learning(new Sprite("assets/laptop.png", 1),new Sprite("assets/redHouse.png", 7),new Sprite("assets/blueHouse.png", 7),new Sprite("assets/orangeHouse.png", 7), new Sprite("assets/chalkboard.png", 4), new Sprite("assets/suburbs.png", 1), new Sprite("assets/bike.png", 6), new Sprite("assets/car.png", 6),new Sprite("assets/bus.png", 6), new Sprite("assets/benji0.png", 8));
+   public static Learning learning = new Learning(new Sprite("assets/laptop.png", 1),new Sprite("assets/redHouse.png", 7),new Sprite("assets/blueHouse.png", 7),new Sprite("assets/orangeHouse.png", 7), new Sprite("assets/chalkboard.png", 4), new Sprite("assets/suburbs.png", 1), new Sprite("assets/bike.png", 6), new Sprite("assets/car.png", 6),new Sprite("assets/bus.png", 6), new Sprite("assets/benji0.png", 8));
 
 
    public Controller() {

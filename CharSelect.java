@@ -23,10 +23,11 @@ public class CharSelect implements MouseListener, MouseMotionListener {
    public void mouseClicked (MouseEvent e) {
       if (xHover < 120 && yHover > 415)
          Controller.changeScreen(0);
-      if (xHover>125 && xHover<355 && yHover>350 && yHover < 425) {
+      if ((xHover>125 && xHover<355 && yHover>350 && yHover < 425) || (xHover>425 && xHover<655 && yHover>350 && yHover < 425)) {
          Controller.changeScreen(6);
-      } if (xHover>425 && xHover<655 && yHover>350 && yHover < 425) {
-         Controller.changeScreen(6);
+         Controller.maze = new Maze();
+         Controller.escapeRoom = new EscapeRoom();
+         Controller.learning = new Learning(new Sprite("assets/laptop.png", 1),new Sprite("assets/redHouse.png", 7),new Sprite("assets/blueHouse.png", 7),new Sprite("assets/orangeHouse.png", 7), new Sprite("assets/chalkboard.png", 4), new Sprite("assets/suburbs.png", 1), new Sprite("assets/bike.png", 6), new Sprite("assets/car.png", 6),new Sprite("assets/bus.png", 6), new Sprite("assets/benji0.png", 8));
       }
    }
 

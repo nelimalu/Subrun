@@ -238,6 +238,7 @@ public class BikingGame {
                     playing = false;
                     player.resetPosition();
                     vehicles.clear();
+                    currentLane = 1;
                     prompt = new MessageBox("You got hit by a car! I guess the streets aren't that safe after all...");
                     return true;
                 }
