@@ -20,7 +20,7 @@ public class BikingGame {
         };
     }
 
-    public void paint(Graphics g, Player player) {
+    public void paint(Graphics g, Player player, EscapeRoom room) {
         for (Lane lane : lanes) {
             lane.draw(g);
             lane.updateReal(vehicles);
@@ -34,7 +34,7 @@ public class BikingGame {
         for (int i = 0; i < vehicles.size(); i++) {
             vehicles.get(i).draw(g);
             if (player.collideSmall(vehicles.get(i))) {
-                System.out.println("DEAD");
+                room.setGame("DEAD");
                 player.resetPosition();
 
             }

@@ -10,6 +10,7 @@ public class Player {
    private Sprite[] horizontalSprites;
    private Sprite[] verticalSprites;
    private Sprite[] bikeSprites;
+   private Sprite deadSprite;
    private int animationCount;
    private int animationDirection;
    private int prevDirection;
@@ -32,6 +33,16 @@ public class Player {
    public Player(int x, int y, Sprite[] horizontalSprites, Sprite[] verticalSprites, Sprite[] bikeSprites) {
       this(x, y, horizontalSprites, verticalSprites);
       this.bikeSprites = bikeSprites;
+   }
+
+   public Player(int x, int y, Sprite[] horizontalSprites, Sprite[] verticalSprites, Sprite[] bikeSprites, Sprite deadSprite) {
+      this(x, y, horizontalSprites, verticalSprites);
+      this.bikeSprites = bikeSprites;
+      this.deadSprite = deadSprite;
+   }
+
+   public Sprite getDeadSprite() {
+      return deadSprite;
    }
 
    public void resetPosition() {
@@ -58,6 +69,10 @@ public class Player {
               x + bikeSprites[0].getImage().getWidth() > obstacle.getX() &&
               y + bikeSprites[0].getImage().getHeight() / 2 < obstacle.getY() + obstacle.getHeight() &&
               bikeSprites[0].getImage().getHeight() / 2 + y > obstacle.getY();
+   }
+
+   public Sprite getSprite() {
+      return horizontalSprites[0];
    }
 
    public boolean collide(Obstacle obstacle) {

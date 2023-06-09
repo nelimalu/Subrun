@@ -34,7 +34,7 @@ public class WalkingGame {
         }
     }
 
-    public void paint(Graphics g, int yOffset, Player player) {
+    public void paint(Graphics g, int yOffset, Player player, EscapeRoom room) {
         frame++;
 
         ArrayList<Lane> copyLanes = new ArrayList<>(lanes);
@@ -55,7 +55,7 @@ public class WalkingGame {
         for (int i = 0; i < cars.size(); i++) {
             cars.get(i).draw(g);
             if (player.collide(cars.get(i))) {
-                System.out.println("DIE");
+                room.setGame("DEAD");
             }
             if (cars.get(i).move(-700, WIDTH - 100))
                 toRemove.add(i);
