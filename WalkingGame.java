@@ -13,6 +13,8 @@ import java.awt.*;
  *
  * @version 1.0
  * @author [60%] Luka Jovanovic & [40%] Brian Song
+ * Luka: car collision, player movement, infinite generation
+ * Brian: painted frame, car generation, lanes
  * Created on 2023/06/04
  */
 public class WalkingGame {

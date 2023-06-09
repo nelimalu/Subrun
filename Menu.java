@@ -10,6 +10,8 @@ import java.awt.event.*;
  *
  * @version 1.0
  * @author [20%] Luka Jovanovic & [80%] Brian Song
+ * Luka: road generation
+ * Brian: Title, text, buttons, paint
  * Created on 2023/05/16
  */
 public class Menu implements MouseListener, MouseMotionListener {

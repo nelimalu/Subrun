@@ -10,6 +10,8 @@ import java.awt.event.*;
  *
  * @version 1.0
  * @author [20%] Luka Jovanovic & [80%] Brian Song
+ * Luka: listeners
+ * Brian: buttons, hovers, painting frame
  * Created on 2023/06/01
  */
 public class CharSelect implements MouseListener, MouseMotionListener {

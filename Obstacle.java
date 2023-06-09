@@ -9,6 +9,8 @@ import java.awt.*;
  *
  * @version 1.0
  * @author [90%] Luka Jovanovic & [10%] Brian Song
+ * Luka: collision, placement, movement
+ * Brian: drew sprite
  * Created on 2023/05/17
  */
 public class Obstacle {

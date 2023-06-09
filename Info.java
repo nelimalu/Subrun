@@ -11,6 +11,8 @@ import java.awt.event.*;
  * @version 1.0
  * @author [20%] Luka Jovanovic & [80%] Brian Song
  * Created on 2023/05/29
+ * Luka: drawing sprites
+ * Brian: text, painting frame
  */
 
 public class Info implements MouseListener, MouseMotionListener {

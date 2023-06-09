@@ -12,6 +12,8 @@ import java.awt.event.*;
  * @version 1.0
  * @author [30%] Luka Jovanovic & [70%] Brian Song
  * Created on 2023/06/07
+ * Luka: flow between paint methods, drawing sprites
+ * Brian: informative speech, text boxes, designs, organizing sprites
  */
 
 public class Learning implements MouseListener {

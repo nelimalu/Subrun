@@ -8,6 +8,8 @@ import java.awt.*;
  *
  * @version 1.0
  * @author [80%] Luka Jovanovic & [20%] Brian Song
+ * Luka: collision, movement, switching between player icons
+ * Brian: construction of player
  * Created on 2023/05/15
  */
 public class Player {

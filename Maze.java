@@ -9,6 +9,8 @@ import java.awt.event.*;
  *
  * @version 1.0
  * @author [70%] Luka Jovanovic & [30%] Brian Song
+ * Luka: maze game, escape room game, bike game, draw sprites, movement
+ * Brian: npc interaction, dialogue
  * Created on 2023/06/03
  */
 public class Maze implements KeyListener, MouseListener, MouseMotionListener {
