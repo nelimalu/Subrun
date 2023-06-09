@@ -27,7 +27,7 @@ public class Sprite {
    public Sprite(String path) {
       scale = 5;
       try {
-         image = ImageIO.read(new File(path));
+         image = ImageIO.read(Sprite.class.getResource("/" + path));
          Image scaled = image.getScaledInstance(image.getWidth() * scale, image.getHeight() * scale, Image.SCALE_DEFAULT);
          image = convertToBufferedImage(scaled);
       } catch (IOException e) {
@@ -44,7 +44,7 @@ public class Sprite {
    public Sprite(String path, int scale) {
       this.scale = scale;
       try {
-         image = ImageIO.read(new File(path));
+         image = ImageIO.read(Sprite.class.getResource("/" + path));
          Image scaled = image.getScaledInstance(image.getWidth() * scale, image.getHeight() * scale, Image.SCALE_DEFAULT);
          image = convertToBufferedImage(scaled);
       } catch (IOException e) {
