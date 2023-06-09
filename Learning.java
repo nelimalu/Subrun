@@ -199,6 +199,7 @@ public class Learning implements KeyListener {
                endScreen(g);
                break;
             case 9:
+               screen = 0;
                Controller.mazeUnlocked = true;
                Controller.changeScreen(6);
 

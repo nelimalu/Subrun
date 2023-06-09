@@ -237,13 +237,17 @@ public class Maze implements KeyListener, MouseListener, MouseMotionListener {
         if (finishedLevels[0] == true && finishedLevels[1] == true && finishedLevels[2] == true) {
             Controller.escapeUnlocked = true;
         }
+        g.setColor(Color.white);
+        g.fillRect(700,0,100,35);
         g.setFont(new Font("Arial", Font.BOLD, 25));
         g.setColor(Color.black);
-        g.drawString("Exit", 15, 445);
-        if (xHover < 100 && yHover > 445) {
+        g.drawRect(700,0,100,35);
+        g.drawString("Exit", 717, 25);
+
+        if (xHover >710  && yHover < 50) {
             g.setFont(new Font("Arial", Font.BOLD, 25));
             g.setColor(new Color(135, 134, 134));
-            g.drawString("Exit", 15, 445);
+            g.drawString("Exit", 717,25);
 
 
         }
@@ -297,7 +301,7 @@ public class Maze implements KeyListener, MouseListener, MouseMotionListener {
                 busGame.handleLoss();
             }
         }
-        if (xHover < 120 && yHover > 415)
+        if (xHover >710  && yHover < 50)
             Controller.changeScreen(6);
     }
 
