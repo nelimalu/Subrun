@@ -27,7 +27,7 @@ public class CharSelect implements MouseListener, MouseMotionListener {
          Controller.changeScreen(6);
          Controller.maze = new Maze();
          Controller.escapeRoom = new EscapeRoom();
-         Controller.learning = new Learning(new Sprite("assets/laptop.png", 1),new Sprite("assets/redHouse.png", 7),new Sprite("assets/blueHouse.png", 7),new Sprite("assets/orangeHouse.png", 7), new Sprite("assets/chalkboard.png", 4), new Sprite("assets/suburbs.png", 1), new Sprite("assets/bike.png", 6), new Sprite("assets/car.png", 6),new Sprite("assets/bus.png", 6), new Sprite("assets/benji0.png", 8));
+         Controller.learning = new Learning(new Sprite("assets/laptop.png", 1),new Sprite("assets/redHouse.png", 7),new Sprite("assets/blueHouse.png", 7),new Sprite("assets/orangeHouse.png", 7), new Sprite("assets/chalkboard.png", 4), new Sprite("assets/suburbs.png", 1), new Sprite("assets/bike.png", 6), new Sprite("assets/car.png", 6),new Sprite("assets/bus.png", 6), new Sprite ("assets/thinking.png",1), new Sprite("assets/sign.png",1), new Sprite("assets/benji0.png",5), new Sprite("assets/benji0.png", 8));
       }
    }
 

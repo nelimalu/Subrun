@@ -6,7 +6,7 @@ import java.awt.event.*;
 public class Controller {
    public Drawing drawing;
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
-   public static int screen = 0;  // default 5
+   public static int screen = 5;  // default 5
    public static boolean initScreen = true;
    public static Timer timer;
    public static final boolean SHOW_HITBOXES = false;
@@ -24,7 +24,7 @@ public class Controller {
    public static Maze maze = new Maze();
    public static EscapeRoom escapeRoom = new EscapeRoom();
    LevelSelect levelSelect = new LevelSelect();
-   public static Learning learning = new Learning(new Sprite("assets/laptop.png", 1),new Sprite("assets/redHouse.png", 7),new Sprite("assets/blueHouse.png", 7),new Sprite("assets/orangeHouse.png", 7), new Sprite("assets/chalkboard.png", 4), new Sprite("assets/suburbs.png", 1), new Sprite("assets/bike.png", 6), new Sprite("assets/car.png", 6),new Sprite("assets/bus.png", 6), new Sprite("assets/benji0.png", 8));
+   public static Learning learning = new Learning(new Sprite("assets/laptop.png", 1),new Sprite("assets/redHouse.png", 7),new Sprite("assets/blueHouse.png", 7),new Sprite("assets/orangeHouse.png", 7), new Sprite("assets/chalkboard.png", 4), new Sprite("assets/suburbs.png", 1), new Sprite("assets/bike.png", 6), new Sprite("assets/car.png", 6),new Sprite("assets/bus.png", 6), new Sprite("assets/thinking.png", 1), new Sprite("assets/sign.png", 1), new Sprite("assets/benji0.png",5), new Sprite("assets/benji0.png", 8));
 
 
    public Controller() {
@@ -128,7 +128,7 @@ public class Controller {
             case 7:
                if (initScreen) {
                   removeListeners();
-                  frame.addKeyListener(learning);
+                  frame.addMouseListener(learning);
                   initScreen = false;
                }
                learning.drawing.paint(g);
