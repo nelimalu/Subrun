@@ -120,7 +120,7 @@ public class BusGame {
     public BusGame() {
         bus = new Bus(120, -200, new Sprite("assets/bus.png", 15));
         house = new Obstacle(100, 0, new Sprite("assets/blueHouse.png"));
-        destinationIndex = 5; //randint(10, 50);
+        destinationIndex = randint(10, 50);
         destination = BUS_STOPS[destinationIndex];
         frame = 0;
         waitTime = (int) (Math.random() * 25) + 25;

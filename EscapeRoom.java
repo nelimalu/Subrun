@@ -1,11 +1,31 @@
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * EscapeRoom class handles and draws the third Escape Room. It manages between three game levels, a
+ * default level, and win + loss screens
+ *
+ * <strong>Course info:</strong>
+ * ICS4U0 with V. Krasteva
+ *
+ * @version 1.0
+ * @author Luka Jovanovic & Brian Song
+ * Created on 2023/06/07
+ */
 public class EscapeRoom implements KeyListener, MouseListener {
+    /** four booleans representing if each of the up, down, left, and right keys are currently being held respectively */
     private static boolean[] buttons = {false, false, false, false};  // up down left right
+
+    /** four booleans representing if each of the up, down, left, and right keys are currently being pressed respectively */
     private static boolean[] pressedButtons = {false, false, false, false};
+
+    /** player object for movement */
     private Player player;
+
+    /** obstacle objects to create level boundaries */
     private Obstacle[] obstacles;
+
+    /** obstacle objects to create level boundaries */
     private Obstacle[] background;
     private Obstacle[] foreground;
     private Teacher walkPerson;
