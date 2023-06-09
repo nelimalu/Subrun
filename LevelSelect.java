@@ -1,15 +1,32 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+/**
+ * LevelSelect allows the user to navigate between the 3 different
+ * levels in the game. The latter 2 are only unlocked as preconditions
+ * are met.
+ *
+ * <strong>Course info:</strong>
+ * ICS4U0 with V. Krasteva
+ *
+ * @version 1.0
+ * @author Luka Jovanovic & Brian Song
+ * Created on 2023/06/04
+ */
 public class LevelSelect implements MouseListener, MouseMotionListener {
-
+    /** stores x value of the mouse in real-time as it moves for interactive button hovers **/
     int xHover;
+    /** stores y value of the mouse in real-time as it moves for interactive button hovers **/
     int yHover;
+    /** stores x value on mouse click for button interaction **/
     int xClick;
+    /** stores y value on mouse click for button interaction **/
     int yClick;
 
-
+    /**
+     * LevelSelect constructor
+     * sets mouse variables to default values
+     */
     public LevelSelect() {
 
         xHover = 0;
@@ -17,7 +34,13 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
         xClick = 0;
         yClick = 0;
     }
-
+    /**
+     * Handle all mouse clicks
+     * opens the level that the mouse clicks on if the level is unlocked
+     * goes back to character select if back is pressed
+     *
+     * @param e the event to be processed
+     */
     public void mouseClicked (MouseEvent e) {
         if (xHover < 120 && yHover > 415)
             Controller.changeScreen(1);
@@ -41,7 +64,12 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
     public void mouseExited (MouseEvent e) {
 
     }
-
+    /**
+     * Stores all mouse movements
+     * Tracks coordinates of mouse in real time
+     *
+     * @param e the event to be processed
+     */
     public void mouseMoved (MouseEvent e) {
         xHover = e.getX();
         yHover = e.getY();
@@ -50,6 +78,12 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
     public void mouseDragged (MouseEvent e) {
     }
 
+    /**
+     * paint method to draw the level select interface
+     * locked levels will be grayed out and unhoverable until preconditions are met
+     *
+     * @param g graphics object to be drawn
+     */
     public void paint (Graphics g) {
 
 
