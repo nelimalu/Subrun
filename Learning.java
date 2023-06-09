@@ -199,7 +199,9 @@ public class Learning implements KeyListener {
                endScreen(g);
                break;
             case 9:
-               System.out.println("DONE -- send back to main menu");
+               Controller.mazeUnlocked = true;
+               Controller.changeScreen(6);
+
                break;
          }
       }
