@@ -2,17 +2,43 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Timer;
-
+/**
+ * CharSelect class plays an animated exit to the game, where
+ * cars enter from the left of the frame and the game concludes as the cars disappear.
+ *
+ * <strong>Course info:</strong>
+ * ICS4U0 with V. Krasteva
+ *
+ * @version 1.0
+ * @author Luka Jovanovic & Brian Song
+ * Created on 2023/06/03
+ */
 public class Exit {
 
+    /** car sprite to be animated */
    Sprite car;
+   /** timer tracker to time certain actions like fading, movement */
    int i;
 
+    /**
+     * Exit constructor
+     * Assigns default/input values to instance variables
+     *
+     * @param car car sprite
+     */
    public Exit(Sprite car) {
       this.car = car;
       this.i = 0;
    }
-   
+
+    /**
+     * Paint method
+     * Outro screen, cars will enter from the left and progress at
+     * a steady pace until they all go off the screen on the right side,
+     * at which point the program will force close.
+     *
+     * @param g Graphics object to be painted
+     */
    public void paint (Graphics g) {
  
          g.setColor(new Color(64, 63, 63));
