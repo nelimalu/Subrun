@@ -175,6 +175,8 @@ public class EscapeRoom implements KeyListener, MouseListener {
     }
 
     public void updateBusGame(Graphics g) {
+        busGame.paint(g, this);
+
 
     }
 
@@ -184,6 +186,17 @@ public class EscapeRoom implements KeyListener, MouseListener {
         g.setColor(Color.black);
         g.setFont(new Font("Helvetica Neue", Font.BOLD, 44));
         g.drawString("Sorry, you died...", 205, 75);
+        g.drawString("Click anywhere to leave", 130, 400);
+        g.drawString("Try again?", 275, 125);
+        g.drawImage(player.getDeadSprite().scaleImage(2), 320, 165, null);
+    }
+
+    public void updateBusLoss(Graphics g) {
+        g.setColor(new Color(247, 163, 174));
+        g.fillRect(0,0,800,500);
+        g.setColor(Color.black);
+        g.setFont(new Font("Helvetica Neue", Font.BOLD, 44));
+        g.drawString("Sorry, you missed your stop...", 80, 75);
         g.drawString("Click anywhere to leave", 130, 400);
         g.drawString("Try again?", 275, 125);
         g.drawImage(player.getDeadSprite().scaleImage(2), 320, 165, null);
@@ -213,6 +226,8 @@ public class EscapeRoom implements KeyListener, MouseListener {
             updateDead(g);
         if (game.equals("ALIVE"))
             updateAlive(g);
+        if (game.equals("BUSLOSS"))
+            updateBusLoss(g);
     }
 
     @Override
@@ -248,9 +263,12 @@ public class EscapeRoom implements KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (game.equals("ALIVE") || game.equals("DEAD")) {
+        if (game.equals("ALIVE") || game.equals("DEAD") || game.equals("BUSLOSS")) {
             player.resetPosition();
             game = "DEFAULT";
+        }
+        else if (game.equals("BUS")) {
+            busGame.checkWin(this);
         }
         else if (walkPerson.inRadius(player)) {
             walkGame = new WalkingGame();
@@ -267,6 +285,7 @@ public class EscapeRoom implements KeyListener, MouseListener {
         }
 
         else if (busPerson.inRadius(player)) {
+            busGame = new BusGame();
             game = "BUS";
         }
 
