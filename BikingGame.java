@@ -6,11 +6,15 @@ public class BikingGame {
     private Lane[] lanes;
     private ArrayList<Vehicle> vehicles;
     private int currentLane;
+    private int frame;
+
+    private static Font scoreFont = new Font("Monospaced", Font.BOLD, 20);
 
     public BikingGame() {
         int x = 255;
         int y = -300;
         currentLane = 1;
+        frame = 0;
 
         vehicles = new ArrayList<Vehicle>();
         lanes = new Lane[] {
@@ -21,6 +25,8 @@ public class BikingGame {
     }
 
     public void paint(Graphics g, Player player, EscapeRoom room) {
+        frame++;
+
         for (Lane lane : lanes) {
             lane.draw(g);
             lane.updateReal(vehicles);
@@ -35,6 +41,12 @@ public class BikingGame {
             vehicles.get(i).draw(g);
             if (player.collideSmall(vehicles.get(i))) {
                 room.setGame("DEAD");
+                room.setBikeHighScore(frame);
+                if (frame >= 1200) {
+                    room.setGame("ALIVE");
+                    room.setBikeHighScore(frame);
+                    room.bikePerson.getMessage().setTextArray("You have successfully completed this task! (score > 1200)", 1);
+                }
                 player.resetPosition();
 
             }
@@ -46,6 +58,10 @@ public class BikingGame {
             toRemove.set(i, toRemove.get(i) - i);
 
         for (int index : toRemove) vehicles.remove(index);
+
+        g.setColor(Color.BLACK);
+        g.setFont(scoreFont);
+        g.drawString("Score: " + frame, 10, 30);
     }
 
     public int getCurrentLane() {
@@ -89,7 +105,7 @@ public class BikingGame {
                 int speed = (int) (Math.random() * 5) + 5;
                 vehicles.add(new Vehicle(getX() + 5, getY(), speed, sprite));
             }
-            rate += 0.0001;
+            rate += 0.000003;
         }
     }
 

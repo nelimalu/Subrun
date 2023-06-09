@@ -12,7 +12,7 @@ import java.awt.event.*;
  * @author Luka Jovanovic & Brian Song
  * Created on 2023/06/07
  */
-public class EscapeRoom implements KeyListener, MouseListener {
+public class EscapeRoom implements KeyListener, MouseListener, MouseMotionListener {
     /** four booleans representing if each of the up, down, left, and right keys are currently being held respectively */
     private static boolean[] buttons = {false, false, false, false};  // up down left right
 
@@ -28,9 +28,9 @@ public class EscapeRoom implements KeyListener, MouseListener {
     /** obstacle objects to create level boundaries */
     private Obstacle[] background;
     private Obstacle[] foreground;
-    private Teacher walkPerson;
-    private Teacher bikePerson;
-    private Teacher busPerson;
+    public Teacher walkPerson;
+    public Teacher bikePerson;
+    public Teacher busPerson;
     private WalkingGame walkGame;
     private BikingGame bikeGame;
     private BusGame busGame;
@@ -40,6 +40,8 @@ public class EscapeRoom implements KeyListener, MouseListener {
     private int xOffset;
     private int yOffset;
     private String game;
+    private int xHover;
+    private int yHover;
 
     public EscapeRoom() {
         if (Controller.CHARACTER.equals("Rebecca")) {
@@ -128,7 +130,7 @@ public class EscapeRoom implements KeyListener, MouseListener {
         walkPerson = new Teacher(-350, 200, new Sprite("assets/walkingMan.png", 7),
                 new String[] {"CLICK TO PLAY WALK GAME", "Reach a score of 5000 to finish this task."});  // TODO ADD HIGH SCORE
         bikePerson = new Teacher(555, 50, new Sprite("assets/bikingMan.png", 7),
-                new String[] {"CLICK TO PLAY BIKE GAME", "Reach a score of 5000 to finish this task."});
+                new String[] {"CLICK TO PLAY BIKE GAME", "Reach a score of 1200 to finish this task."});
         busPerson = new Teacher(1050, 200, new Sprite("assets/BusMan.png", 7),
                 new String[] {"CLICK TO PLAY BUS GAME", "Get off at the right stop to finish this task."});
 
@@ -137,6 +139,18 @@ public class EscapeRoom implements KeyListener, MouseListener {
 
     public void setGame(String game) {
         this.game = game;
+    }
+
+    public void setBikeHighScore(int amount) {
+        bikeHighScore = amount;
+    }
+
+    public void setWalkHighScore(int amount) {
+        walkHighScore = amount;
+    }
+
+    public void incrementBusHighScore() {
+        busHighScore++;
     }
 
     public void move(int xDistance, int yDistance) {
@@ -220,7 +234,6 @@ public class EscapeRoom implements KeyListener, MouseListener {
 
 
     }
-
     public void updateDead(Graphics g) {
         g.setColor(new Color(247, 163, 174));
         g.fillRect(0,0,800,500);
@@ -228,7 +241,7 @@ public class EscapeRoom implements KeyListener, MouseListener {
         g.setFont(new Font("Helvetica Neue", Font.BOLD, 44));
         g.drawString("Sorry, you died...", 205, 75);
         g.drawString("Click anywhere to leave", 130, 400);
-        g.drawString("Try again?", 275, 125);
+        g.drawString("Play again?", 265, 125);
         g.drawImage(player.getDeadSprite().scaleImage(2), 320, 165, null);
     }
 
@@ -248,26 +261,59 @@ public class EscapeRoom implements KeyListener, MouseListener {
         g.fillRect(0,0,800,500);
         g.setColor(Color.black);
         g.setFont(new Font("Helvetica Neue", Font.BOLD, 44));
-        g.drawString("You made it out of the suburbs!", 65, 75);
+        g.drawString("You have completed this task!", 65, 75);
         g.drawString("Click anywhere to leave", 130, 400);
         g.drawString("Congrats!", 290, 125);
         g.drawImage(player.getSprite().scaleImage(2), 320, 165, null);
     }
 
+    public void finishGame(Graphics g) {
+        g.setColor(new Color(194, 247, 163));
+        g.fillRect(0,0,800,500);
+        g.setColor(Color.black);
+        g.setFont(new Font("Helvetica Neue", Font.BOLD, 44));
+        g.drawString("You completed all tasks", 140, 75);
+        g.drawString("and made it out of the suburbs!", 70, 125);
+        g.drawImage(player.getSprite().scaleImage(2), 320, 165, null);
+        g.setColor(Color.white);
+
+        g.fillRect(125,355,230,75);
+        g.fillRect(425,355,230,75);
+        g.setFont(new Font("Helvetica Neue", Font.PLAIN, 24));
+
+
+        g.setColor(new Color(201, 201, 201));
+        if (xHover>125 && xHover<355 && yHover>375 && yHover < 450) {  // EXIT
+            g.fillRect(125, 355, 230, 75);
+        }
+        if (xHover>425 && xHover<655 && yHover>375 && yHover < 450) {  // MENU
+            g.fillRect(425, 355, 230, 75);
+        }
+
+        g.setColor(Color.black);
+        g.drawString("Exit", 215, 400);
+        g.drawString("Menu", 515, 400);
+
+        g.drawRect(125,355,230,75);
+        g.drawRect(425,355,230,75);
+    }
+
     public void paint(Graphics g) {
-        if (game.equals("DEFAULT"))
+        if (busHighScore > 0 && bikeHighScore >= 1200 && walkHighScore >= 5000)
+            finishGame(g);
+        else if (game.equals("DEFAULT"))
             updateDefault(g);
-        if (game.equals("WALK"))
+        else if (game.equals("WALK"))
             updateWalkGame(g);
-        if (game.equals("BIKE"))
+        else if (game.equals("BIKE"))
             updateBikeGame(g);
-        if (game.equals("BUS"))
+        else if (game.equals("BUS"))
             updateBusGame(g);
-        if (game.equals("DEAD"))
+        else if (game.equals("DEAD"))
             updateDead(g);
-        if (game.equals("ALIVE"))
+        else if (game.equals("ALIVE"))
             updateAlive(g);
-        if (game.equals("BUSLOSS"))
+        else if (game.equals("BUSLOSS"))
             updateBusLoss(g);
     }
 
@@ -304,6 +350,14 @@ public class EscapeRoom implements KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if (busHighScore > 0 && bikeHighScore >= 1200 && walkHighScore >= 5000) {
+            if (xHover > 125 && xHover < 355 && yHover > 375 && yHover < 450) {  // EXIT
+                Controller.changeScreen(4);  // exit screen
+            }
+            if (xHover > 425 && xHover < 655 && yHover > 375 && yHover < 450) {  // MENU
+                Controller.changeScreen(0);  // menu screen
+            }
+        }
         if (game.equals("ALIVE") || game.equals("DEAD") || game.equals("BUSLOSS")) {
             player.resetPosition();
             game = "DEFAULT";
@@ -353,4 +407,14 @@ public class EscapeRoom implements KeyListener, MouseListener {
 
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        xHover = e.getX();
+        yHover = e.getY();
+    }
 }

@@ -131,8 +131,11 @@ public class BusGame {
     }
 
     public void checkWin(EscapeRoom room) {
-        if (BUS_STOPS[stopIndex].equals(destination))
+        if (BUS_STOPS[stopIndex].equals(destination)) {
             room.setGame("ALIVE");
+            room.incrementBusHighScore();
+            room.busPerson.getMessage().setTextArray("You have successfully completed this task! (win one game)", 1);
+        }
         else
             room.setGame("BUSLOSS");
     }

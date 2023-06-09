@@ -56,6 +56,11 @@ public class WalkingGame {
             cars.get(i).draw(g);
             if (player.collide(cars.get(i))) {
                 room.setGame("DEAD");
+                if (score >= 5000) {
+                    room.setGame("ALIVE");
+                    room.setWalkHighScore(score);
+                    room.walkPerson.getMessage().setTextArray("You have successfully completed this task! (score > 5000)", 1);
+                }
             }
             if (cars.get(i).move(-700, WIDTH - 100))
                 toRemove.add(i);

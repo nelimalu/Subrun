@@ -16,6 +16,10 @@ public class Teacher extends Obstacle {
         return Math.hypot(player.getX() - getX(), player.getY() - getY()) < 120;
     }
 
+    public MessageBox getMessage() {
+        return message;
+    }
+
     public void paintPrompt(Graphics g, Player player) {
         if (inRadius(player)) {
             message.draw(g);
