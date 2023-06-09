@@ -9,7 +9,7 @@ import java.awt.*;
  *
  * @version 1.0
  * @author Luka Jovanovic & Brian Song
- * Created on 2023/07/04
+ * Created on 2023/06/07
  */
 public class BusGame {
 
