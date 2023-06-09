@@ -68,6 +68,10 @@ public class MessageBox {
         this.change = change;
     }
 
+    public void setTextArray(String text, int index) {
+        textArray[index] = text;
+    }
+
     public int getChange() {
         return change;
     }

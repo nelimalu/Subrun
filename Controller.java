@@ -6,7 +6,9 @@ import java.awt.event.*;
 public class Controller {
    public Drawing drawing;
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
+
    public static int screen = 5;  // default 5
+
    public static boolean initScreen = true;
    public static Timer timer;
    public static final boolean SHOW_HITBOXES = false;
@@ -138,6 +140,7 @@ public class Controller {
                   removeListeners();
                   frame.addMouseListener(escapeRoom);
                   frame.addKeyListener(escapeRoom);
+                  frame.addMouseMotionListener(escapeRoom);
                   initScreen = false;
                }
                escapeRoom.paint(g);
