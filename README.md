@@ -47,3 +47,26 @@ The core mechanics of the game are complete, but the player experience could be 
 - Making the locked level interface feel more accessible by showing what needs to be done to unlock each level
 - Making it more clear where to find the bus game in the maze level
 - Prompting the user to exit directly to the main screen rather than manually after completing all 3 stars in the maze level
+
+## Work Divison
+| File             | Luka | Brian |
+|------------------|------|-------|
+| Assets           | 80%  | 20%   |
+| BikingGame.java  | 70%  | 30%   |
+| BusGame.java     | 50%  | 50%   |
+| CharSelect.java  | 20%  | 80%   |
+| Controller.java  | 50%  | 50%   |
+| EscapeRoom.java  | 70%  | 30%   |
+| Exit.java        | 0%   | 100%  |
+| Info.java        | 20%  | 80%   |
+| Learning.java    | 30%  | 70%   |
+| LevelSelect.java | 30%  | 70%   |
+| Maze.java        | 70%  | 30%   |
+| Menu.java        | 20%  | 80%   |
+| MessageBox.java  | 100% | 0%    |
+| Obstacle.java    | 90%  | 10%   |
+| Player.java      | 80%  | 20%   |
+| Splash.java      | 0%   | 100%  |
+| Sprite.java      | 80%  | 20%   |
+| Teacher.java     | 50%  | 50%   |
+| WalkingGame.java | 60%  | 40%   |

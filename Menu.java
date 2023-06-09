@@ -9,7 +9,7 @@ import java.awt.event.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [20%] Luka Jovanovic & [80%] Brian Song
  * Created on 2023/05/16
  */
 public class Menu implements MouseListener, MouseMotionListener {
@@ -69,7 +69,7 @@ public class Menu implements MouseListener, MouseMotionListener {
       g.setColor(new Color(64, 63, 63));
       g.fillRect(0,0,800,500);
 
-
+      // road dividers in background
       g.setColor(Color.yellow);
       for (int i = 0; i < 800; i += 80) {
          g.fillRect(i,130,50,20);
@@ -81,9 +81,12 @@ public class Menu implements MouseListener, MouseMotionListener {
 
       g.setColor(Color.white);
 
+      // buttons
       g.fillRect(270,150,210,60);
       g.fillRect(270,250,210,60);
       g.fillRect(270,350,210,60);
+
+      // colour hovered buttons
       g.setColor(Color.red);
       if (xHover>270 && xHover<480 && yHover>175 && yHover < 235)
          g.fillRect(270,150,210,60);

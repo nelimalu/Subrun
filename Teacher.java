@@ -7,7 +7,7 @@ import java.awt.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [50%] Luka Jovanovic & [50%] Brian Song
  * Created on 2023/06/07
  */
 public class Teacher extends Obstacle {

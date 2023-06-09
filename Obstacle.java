@@ -8,7 +8,7 @@ import java.awt.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [90%] Luka Jovanovic & [10%] Brian Song
  * Created on 2023/05/17
  */
 public class Obstacle {

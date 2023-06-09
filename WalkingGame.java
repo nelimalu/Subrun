@@ -12,7 +12,7 @@ import java.awt.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [60%] Luka Jovanovic & [40%] Brian Song
  * Created on 2023/06/04
  */
 public class WalkingGame {

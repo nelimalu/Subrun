@@ -8,7 +8,7 @@ import java.awt.event.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [70%] Luka Jovanovic & [30%] Brian Song
  * Created on 2023/06/03
  */
 public class Maze implements KeyListener, MouseListener, MouseMotionListener {
