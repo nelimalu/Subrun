@@ -1,3 +1,5 @@
+import com.sun.security.jgss.GSSUtil;
+
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.awt.*;
@@ -6,12 +8,100 @@ public class WalkingGame {
 
     private ArrayList<Lane> lanes;
     private ArrayList<Car> cars;
+    private static int WIDTH = 2000;
+    private static int HEIGHT = 150;
+    private long frame;
+    private Obstacle[] obstacles;
+    private int score;
+    private static Font scoreFont = new Font("Monospaced", Font.BOLD, 20);
+
+    public WalkingGame() {
+        this.lanes = new ArrayList<Lane>();
+        this.cars = new ArrayList<Car>();
+        this.frame = 0;
+        this.obstacles = new Obstacle[] {};
+
+        for (int i = 0; i < 2; i++) {
+            lanes.add(new Lane(-600, 330 - i * HEIGHT, WIDTH, HEIGHT));
+        }
+        lanes.add(new Lane(-600, 330 - 2 * HEIGHT, WIDTH, HEIGHT, randint(1, 3) / 100.0));
+
+        for (int i = 3; i < 50; i++) {
+            if (Math.random() < 0.7)
+                lanes.add(new Lane(-600, 330 - i * HEIGHT, WIDTH, HEIGHT, randint(1, 3) / 100.0));
+            else
+                lanes.add(new Lane(-600, 330 - i * HEIGHT, WIDTH, HEIGHT));
+        }
+    }
+
+    public void paint(Graphics g, int yOffset, Player player) {
+        frame++;
+
+        ArrayList<Lane> copyLanes = new ArrayList<>(lanes);
+        for (Lane lane : lanes) {
+            lane.draw(g);
+            lane.updateReal(cars);
+
+            if (lane.getY() > 1000) {
+                lane.setY(lanes.get(lanes.size() - 1).getY() - HEIGHT);
+                lane.setFrequency(lane.getFrequency() + 0.01);
+                copyLanes.remove(0);
+                copyLanes.add(lane);
+            }
+        }
+        lanes = copyLanes;
+
+        ArrayList<Integer> toRemove = new ArrayList<Integer>();
+        for (int i = 0; i < cars.size(); i++) {
+            cars.get(i).draw(g);
+            if (player.collide(cars.get(i))) {
+                System.out.println("DIE");
+            }
+            if (cars.get(i).move(-700, WIDTH - 100))
+                toRemove.add(i);
+        }
+
+        for (int i = 0; i < toRemove.size(); i++)
+            toRemove.set(i, toRemove.get(i) - i);
+
+        for (int index : toRemove) cars.remove(index);
+
+        if (yOffset > score)
+            score = yOffset;
+
+        g.setColor(Color.BLACK);
+        g.setFont(scoreFont);
+        g.drawString("Score: " + score, 10, 30);
+    }
+
+    public void move(int xDistance, int yDistance) {
+        for (Car car : cars) {
+            car.moveX(xDistance);
+            car.moveY(yDistance);
+        }
+
+        for (Lane lane : lanes) {
+            lane.move(xDistance, yDistance);
+        }
+    }
+
+    public Obstacle[] getObstacles() {
+        return obstacles;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public static int randint(int min, int max) {
+        return (int) (Math.random() * (max - min)) + min;
+    }
 
     private static class Lane extends Obstacle {
         private int direction;
         private int speed;
         private boolean isRoad;
-        private int frequency;
+        private double frequency;
 
         public Lane(int x, int y, int width, int height) {
             super(x, y, width, height);
@@ -21,7 +111,7 @@ public class WalkingGame {
             this.frequency = 0;
         }
 
-        public Lane(int x, int y, int width, int height, int frequency) {
+        public Lane(int x, int y, int width, int height, double frequency) {
             this(x, y, width, height);
             this.isRoad = true;
             this.frequency = frequency;
@@ -30,6 +120,14 @@ public class WalkingGame {
         public void move(int xDistance, int yDistance) {
             moveX(xDistance);
             moveY(yDistance);
+        }
+
+        public double getFrequency() {
+            return frequency;
+        }
+
+        public void setFrequency(double amount) {
+            frequency = amount;
         }
 
         public void draw(Graphics g) {
@@ -43,6 +141,14 @@ public class WalkingGame {
 
         public void update(long frame, ArrayList<Car> cars) {
             if (isRoad && frame % (frequency * 25L) == 0) {
+                Sprite sprite = new Sprite("assets/car.png", 5);
+                int x = direction > 0 ? getX() : getX() + getWidth() - sprite.getImage().getWidth();
+                cars.add(new Car(x, getY() + getHeight() / 3, direction, speed, sprite));
+            }
+        }
+
+        public void updateReal(ArrayList<Car> cars) {
+            if (isRoad && Math.random() < frequency) {
                 Sprite sprite = new Sprite("assets/car.png", 5);
                 int x = direction > 0 ? getX() : getX() + getWidth() - sprite.getImage().getWidth();
                 cars.add(new Car(x, getY() + getHeight() / 3, direction, speed, sprite));

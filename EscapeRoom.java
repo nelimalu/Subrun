@@ -14,6 +14,12 @@ public class EscapeRoom implements KeyListener, MouseListener {
     private Teacher walkPerson;
     private Teacher bikePerson;
     private Teacher busPerson;
+    private WalkingGame walkGame;
+    private BikingGame bikeGame;
+    private BusGame busGame;
+    private int walkHighScore;
+    private int bikeHighScore;
+    private int busHighScore;
     private int xOffset;
     private int yOffset;
     private String game;
@@ -85,6 +91,8 @@ public class EscapeRoom implements KeyListener, MouseListener {
                 new String[] {"CLICK TO PLAY BIKE GAME", "> HIGHSCORE: "});
         busPerson = new Teacher(1050, 200, new Sprite("assets/BusMan.png", 7),
                 new String[] {"CLICK TO PLAY BUS GAME", "> HIGHSCORE: "});
+
+
     }
 
     public void move(int xDistance, int yDistance) {
@@ -136,7 +144,23 @@ public class EscapeRoom implements KeyListener, MouseListener {
     }
 
     public void updateWalkGame(Graphics g) {
-        
+        int[] distance = player.move(buttons, walkGame.getObstacles());
+        if (xOffset < -500)
+            distance[0] += Player.SPEED;
+        if (xOffset > 500)
+            distance[0] -= Player.SPEED;
+        if (yOffset < Math.max(0,  walkGame.getScore() - 200))
+            distance[1] += Player.SPEED;
+
+        xOffset += distance[0];
+        yOffset += distance[1];
+        pressedButtons = new boolean[] {false, false, false, false};
+
+
+        walkGame.move(distance[0], distance[1]);
+
+        walkGame.paint(g, yOffset, player);
+        player.draw(g, buttons);
     }
 
     public void updateBikeGame(Graphics g) {
@@ -191,12 +215,20 @@ public class EscapeRoom implements KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (walkPerson.inRadius(player))
+        if (walkPerson.inRadius(player)) {
+            walkGame = new WalkingGame();
+            xOffset = 0;
+            yOffset = 0;
             game = "WALK";
-        else if (bikePerson.inRadius(player))
+        }
+        else if (bikePerson.inRadius(player)) {
             game = "BIKE";
-        else if (busPerson.inRadius(player))
+        }
+
+        else if (busPerson.inRadius(player)) {
             game = "BUS";
+        }
+
     }
 
     @Override
