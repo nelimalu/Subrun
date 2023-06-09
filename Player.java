@@ -177,6 +177,18 @@ public class Player {
       }
    }
 
+   public void bikingMove(boolean[] buttons, int lane, BikingGame bikingGame) {
+      if (buttons[2] && lane < 2) {
+         bikingGame.setCurrentLane(bikingGame.getCurrentLane() + 1);
+         moveReal(-100, 0);
+      }
+
+      if (buttons[3] && lane > 0) {
+         bikingGame.setCurrentLane(bikingGame.getCurrentLane() - 1);
+         moveReal(100, 0);
+      }
+   }
+
    public void drawUp(Graphics g) {
       Sprite nextSprite = bikeSprites[animationCount / ANIMATION_DELAY_FACTOR];
       g.drawImage(nextSprite.getImage(), x, y, null);

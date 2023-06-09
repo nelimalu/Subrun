@@ -164,7 +164,11 @@ public class EscapeRoom implements KeyListener, MouseListener {
     }
 
     public void updateBikeGame(Graphics g) {
+        bikeGame.paint(g, player);
+        player.bikingMove(pressedButtons, bikeGame.getCurrentLane(), bikeGame);
 
+        pressedButtons = new boolean[] {false, false, false, false};
+        player.drawUp(g);
     }
 
     public void updateBusGame(Graphics g) {
@@ -222,6 +226,10 @@ public class EscapeRoom implements KeyListener, MouseListener {
             game = "WALK";
         }
         else if (bikePerson.inRadius(player)) {
+            bikeGame = new BikingGame();
+            player.resetAnimationCount();
+            xOffset = 0;
+            yOffset = 0;
             game = "BIKE";
         }
 
