@@ -46,7 +46,9 @@ public class Obstacle {
    public void moveY(int distance) {
       y += distance;
    }
-
+   public void setY(int value) {
+      y = value;
+   }
    public int getX() {
       return x;
    }

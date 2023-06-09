@@ -29,6 +29,10 @@ public class Sprite {
          System.out.println("[ERROR] Failed to load image with path: " + path);
       }
    }
+
+   public BufferedImage scaleImage(int scale) {
+      return convertToBufferedImage(image.getScaledInstance(image.getWidth() * scale, image.getHeight() * scale, Image.SCALE_DEFAULT));
+   }
    
    public static BufferedImage convertToBufferedImage(Image image)
    {

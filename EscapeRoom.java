@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class EscapeRoom implements KeyListener, MouseListener {
     private static boolean[] buttons = {false, false, false, false};  // up down left right
@@ -14,6 +11,12 @@ public class EscapeRoom implements KeyListener, MouseListener {
     private Teacher walkPerson;
     private Teacher bikePerson;
     private Teacher busPerson;
+    private WalkingGame walkGame;
+    private BikingGame bikeGame;
+    private BusGame busGame;
+    private int walkHighScore;
+    private int bikeHighScore;
+    private int busHighScore;
     private int xOffset;
     private int yOffset;
     private String game;
@@ -34,7 +37,9 @@ public class EscapeRoom implements KeyListener, MouseListener {
             new Sprite[]{
                     new Sprite("assets/rebeccaBiking0.png"),
                     new Sprite("assets/rebeccaBiking1.png"),
-            });
+            },
+            new Sprite("assets/rebeccaDead.png")
+        );
 
         obstacles = new Obstacle[] {
                 new Obstacle(-300, 70, 50, 330),  // left
@@ -85,6 +90,12 @@ public class EscapeRoom implements KeyListener, MouseListener {
                 new String[] {"CLICK TO PLAY BIKE GAME", "> HIGHSCORE: "});
         busPerson = new Teacher(1050, 200, new Sprite("assets/BusMan.png", 7),
                 new String[] {"CLICK TO PLAY BUS GAME", "> HIGHSCORE: "});
+
+
+    }
+
+    public void setGame(String game) {
+        this.game = game;
     }
 
     public void move(int xDistance, int yDistance) {
@@ -136,15 +147,70 @@ public class EscapeRoom implements KeyListener, MouseListener {
     }
 
     public void updateWalkGame(Graphics g) {
-        
+        int[] distance = player.move(buttons, walkGame.getObstacles());
+        if (xOffset < -500)
+            distance[0] += Player.SPEED;
+        if (xOffset > 500)
+            distance[0] -= Player.SPEED;
+        if (yOffset < Math.max(0,  walkGame.getScore() - 200))
+            distance[1] += Player.SPEED;
+
+        xOffset += distance[0];
+        yOffset += distance[1];
+        pressedButtons = new boolean[] {false, false, false, false};
+
+
+        walkGame.move(distance[0], distance[1]);
+
+        walkGame.paint(g, yOffset, player, this);
+        player.draw(g, buttons);
     }
 
     public void updateBikeGame(Graphics g) {
+        bikeGame.paint(g, player, this);
+        player.bikingMove(pressedButtons, bikeGame.getCurrentLane(), bikeGame);
 
+        pressedButtons = new boolean[] {false, false, false, false};
+        player.drawUp(g);
     }
 
     public void updateBusGame(Graphics g) {
+        busGame.paint(g, this);
 
+
+    }
+
+    public void updateDead(Graphics g) {
+        g.setColor(new Color(247, 163, 174));
+        g.fillRect(0,0,800,500);
+        g.setColor(Color.black);
+        g.setFont(new Font("Helvetica Neue", Font.BOLD, 44));
+        g.drawString("Sorry, you died...", 205, 75);
+        g.drawString("Click anywhere to leave", 130, 400);
+        g.drawString("Try again?", 275, 125);
+        g.drawImage(player.getDeadSprite().scaleImage(2), 320, 165, null);
+    }
+
+    public void updateBusLoss(Graphics g) {
+        g.setColor(new Color(247, 163, 174));
+        g.fillRect(0,0,800,500);
+        g.setColor(Color.black);
+        g.setFont(new Font("Helvetica Neue", Font.BOLD, 44));
+        g.drawString("Sorry, you missed your stop...", 80, 75);
+        g.drawString("Click anywhere to leave", 130, 400);
+        g.drawString("Try again?", 275, 125);
+        g.drawImage(player.getDeadSprite().scaleImage(2), 320, 165, null);
+    }
+
+    public void updateAlive(Graphics g) {
+        g.setColor(new Color(194, 247, 163));
+        g.fillRect(0,0,800,500);
+        g.setColor(Color.black);
+        g.setFont(new Font("Helvetica Neue", Font.BOLD, 44));
+        g.drawString("You made it out of the suburbs!", 65, 75);
+        g.drawString("Click anywhere to leave", 130, 400);
+        g.drawString("Congrats!", 290, 125);
+        g.drawImage(player.getSprite().scaleImage(2), 320, 165, null);
     }
 
     public void paint(Graphics g) {
@@ -156,6 +222,12 @@ public class EscapeRoom implements KeyListener, MouseListener {
             updateBikeGame(g);
         if (game.equals("BUS"))
             updateBusGame(g);
+        if (game.equals("DEAD"))
+            updateDead(g);
+        if (game.equals("ALIVE"))
+            updateAlive(g);
+        if (game.equals("BUSLOSS"))
+            updateBusLoss(g);
     }
 
     @Override
@@ -191,12 +263,33 @@ public class EscapeRoom implements KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (walkPerson.inRadius(player))
+        if (game.equals("ALIVE") || game.equals("DEAD") || game.equals("BUSLOSS")) {
+            player.resetPosition();
+            game = "DEFAULT";
+        }
+        else if (game.equals("BUS")) {
+            busGame.checkWin(this);
+        }
+        else if (walkPerson.inRadius(player)) {
+            walkGame = new WalkingGame();
+            xOffset = 0;
+            yOffset = 0;
             game = "WALK";
-        else if (bikePerson.inRadius(player))
+        }
+        else if (bikePerson.inRadius(player)) {
+            bikeGame = new BikingGame();
+            player.resetAnimationCount();
+            xOffset = 0;
+            yOffset = 0;
             game = "BIKE";
-        else if (busPerson.inRadius(player))
+        }
+
+        else if (busPerson.inRadius(player)) {
+            busGame = new BusGame();
             game = "BUS";
+        }
+
+
     }
 
     @Override
@@ -218,4 +311,5 @@ public class EscapeRoom implements KeyListener, MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
 }

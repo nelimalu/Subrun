@@ -3,12 +3,58 @@ import java.util.ArrayList;
 
 public class BikingGame {
 
-    private int x;
-    private int y;
-    private int width;
-    private int height;
     private Lane[] lanes;
     private ArrayList<Vehicle> vehicles;
+    private int currentLane;
+
+    public BikingGame() {
+        int x = 255;
+        int y = -300;
+        currentLane = 1;
+
+        vehicles = new ArrayList<Vehicle>();
+        lanes = new Lane[] {
+                new Lane(x, y, 100, 1000, new Color(70, 70, 70), 0.005),
+                new Lane(x + 100, y, 100, 1000, new Color(100, 100, 100), 0.015),
+                new Lane(x + 200, y, 100, 1000, new Color(70, 70, 70), 0.005),
+        };
+    }
+
+    public void paint(Graphics g, Player player, EscapeRoom room) {
+        for (Lane lane : lanes) {
+            lane.draw(g);
+            lane.updateReal(vehicles);
+        }
+
+        for (Vehicle vehicle : vehicles) {
+            vehicle.draw(g);
+        }
+
+        ArrayList<Integer> toRemove = new ArrayList<Integer>();
+        for (int i = 0; i < vehicles.size(); i++) {
+            vehicles.get(i).draw(g);
+            if (player.collideSmall(vehicles.get(i))) {
+                room.setGame("DEAD");
+                player.resetPosition();
+
+            }
+            if (vehicles.get(i).move(800)) // out of bounds
+                toRemove.add(i);
+        }
+
+        for (int i = 0; i < toRemove.size(); i++)
+            toRemove.set(i, toRemove.get(i) - i);
+
+        for (int index : toRemove) vehicles.remove(index);
+    }
+
+    public int getCurrentLane() {
+        return currentLane;
+    }
+
+    public void setCurrentLane(int amount) {
+        currentLane = amount;
+    }
 
     private static class Lane extends Obstacle {
         private Color colour;
@@ -36,7 +82,17 @@ public class BikingGame {
                 vehicles.add(new Vehicle(getX() + 5, getY(), speed, sprite));
             }
         }
+
+        public void updateReal(ArrayList<Vehicle> vehicles) {
+            if (Math.random() < rate) {
+                Sprite sprite = new Sprite("assets/frontFacingCar.png", 3);
+                int speed = (int) (Math.random() * 5) + 5;
+                vehicles.add(new Vehicle(getX() + 5, getY(), speed, sprite));
+            }
+            rate += 0.0001;
+        }
     }
+
 
     private static class Vehicle extends Obstacle {
         private int speed;

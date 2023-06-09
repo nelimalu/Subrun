@@ -109,6 +109,84 @@ public class BusGame {
     private static final Font MEDIUM_FONT = new Font("Monospaced", Font.BOLD, 20);
     private static final Font SMALL_FONT = new Font("Monospaced", Font.BOLD, 10);
 
+    private Bus bus;
+    private Obstacle house;
+    private int stopIndex;
+    private String destination;
+    private int destinationIndex;
+    private long frame;
+    private int waitTime;
+
+    public BusGame() {
+        bus = new Bus(120, -200, new Sprite("assets/bus.png", 15));
+        house = new Obstacle(100, 0, new Sprite("assets/blueHouse.png"));
+        destinationIndex = 5; //randint(10, 50);
+        destination = BUS_STOPS[destinationIndex];
+        frame = 0;
+        waitTime = (int) (Math.random() * 25) + 25;
+    }
+
+    public static int randint(int min, int max) {
+        return (int) (Math.random() * (max - min)) + min;
+    }
+
+    public void checkWin(EscapeRoom room) {
+        if (BUS_STOPS[stopIndex].equals(destination))
+            room.setGame("ALIVE");
+        else
+            room.setGame("BUSLOSS");
+    }
+
+    public void paint(Graphics g, EscapeRoom room) {
+        int x = 0;
+        int y = 0;
+        int width = 1000;
+        int height = 800;
+
+        frame++;
+        if (frame % waitTime == 0) {
+            stopIndex++;
+            waitTime = (int) (Math.random() * 25) + 30;
+        }
+
+        if (stopIndex > destinationIndex) {
+            room.setGame("BUSLOSS");
+        }
+
+        house.moveX(-15);
+        if (house.getX() < -300)
+            house.moveX(1200);
+
+        g.setColor(new Color(168, 168, 168));
+        g.fillRect(x, y, width, height);
+
+        g.setColor(new Color(89, 168, 49));
+        g.fillRect(x, y, width, height / 4);
+        g.fillRect(x, (int) (y + height * 0.75), width, height / 4);
+
+        g.setColor(new Color(159, 159, 159));
+        g.fillRect(0, 300, 785, 200);
+
+        g.setColor(new Color(37, 37, 37));
+        g.fillRect(10, 310, 765, 140);
+
+        g.setColor(Color.WHITE);
+        g.setFont(MEDIUM_FONT);
+        g.drawString("NEXT STOP: " + BUS_STOPS[stopIndex + 1], 20, 360);
+        g.setFont(SMALL_FONT);
+        g.drawString("CURRENT STOP:", 20, 400);
+        g.setFont(LARGE_FONT);
+        g.drawString(BUS_STOPS[stopIndex], 20, 430);
+
+        g.setFont(MEDIUM_FONT);
+        g.setColor(Color.RED);
+        g.drawString("DESTINATION: " + destination, 20, 340);
+
+        house.draw(g);
+        bus.draw(g);
+
+    }
+
     private static class Bus extends Obstacle {
 
         public Bus(int x, int y, Sprite sprite) {
@@ -161,7 +239,7 @@ public class BusGame {
             readDialogue = false;
             playing = false;
             stopIndex = 0;
-            waitTime = (int) (Math.random() * 25) + 25;
+            waitTime = (int) (Math.random() * 25) + 100;
             destination = BUS_STOPS[END_INDEX];
             teacher = new Teacher(350, -2400, new Sprite("assets/BusMan.png", 7));
             enterRadius = new Teacher(350, -2600);
@@ -228,7 +306,7 @@ public class BusGame {
                 frame++;
                 if (frame % waitTime == 0) {
                     stopIndex++;
-                    waitTime = (int) (Math.random() * 25) + 50;
+                    waitTime = (int) (Math.random() * 25) + 100;
                 }
 
                 if (stopIndex > END_INDEX) {
