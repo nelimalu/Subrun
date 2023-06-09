@@ -11,6 +11,8 @@ import java.awt.event.*;
  *
  * @version 1.0
  * @author [30%] Luka Jovanovic & [70%] Brian Song
+ * Luka: transition into the 3 levels
+ * Brian: buttons, hover, paint graphics
  * Created on 2023/06/04
  */
 public class LevelSelect implements MouseListener, MouseMotionListener {

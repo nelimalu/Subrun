@@ -9,6 +9,8 @@ import java.awt.*;
  *
  * @version 1.0
  * @author [50%] Luka Jovanovic & [50%] Brian Song
+ * Luka: randomization methods, getting off bus
+ * Brian: preparing list of bus stops, painting frame
  * Created on 2023/06/07
  */
 public class BusGame {

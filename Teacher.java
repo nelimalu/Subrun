@@ -3,11 +3,14 @@ import java.awt.*;
 /**
  * Teacher class represents the teacher npc in game that the
  * user can interact with.
+ *
  * <strong>Course info:</strong>
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author [50%] Luka Jovanovic & [50%] Brian Song
+ * @author [70%] Luka Jovanovic & [30%] Brian Song
+ * Luka: drew sprite, collision detection
+ * Brian: messages, prompt
  * Created on 2023/06/07
  */
 public class Teacher extends Obstacle {

@@ -10,6 +10,8 @@ import java.util.ArrayList;
  *
  * @version 1.0
  * @author [70%] Luka Jovanovic & [30%] Brian Song
+ * Luka: Sprites for game, bike movement, score tracking
+ * Brian: Drawing map layout, infinite generation
  * Created on 2023/06/07
  */
 public class BikingGame {

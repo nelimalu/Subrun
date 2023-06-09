@@ -8,6 +8,7 @@ import java.awt.*;
  *
  * @version 1.0
  * @author [100%] Luka Jovanovic & [0%] Brian Song
+ * Luka: design, processing text
  * Created on 2023/06/05
  */
 public class MessageBox {

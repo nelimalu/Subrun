@@ -11,6 +11,8 @@ import java.awt.event.*;
  *
  * @version 1.0
  * @author [50%] Luka Jovanovic & [50%] Brian Song
+ * Luka: Flow between frames, removing & adding listeners
+ * Brian: clear/character tracking variables, frame constructors
  * Created on 2023/05/29
  */
 public class Controller {

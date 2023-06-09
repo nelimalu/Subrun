@@ -12,6 +12,8 @@ import java.io.*;
  * @version 1.0
  * @author [80%] Luka Jovanovic & [20%] Brian Song
  * Created on 2023/05/16
+ * Luka: scale factor, file import, buffered image
+ * Brian: constructors
  */
 public class Sprite {
    /** buffered image that is used when drawing on a frame */
