@@ -2,25 +2,36 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * BusGame class handles movement between the character select screen, which continues to the game, the info screen, and exiting
+ *
+ * <strong>Course info:</strong>
+ * ICS4U0 with V. Krasteva
+ *
+ * @version 1.0
+ * @author Luka Jovanovic & Brian Song
+ * Created on 2023/05/16
+ */
 public class Menu implements MouseListener, MouseMotionListener {
-
+   
+   /** X position of the mouse */
    int xHover;
+   
+   /** Y position of the mouse */
    int yHover;
-
+   
+   /**
+    * Menu constructor that initializes the mouse position
+    */
    public Menu() {
       xHover = 0;
       yHover = 0;
-      /*
-      JFrame frame = new JFrame();
-      
-      frame.setSize(800,500);
-      draw.addMouseListener(this);
-      draw.addMouseMotionListener(this);
-      frame.add(draw);
-      frame.setVisible(true);
-      */
    }
-
+   
+   /**
+    * Handles mouse clicks by checking where the mouse is on the click, and if it's on a button, it sends the user to the respective screen
+    * @param e The mouse event
+    */
    public void mouseClicked(MouseEvent e) {
       if (xHover>270 && xHover<480 && yHover>175 && yHover < 235) {
          System.out.println("PLAY");
@@ -39,12 +50,20 @@ public class Menu implements MouseListener, MouseMotionListener {
    public void mouseEntered (MouseEvent e) {}
    public void mouseExited (MouseEvent e) {}
    public void mouseDragged (MouseEvent e) {}
-
+   
+   /**
+    * Keeps track of the mouse position using xHover and yHover
+    * @param e The mouse event
+    */
    public void mouseMoved (MouseEvent e) {
       xHover = e.getX();
       yHover = e.getY();
    }
-
+   
+   /**
+    * Draws all the text, title, background and buttons for the main menu
+    * @param g The Graphics object for drawing
+    */
    public void paint (Graphics g) {
 
       g.setColor(new Color(64, 63, 63));
