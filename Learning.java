@@ -19,7 +19,7 @@ public class Learning implements KeyListener {
    Sprite walk;
 
    private static MessageBox[] messages = {
-           new MessageBox("Hey! I'm " + Controller.getCharacter() + ". Nice to meet you! Welcome to the town of Vaughan. Come on! I'll show you around!"),
+           new MessageBox("Hey! I'm " + Controller.CHARACTER + ". Nice to meet you! Welcome to the town of Vaughan. Come on! I'll show you around!"),
            new MessageBox("Vaughan's a suburban neighborhood, and it's a pretty nice place to be: decently quiet, and great people. But there's a problem..."),
            new MessageBox("It’s really hard to get around here as a kid. If you look atthe map, you can see that all the houses are placed in strips, with wide sidewalk-less roads linking isolated communities, making transportation really annoying without a car."),
            new MessageBox("So really, if your parents can’t drive you, that gives you 4ways to get around as a kid here. You can walk, you can ridea bike, you can bus, or if you’re feeling rich, you can takean Uber."),
@@ -31,9 +31,9 @@ public class Learning implements KeyListener {
    };
 
    public Learning(Sprite laptop, Sprite redHouse, Sprite blueHouse, Sprite orangeHouse, Sprite chalkboard, Sprite suburbs, Sprite bike, Sprite car, Sprite bus, Sprite walk) {
-      if (Controller.getCharacter().equals("Rebecca")) {
+      if (Controller.CHARACTER.equals("Rebecca")) {
          character = new Sprite("assets/rebecca0.png", 12);
-      } else if (Controller.getCharacter().equals("Benji")) {
+      } else if (Controller.CHARACTER.equals("Benji")) {
          character = new Sprite("assets/benji0.png", 12);
       }
       JFrame frame = new JFrame("Testing");

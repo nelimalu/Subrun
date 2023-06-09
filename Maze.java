@@ -24,22 +24,43 @@ public class Maze implements KeyListener, MouseListener, MouseMotionListener {
     private BusGame.SampleGame busGame;
 
     public Maze() {
-        player = new Player(800 / 2, 500 / 2, new Sprite[]{
-                        new Sprite("assets/rebecca0.png"),
-                        new Sprite("assets/rebecca1.png"),
-                        new Sprite("assets/rebecca0.png"),
-                        new Sprite("assets/rebecca2.png")
-                },
-                new Sprite[] {
-                        new Sprite("assets/rebecca3.png"),
-                        new Sprite("assets/rebecca4.png"),
-                        new Sprite("assets/rebecca3.png"),
-                        new Sprite("assets/rebecca5.png")
-                },
-                new Sprite[]{
-                        new Sprite("assets/rebeccaBiking0.png"),
-                        new Sprite("assets/rebeccaBiking1.png"),
-                });
+        if (Controller.CHARACTER.equals("Rebecca")) {
+            player = new Player(800 / 2, 500 / 2, new Sprite[]{
+                    new Sprite("assets/rebecca0.png"),
+                    new Sprite("assets/rebecca1.png"),
+                    new Sprite("assets/rebecca0.png"),
+                    new Sprite("assets/rebecca2.png")
+            },
+                    new Sprite[]{
+                            new Sprite("assets/rebecca3.png"),
+                            new Sprite("assets/rebecca4.png"),
+                            new Sprite("assets/rebecca3.png"),
+                            new Sprite("assets/rebecca5.png")
+                    },
+                    new Sprite[]{
+                            new Sprite("assets/rebeccaBiking0.png"),
+                            new Sprite("assets/rebeccaBiking1.png"),
+                    }
+            );
+        } else {
+            player = new Player(800 / 2, 500 / 2, new Sprite[]{
+                    new Sprite("assets/benji0.png"),
+                    new Sprite("assets/benji1.png"),
+                    new Sprite("assets/benji0.png"),
+                    new Sprite("assets/benji2.png")
+            },
+                    new Sprite[]{
+                            new Sprite("assets/benji3.png"),
+                            new Sprite("assets/benji4.png"),
+                            new Sprite("assets/benji3.png"),
+                            new Sprite("assets/benji5.png")
+                    },
+                    new Sprite[]{
+                            new Sprite("assets/benjiBiking0.png"),
+                            new Sprite("assets/benjiBiking1.png"),
+                    }
+            );
+        }
 
         obstacles = new Obstacle[]{
                 // start

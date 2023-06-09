@@ -42,24 +42,45 @@ public class EscapeRoom implements KeyListener, MouseListener {
     private String game;
 
     public EscapeRoom() {
-        player = new Player(800 / 2, 500 / 2, new Sprite[] {
+        if (Controller.CHARACTER.equals("Rebecca")) {
+            player = new Player(800 / 2, 500 / 2, new Sprite[]{
                     new Sprite("assets/rebecca0.png"),
                     new Sprite("assets/rebecca1.png"),
                     new Sprite("assets/rebecca0.png"),
                     new Sprite("assets/rebecca2.png")
             },
-            new Sprite[] {
-                    new Sprite("assets/rebecca3.png"),
-                    new Sprite("assets/rebecca4.png"),
-                    new Sprite("assets/rebecca3.png"),
-                    new Sprite("assets/rebecca5.png")
+                    new Sprite[]{
+                            new Sprite("assets/rebecca3.png"),
+                            new Sprite("assets/rebecca4.png"),
+                            new Sprite("assets/rebecca3.png"),
+                            new Sprite("assets/rebecca5.png")
+                    },
+                    new Sprite[]{
+                            new Sprite("assets/rebeccaBiking0.png"),
+                            new Sprite("assets/rebeccaBiking1.png"),
+                    },
+                    new Sprite("assets/rebeccaDead.png")
+            );
+        } else {
+            player = new Player(800 / 2, 500 / 2, new Sprite[]{
+                    new Sprite("assets/benji0.png"),
+                    new Sprite("assets/benji1.png"),
+                    new Sprite("assets/benji0.png"),
+                    new Sprite("assets/benji2.png")
             },
-            new Sprite[]{
-                    new Sprite("assets/rebeccaBiking0.png"),
-                    new Sprite("assets/rebeccaBiking1.png"),
-            },
-            new Sprite("assets/rebeccaDead.png")
-        );
+                    new Sprite[]{
+                            new Sprite("assets/benji3.png"),
+                            new Sprite("assets/benji4.png"),
+                            new Sprite("assets/benji3.png"),
+                            new Sprite("assets/benji5.png")
+                    },
+                    new Sprite[]{
+                            new Sprite("assets/benjiBiking0.png"),
+                            new Sprite("assets/benjiBiking1.png"),
+                    },
+                    new Sprite("assets/benjiDead.png")
+            );
+        }
 
         obstacles = new Obstacle[] {
                 new Obstacle(-300, 70, 50, 330),  // left
@@ -105,11 +126,11 @@ public class EscapeRoom implements KeyListener, MouseListener {
         game = "DEFAULT";
 
         walkPerson = new Teacher(-350, 200, new Sprite("assets/walkingMan.png", 7),
-                new String[] {"CLICK TO PLAY WALK GAME", "> HIGHSCORE: "});  // TODO ADD HIGH SCORE
+                new String[] {"CLICK TO PLAY WALK GAME", "Reach a score of 5000 to finish this task."});  // TODO ADD HIGH SCORE
         bikePerson = new Teacher(555, 50, new Sprite("assets/bikingMan.png", 7),
-                new String[] {"CLICK TO PLAY BIKE GAME", "> HIGHSCORE: "});
+                new String[] {"CLICK TO PLAY BIKE GAME", "Reach a score of 5000 to finish this task."});
         busPerson = new Teacher(1050, 200, new Sprite("assets/BusMan.png", 7),
-                new String[] {"CLICK TO PLAY BUS GAME", "> HIGHSCORE: "});
+                new String[] {"CLICK TO PLAY BUS GAME", "Get off at the right stop to finish this task."});
 
 
     }

@@ -6,14 +6,14 @@ import java.awt.event.*;
 public class Controller {
    public Drawing drawing;
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
-   public static int screen = 5;  // default 5
+   public static int screen = 0;  // default 5
    public static boolean initScreen = true;
    public static Timer timer;
    public static final boolean SHOW_HITBOXES = false;
    public static boolean mazeUnlocked = false;
    public static boolean escapeUnlocked = false;
 
-   public static String character = "Rebecca";
+   public static String CHARACTER = "Benji";
 
    /* INITIALIZE SCREENS */
    Menu menu = new Menu();
@@ -149,14 +149,6 @@ public class Controller {
 
 
       }
-   }
-
-   public static String getCharacter() {
-      return character;
-   }
-
-   public static void setCharacter(String ch) {
-      character = ch;
    }
 
 }

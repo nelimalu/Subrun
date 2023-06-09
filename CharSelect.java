@@ -76,12 +76,12 @@ public class CharSelect implements MouseListener, MouseMotionListener {
       g.setColor(new Color(209, 196, 56));
       if (xHover>125 && xHover<355 && yHover>350 && yHover < 425) {
          g.fillRect(125, 330, 230, 75);
-         Controller.setCharacter("Benji");
+         Controller.CHARACTER = "Benji";
 
       }
       if (xHover>425 && xHover<655 && yHover>350 && yHover < 425) {
          g.fillRect(425, 330, 230, 75);
-         Controller.setCharacter("Rebecca");
+         Controller.CHARACTER = "Rebecca";
       }
 
       g.setColor(Color.black);
