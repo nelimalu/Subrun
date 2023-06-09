@@ -23,8 +23,10 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
             Controller.changeScreen(1);
         if (xHover>250 && xHover<550 && yHover>150 && yHover < 225)
             Controller.changeScreen(7);
-        if (xHover>250 && xHover<550 && yHover>255 && yHover < 330)
+        if ((xHover>250 && xHover<550 && yHover>255 && yHover < 330) && (Controller.mazeUnlocked == true))
             Controller.changeScreen(3);
+        if ((xHover>250 && xHover<550 && yHover>360 && yHover < 435) && (Controller.escapeUnlocked == true))
+            Controller.changeScreen(8);
     }
 
     public void mousePressed (MouseEvent e) {
@@ -78,19 +80,37 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
             g.fillRect(250, 230, 300, 75);
         if (xHover>250 && xHover<550 && yHover>360 && yHover < 435)
             g.fillRect(250, 335, 300, 75);
+        g.setColor(Color.black);
+        g.setFont(new Font("Helvetica Neue", Font.PLAIN, 24));
+        g.drawString("1. Learning", 300, 170);
+
+        if (Controller.mazeUnlocked == false) {
+            g.setColor(new Color(48, 48, 48));
+            g.fillRect(250,230,300,75);
+            g.setFont(new Font("Helvetica Neue", Font.PLAIN, 27));
+            g.setColor(Color.white);
+            g.drawString("Locked", 300, 277);
+        } else {
+            g.drawString("2. Maze", 300, 275);
+        }
+
+        if (Controller.escapeUnlocked == false) {
+            g.setColor(new Color(48, 48, 48));
+            g.fillRect(250,335,300,75);
+            g.setFont(new Font("Helvetica Neue", Font.PLAIN, 27));
+            g.setColor(Color.white);
+            g.drawString("Locked", 300, 382);
+        } else {
+            g.drawString("3. Escape Room", 300, 380);
+        }
 
         g.setColor(Color.black);
         g.drawRect(250,125,300,75);
         g.drawRect(250,230,300,75);
         g.drawRect(250,335,300,75);
 
-        g.setFont(new Font("Helvetica Neue", Font.PLAIN, 24));
-        g.drawString("1. Learning", 300, 170);
-        g.drawString("2. Maze", 300, 275);
-        g.drawString("3. Escape Room", 300, 380);
+
         g.setFont(new Font("Arial", Font.BOLD, 30));
-
-
         g.setColor(Color.white);
         g.drawString("<- Back", 15, 440);
         if (xHover < 120 && yHover > 415) {

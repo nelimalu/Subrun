@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class Maze implements KeyListener, MouseListener {
+public class Maze implements KeyListener, MouseListener, MouseMotionListener {
     private Player player;
     private Obstacle[] obstacles;
     private static boolean[] buttons = {false, false, false, false};  // up down left right
@@ -11,7 +11,9 @@ public class Maze implements KeyListener, MouseListener {
     public static Sprite[] starSprites = {new Sprite("assets/emptyStar.png", 2), new Sprite("assets/filledStar.png", 2)};
     private static final Font font = new Font("Monospaced", Font.BOLD, 10);
     private int xOffset;
+    private int xHover;
     private int yOffset;
+    private int yHover;
     private int dialogueIndex;
     private boolean isInDialogue;
     private char lastKeyPressed;
@@ -232,6 +234,23 @@ public class Maze implements KeyListener, MouseListener {
         for (int i = 0; i < finishedLevels.length; i++) {
             g.drawImage(starSprites[finishedLevels[i] ? 1 : 0].getImage(), 10 + i * 40, 20, null);
         }
+        if (finishedLevels[0] == true && finishedLevels[1] == true && finishedLevels[2] == true) {
+            Controller.escapeUnlocked = true;
+        }
+        g.setColor(Color.white);
+        g.fillRect(700,0,100,35);
+        g.setFont(new Font("Arial", Font.BOLD, 25));
+        g.setColor(Color.black);
+        g.drawRect(700,0,100,35);
+        g.drawString("Exit", 717, 25);
+
+        if (xHover >710  && yHover < 50) {
+            g.setFont(new Font("Arial", Font.BOLD, 25));
+            g.setColor(new Color(135, 134, 134));
+            g.drawString("Exit", 717,25);
+
+
+        }
     }
 
     @Override
@@ -282,6 +301,8 @@ public class Maze implements KeyListener, MouseListener {
                 busGame.handleLoss();
             }
         }
+        if (xHover >710  && yHover < 50)
+            Controller.changeScreen(6);
     }
 
     @Override
@@ -294,4 +315,12 @@ public class Maze implements KeyListener, MouseListener {
     public void mouseEntered(MouseEvent e) {}
     @Override
     public void mouseExited(MouseEvent e) {}
+
+    public void mouseMoved (MouseEvent e) {
+        xHover = e.getX();
+        yHover = e.getY();
+    }
+
+    public void mouseDragged (MouseEvent e) { }
+
 }
