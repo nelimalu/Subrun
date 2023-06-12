@@ -32,6 +32,7 @@ public class Maze implements KeyListener, MouseListener, MouseMotionListener {
     /** sprites used to visualize the finished levels */
     public static Sprite[] starSprites = {new Sprite("assets/emptyStar.png", 2), new Sprite("assets/filledStar.png", 2)};
 
+    /** sprites used to enhance the background */
     private static Obstacle[] backgroundImages;
 
     /** font that is used to draw text in the maze */

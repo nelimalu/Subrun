@@ -96,6 +96,13 @@ public class BikingGame {
         g.setColor(Color.BLACK);
         g.setFont(scoreFont);
         g.drawString("Score: " + frame, 10, 30);
+
+        // inform player if they completed the task
+        if (frame > 1200) {
+            g.setColor(Color.GREEN);
+            g.drawString("TASK COMPLETE:", 10, 60);
+            g.drawString("score > 1200", 10, 80);
+        }
     }
 
     /**
