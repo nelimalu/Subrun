@@ -272,7 +272,7 @@ public class BikingGame {
                                 "2) Sidewalk",
                                 "3) Bike Lane"
                         }, '2'),
-                new MessageBox("Correct! In Canada, it is illegal for a cyclist to bike on a sidewalk.", 2),
+                new MessageBox("Correct! In Canada, it is illegal for a cyclist to bike on a sidewalk. Enter the room behind me to start biking.", 2),
                 new MessageBox("Wrong! Feel free to try again!"),
         };
 

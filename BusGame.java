@@ -326,7 +326,7 @@ public class BusGame {
                                 "2) Too many lanes",
                                 "3) Low frequency"
                         }, '1'),
-                new MessageBox("Correct! Low bus ridership in the suburbs leads to budget cuts, spiraling into even less ridership.", 2),
+                new MessageBox("Correct! Low bus ridership in the suburbs leads to budget cuts, spiraling into even less ridership. Walk forward to board the bus.", 2),
                 new MessageBox("Wrong! Feel free to try again!"),
         };
 
