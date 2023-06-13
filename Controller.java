@@ -19,7 +19,7 @@ public class Controller {
    /** creating frame & assigning header name */
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
    /** current screen index corresponding with a switch statement to switch paintings */
-   public static int screen = 5;  // default 5
+   public static int screen = 10;  // default 5
    /** limits the addition of listeners to frame to once */
    public static boolean initScreen = true;
    /** timer to manage framerate and track scores throughought the progression of the game */
@@ -53,7 +53,8 @@ public class Controller {
    LevelSelect levelSelect = new LevelSelect();
    /** Learning screen with scales for sprite images */
    public static Learning learning = new Learning(new Sprite("assets/laptop.png", 1),new Sprite("assets/redHouse.png", 7),new Sprite("assets/blueHouse.png", 7),new Sprite("assets/orangeHouse.png", 7), new Sprite("assets/chalkboard.png", 4), new Sprite("assets/suburbs.png", 1), new Sprite("assets/bike.png", 6), new Sprite("assets/car.png", 6),new Sprite("assets/bus.png", 6), new Sprite("assets/thinking.png", 1), new Sprite("assets/sign.png", 1), new Sprite("assets/benji0.png",5), new Sprite("assets/benji0.png", 8));
-
+   EscapeInstruction escapeInstruction = new EscapeInstruction(new Sprite("assets/rebecca0.png",6), new Sprite("assets/pin.png",1));
+   Citations citations = new Citations();
    /**
     * Constructor for controller class
     * Sets dimensions for JFrame and set close operation
@@ -194,8 +195,24 @@ public class Controller {
                }
                escapeRoom.paint(g);
                break;
-
-
+            case 9:  
+               if (initScreen) {
+                  removeListeners();
+                  frame.addMouseListener(escapeInstruction);
+                  frame.addMouseMotionListener(escapeInstruction);
+                  initScreen = false;
+               }
+               escapeInstruction.paint(g);
+               break;
+            case 10: 
+               if (initScreen) {
+                  removeListeners();
+                  initScreen = false;
+                  frame.addMouseListener(citations);
+                  frame.addMouseMotionListener(citations);
+               }
+               citations.paint(g);
+               break;
 
          }
 
