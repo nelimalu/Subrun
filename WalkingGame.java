@@ -115,6 +115,13 @@ public class WalkingGame {
         g.setColor(Color.BLACK);
         g.setFont(scoreFont);
         g.drawString("Score: " + score, 10, 30);
+
+        // inform player if they completed the task
+        if (score > 5000) {
+            g.setColor(Color.GREEN);
+            g.drawString("TASK COMPLETE:", 10, 60);
+            g.drawString("score > 5000", 10, 80);
+        }
     }
 
     /**
