@@ -21,7 +21,7 @@ public class Controller {
    /** creating frame & assigning header name */
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
    /** current screen index corresponding with a switch statement to switch paintings */
-   public static int screen = 8;  // default 5
+   public static int screen = 5;  // default 5
    /** limits the addition of listeners to frame to once */
    public static boolean initScreen = true;
    /** timer to manage framerate and track scores throughought the progression of the game */
