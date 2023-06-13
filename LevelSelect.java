@@ -50,8 +50,10 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
             Controller.changeScreen(7);
         if ((xHover>250 && xHover<550 && yHover>255 && yHover < 330) && (Controller.mazeUnlocked))
             Controller.changeScreen(3);
+
         if ((xHover>250 && xHover<550 && yHover>360 && yHover < 435) && (Controller.escapeUnlocked))
-            Controller.changeScreen(8);
+            Controller.changeScreen(9);
+
     }
 
     public void mousePressed (MouseEvent e) {

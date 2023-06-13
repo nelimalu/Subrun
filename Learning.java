@@ -53,16 +53,16 @@ public class Learning implements MouseListener {
    /** array of MessageBoxes, dialogues stored by order of index appearance */
    private static MessageBox[] messages = {
            new MessageBox("Hey! Nice to meet you! Welcome to the town of Vaughan. Come on! I'll show you around!"),
-           new MessageBox("Vaughan's a suburban neighborhood, and it's a pretty nice place to be: decently quiet, and great people. But there's a problem..."),
-           new MessageBox("It’s really hard to get around here as a kid. If you look atthe map, you can see that all the houses are placed in strips, with wide sidewalk-less roads linking isolated communities, making transportation really annoying without a car."),
-           new MessageBox("So really, if your parents can’t drive you, that gives you 4ways to get around as a kid here. You can walk, you can ridea bike, you can bus, or if you’re feeling rich, you can takean Uber."),
-           new MessageBox("If you aren’t going too far, taking a bike’s a great option!There’s a lot of room to bike around, and it’s a nice littleworkout. Just remember biking on the sidewalk is illegal, sostick to the bike lanes!"),
-           new MessageBox("Walking is also great, especially when the weather’s good. Everything’s far apart so walking can only take you so far, but it's there. Naturally, travel times can get quite long, and sidewalks can be designed pretty inconsistently too."),
+           new MessageBox("Vaughan's a suburban neighborhood, and it's a pretty nice place to be: decently quiet, and great people. But there's a problem: urban sprawl, an issue that's almost doubled over the last 24 years. Let me explain."),
+           new MessageBox("It's really hard to get around here as a kid. If you look atthe map, you can see that all the houses are placed in strips, with wide sidewalk-less roads linking isolated communities, making transportation really annoying without a car."),
+           new MessageBox("So really, if your parents can't drive you, that gives you 4ways to get around as a kid here. You can walk, you can ridea bike, you can bus, or if you're feeling rich, you can takean Uber."),
+           new MessageBox("If you aren't going too far, taking a bike's a great option!There's a lot of room to bike around, and it's a nice littleworkout. Just remember biking on the sidewalk is illegal, sostick to the bike lanes!"),
+           new MessageBox("Walking is also great, especially when the weather's good. Everything's far apart so walking can only take you so far, but it's there. Naturally, travel times can get quite long, and sidewalks can be designed pretty inconsistently too."),
            new MessageBox("Another option is the bus! Although the bus route system in our neighborhood is not great at all because of low funding, when the bus does end up coming, it can be a fast and eco-friendly way to get places. "),
-           new MessageBox("And finally, if you feel like splurging a little, you could call an uber and have it take you where you need to go. Justmake sure you have your parent’s permission, and be careful how much you spend; Ubers are expensive!"),
+           new MessageBox("And finally, if you feel like splurging a little, you could call an uber and have it take you where you need to go. Justmake sure you have your parent's permission, and be careful how much you spend; Ubers are expensive!"),
            new MessageBox("Here's the thing: although these are all good ways to get around in a suburban neighborhood, it doesn't solve the overlying issue of urban sprawl in itself." ),
            new MessageBox("Consider petitioning for better public transit, walking, andbiking infrastructure in your neighborhood! Lawmakers will notice eventually if a lot of people petition for the same thing."),
-           new MessageBox("And that’s just about all you need to know to get around in our neighborhood. Now, you try walking a day in my shoes! Just remember everything I told you!")
+           new MessageBox("And that's just about all you need to know to get around in our neighborhood. Now, you try walking a day in my shoes! Just remember everything I told you!")
    };
 
    /**

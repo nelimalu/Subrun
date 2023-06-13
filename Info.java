@@ -57,6 +57,8 @@ public class Info implements MouseListener, MouseMotionListener {
    public void mouseClicked(MouseEvent e) {
       if (xHover < 120 && yHover > 415)
          Controller.changeScreen(0);
+      if (xHover > 120 && xHover < 320 && yHover > 415)
+         Controller.changeScreen(10);
    }
 
    public void mousePressed(MouseEvent e) {
@@ -128,12 +130,19 @@ public class Info implements MouseListener, MouseMotionListener {
       g.setFont(new Font("Arial", Font.BOLD, 30));
       g.setColor(Color.white);
       g.drawString("<- Back", 15, 440);
+      g.drawString("Citations ->", 160, 440);
 
       // Highlight "Back" button when hovered
       if (xHover < 120 && yHover > 415) {
          g.setFont(new Font("Arial", Font.BOLD, 30));
          g.setColor(Color.yellow);
          g.drawString("<- Back", 15, 440);
+      }
+      if (xHover > 120 && xHover < 320 && yHover > 415) {
+         g.setFont(new Font("Arial", Font.BOLD, 30));
+         g.setColor(Color.yellow);
+         g.drawString("Citations ->", 160, 440);
+
       }
 
       // Draw images
