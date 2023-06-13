@@ -7,7 +7,8 @@ import java.awt.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [100%] Luka Jovanovic & [0%] Brian Song
+ * Luka: design, processing text
  * Created on 2023/06/05
  */
 public class MessageBox {

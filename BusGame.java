@@ -8,8 +8,10 @@ import java.awt.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
- * Created on 2023/07/04
+ * @author [50%] Luka Jovanovic & [50%] Brian Song
+ * Luka: randomization methods, getting off bus
+ * Brian: preparing list of bus stops, painting frame
+ * Created on 2023/06/07
  */
 public class BusGame {
 
@@ -324,7 +326,7 @@ public class BusGame {
                                 "2) Too many lanes",
                                 "3) Low frequency"
                         }, '1'),
-                new MessageBox("Correct! Low bus ridership in the suburbs leads to budget cuts, spiraling into even less ridership.", 2),
+                new MessageBox("Correct! Low bus ridership in the suburbs leads to budget cuts, spiraling into even less ridership. Walk forward to board the bus.", 2),
                 new MessageBox("Wrong! Feel free to try again!"),
         };
 

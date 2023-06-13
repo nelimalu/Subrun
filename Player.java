@@ -7,7 +7,9 @@ import java.awt.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [80%] Luka Jovanovic & [20%] Brian Song
+ * Luka: collision, movement, switching between player icons
+ * Brian: construction of player
  * Created on 2023/05/15
  */
 public class Player {
@@ -356,7 +358,7 @@ public class Player {
    /**
     * Draw the player moving regularly with animations depending on the directoin
     * @param g Graphics object for drawing
-    * @param buttons
+    * @param buttons Buttons that are currently being pressed
     */
    public void draw(Graphics g, boolean[] buttons) {
        if (Controller.SHOW_HITBOXES) {

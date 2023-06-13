@@ -10,8 +10,10 @@ import java.io.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [80%] Luka Jovanovic & [20%] Brian Song
  * Created on 2023/05/16
+ * Luka: scale factor, file import, buffered image
+ * Brian: constructors
  */
 public class Sprite {
    /** buffered image that is used when drawing on a frame */
@@ -27,7 +29,7 @@ public class Sprite {
    public Sprite(String path) {
       scale = 5;
       try {
-         image = ImageIO.read(new File(path));
+         image = ImageIO.read(Sprite.class.getResource("/" + path));
          Image scaled = image.getScaledInstance(image.getWidth() * scale, image.getHeight() * scale, Image.SCALE_DEFAULT);
          image = convertToBufferedImage(scaled);
       } catch (IOException e) {
@@ -44,7 +46,7 @@ public class Sprite {
    public Sprite(String path, int scale) {
       this.scale = scale;
       try {
-         image = ImageIO.read(new File(path));
+         image = ImageIO.read(Sprite.class.getResource("/" + path));
          Image scaled = image.getScaledInstance(image.getWidth() * scale, image.getHeight() * scale, Image.SCALE_DEFAULT);
          image = convertToBufferedImage(scaled);
       } catch (IOException e) {

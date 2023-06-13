@@ -9,7 +9,9 @@ import java.util.ArrayList;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [70%] Luka Jovanovic & [30%] Brian Song
+ * Luka: Sprites for game, bike movement, score tracking
+ * Brian: Drawing map layout, infinite generation
  * Created on 2023/06/07
  */
 public class BikingGame {
@@ -94,6 +96,13 @@ public class BikingGame {
         g.setColor(Color.BLACK);
         g.setFont(scoreFont);
         g.drawString("Score: " + frame, 10, 30);
+
+        // inform player if they completed the task
+        if (frame > 1200) {
+            g.setColor(Color.GREEN);
+            g.drawString("TASK COMPLETE:", 10, 60);
+            g.drawString("score > 1200", 10, 80);
+        }
     }
 
     /**
@@ -270,7 +279,7 @@ public class BikingGame {
                                 "2) Sidewalk",
                                 "3) Bike Lane"
                         }, '2'),
-                new MessageBox("Correct! In Canada, it is illegal for a cyclist to bike on a sidewalk.", 2),
+                new MessageBox("Correct! In Canada, it is illegal for a cyclist to bike on a sidewalk. Enter the room behind me to start biking.", 2),
                 new MessageBox("Wrong! Feel free to try again!"),
         };
 

@@ -10,7 +10,9 @@ import java.awt.event.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [30%] Luka Jovanovic & [70%] Brian Song
+ * Luka: transition into the 3 levels
+ * Brian: buttons, hover, paint graphics
  * Created on 2023/06/04
  */
 public class LevelSelect implements MouseListener, MouseMotionListener {
@@ -46,10 +48,12 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
             Controller.changeScreen(1);
         if (xHover>250 && xHover<550 && yHover>150 && yHover < 225)
             Controller.changeScreen(7);
-        if ((xHover>250 && xHover<550 && yHover>255 && yHover < 330) && (Controller.mazeUnlocked == true))
+        if ((xHover>250 && xHover<550 && yHover>255 && yHover < 330) && (Controller.mazeUnlocked))
             Controller.changeScreen(3);
-        if ((xHover>250 && xHover<550 && yHover>360 && yHover < 435) && (Controller.escapeUnlocked == true))
+
+        if ((xHover>250 && xHover<550 && yHover>360 && yHover < 435) && (Controller.escapeUnlocked))
             Controller.changeScreen(9);
+
     }
 
     public void mousePressed (MouseEvent e) {
@@ -108,6 +112,7 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
         g.fillRect(250, 335, 300, 75);
 
         g.setColor(new Color(209, 196, 56));
+        // highlight buttons that are hovered over
         if (xHover>250 && xHover<550 && yHover>150 && yHover < 225)
             g.fillRect(250, 125, 300, 75);
         if (xHover>250 && xHover<550 && yHover>255 && yHover < 330)
@@ -118,7 +123,8 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
         g.setFont(new Font("Helvetica Neue", Font.PLAIN, 24));
         g.drawString("1. Learning", 300, 170);
 
-        if (Controller.mazeUnlocked == false) {
+        // locking function for maze level
+        if (!Controller.mazeUnlocked) {
             g.setColor(new Color(48, 48, 48));
             g.fillRect(250,230,300,75);
             g.setFont(new Font("Helvetica Neue", Font.PLAIN, 27));
@@ -128,7 +134,8 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
             g.drawString("2. Maze", 300, 275);
         }
 
-        if (Controller.escapeUnlocked == false) {
+        // locking function for escape room
+        if (!Controller.escapeUnlocked) {
             g.setColor(new Color(48, 48, 48));
             g.fillRect(250,335,300,75);
             g.setFont(new Font("Helvetica Neue", Font.PLAIN, 27));
@@ -144,6 +151,7 @@ public class LevelSelect implements MouseListener, MouseMotionListener {
         g.drawRect(250,335,300,75);
 
 
+        // back button
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.setColor(Color.white);
         g.drawString("<- Back", 15, 440);

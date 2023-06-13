@@ -8,7 +8,9 @@ import java.awt.event.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [70%] Luka Jovanovic & [30%] Brian Song
+ * Luka: maze game, escape room game, bike game, draw sprites, movement
+ * Brian: npc interaction, dialogue
  * Created on 2023/06/03
  */
 public class Maze implements KeyListener, MouseListener, MouseMotionListener {
@@ -29,6 +31,9 @@ public class Maze implements KeyListener, MouseListener, MouseMotionListener {
 
     /** sprites used to visualize the finished levels */
     public static Sprite[] starSprites = {new Sprite("assets/emptyStar.png", 2), new Sprite("assets/filledStar.png", 2)};
+
+    /** sprites used to enhance the background */
+    private static Obstacle[] backgroundImages;
 
     /** font that is used to draw text in the maze */
     private static final Font font = new Font("Monospaced", Font.BOLD, 10);
@@ -145,6 +150,10 @@ public class Maze implements KeyListener, MouseListener, MouseMotionListener {
                 new Obstacle(550, -2350, 3000, 50),
         };
 
+        backgroundImages = new Obstacle[] {
+                new Obstacle(320, -10, new Sprite("assets/arrows.png"))
+        };
+
         dialogueIndex = 0;
         lastKeyPressed = 0;
         sendBack = false;
@@ -252,6 +261,10 @@ public class Maze implements KeyListener, MouseListener, MouseMotionListener {
             obstacle.moveX(xDistance);
             obstacle.moveY(yDistance);
         }
+        for (Obstacle obstacle : backgroundImages) {
+            obstacle.moveX(xDistance);
+            obstacle.moveY(yDistance);
+        }
     }
 
     /**
@@ -263,6 +276,10 @@ public class Maze implements KeyListener, MouseListener, MouseMotionListener {
         busGame.move(-xOffset, -yOffset);
 
         for (Obstacle obstacle : obstacles) {
+            obstacle.moveX(-xOffset);
+            obstacle.moveY(-yOffset);
+        }
+        for (Obstacle obstacle : backgroundImages) {
             obstacle.moveX(-xOffset);
             obstacle.moveY(-yOffset);
         }
@@ -301,6 +318,10 @@ public class Maze implements KeyListener, MouseListener, MouseMotionListener {
             prompt = bikingGame.getPrompt();
         if (busGame.getPrompt() != null)
             prompt = busGame.getPrompt();
+
+        for (Obstacle image : backgroundImages) {
+            image.draw(g);
+        }
 
         // decide if player should be sent back to the origin
         if (bikingGame.draw(g, player, xOffset, yOffset, this))

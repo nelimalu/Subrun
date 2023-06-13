@@ -9,7 +9,9 @@ import java.awt.event.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [20%] Luka Jovanovic & [80%] Brian Song
+ * Luka: listeners
+ * Brian: buttons, hovers, painting frame
  * Created on 2023/06/01
  */
 public class CharSelect implements MouseListener, MouseMotionListener {

@@ -12,7 +12,9 @@ import java.awt.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [60%] Luka Jovanovic & [40%] Brian Song
+ * Luka: car collision, player movement, infinite generation
+ * Brian: painted frame, car generation, lanes
  * Created on 2023/06/04
  */
 public class WalkingGame {
@@ -113,6 +115,13 @@ public class WalkingGame {
         g.setColor(Color.BLACK);
         g.setFont(scoreFont);
         g.drawString("Score: " + score, 10, 30);
+
+        // inform player if they completed the task
+        if (score > 5000) {
+            g.setColor(Color.GREEN);
+            g.drawString("TASK COMPLETE:", 10, 60);
+            g.drawString("score > 5000", 10, 80);
+        }
     }
 
     /**
@@ -365,7 +374,7 @@ public class WalkingGame {
                                 "2) Long travel distances",
                                 "3) Concrete sidewalks"
                         }, '3'),
-                new MessageBox("Correct! The fact that sidewalks are made out of concrete has no significant effect on the walkability of suburbs.", 2),
+                new MessageBox("Correct! The fact that sidewalks are made out of concrete has no significant effect on the walkability of suburbs. Enter the room behind me and cross the streets whilst still dodging the cars!.", 2),
                 new MessageBox("Wrong! Feel free to try again!"),
         };
 

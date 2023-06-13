@@ -10,8 +10,10 @@ import java.awt.event.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [30%] Luka Jovanovic & [70%] Brian Song
  * Created on 2023/06/07
+ * Luka: flow between paint methods, drawing sprites
+ * Brian: informative speech, text boxes, designs, organizing sprites
  */
 
 public class Learning implements MouseListener {
@@ -62,11 +64,25 @@ public class Learning implements MouseListener {
            new MessageBox("Consider petitioning for better public transit, walking, andbiking infrastructure in your neighborhood! Lawmakers will notice eventually if a lot of people petition for the same thing."),
            new MessageBox("And that's just about all you need to know to get around in our neighborhood. Now, you try walking a day in my shoes! Just remember everything I told you!")
    };
+
    /**
     * Learning constructor:
     * creates a player object based on character selected previously
     * creates a drawing that rotates through paint methods
     * imports sprites to be used in the paint methods
+    * @param laptop Laptop sprite
+    * @param redHouse Red house sprite
+    * @param blueHouse Blue house sprite
+    * @param orangeHouse Orange house sprite
+    * @param chalkboard Chalkboard sprite
+    * @param suburbs Suburbs image
+    * @param bike Bike sprite
+    * @param car Car sprite
+    * @param bus Bus sprite
+    * @param thinking Thinking Sprite
+    * @param sign Sign sprite
+    * @param petitioner Petitioner sprite (benji)
+    * @param walk Walk sprite
     */
    public Learning(Sprite laptop, Sprite redHouse, Sprite blueHouse, Sprite orangeHouse, Sprite chalkboard, Sprite suburbs, Sprite bike, Sprite car, Sprite bus, Sprite thinking, Sprite sign, Sprite petitioner, Sprite walk) {
       if (Controller.CHARACTER.equals("Rebecca")) {
@@ -128,8 +144,6 @@ public class Learning implements MouseListener {
     * @param g Graphics object for drawing
     */
    public void introScreen(Graphics g) {
-      //g.setColor(new Color(167, 227, 232));
-      //g.fillRect(0,0,800,500);
       g.drawImage(laptop.getImage(), 200, -50, null);
       g.drawImage(character.getImage(), 525, 140, null);
       messages[0].draw(g);
@@ -140,8 +154,6 @@ public class Learning implements MouseListener {
     * @param g Graphics object for drawing
     */
    public void suburbsScreen(Graphics g) {
-      //g.setColor(new Color(167, 227, 232));
-      //g.fillRect(0,0,800,500);
       g.drawImage(redHouse.getImage(), 200, 100, null);
       g.drawImage(blueHouse.getImage(), 400, 70, null);
       g.drawImage(orangeHouse.getImage(), 300, 120, null);
@@ -154,8 +166,6 @@ public class Learning implements MouseListener {
     * @param g Graphics object for drawing
     */
    public void travelScreen(Graphics g) {
-      //g.setColor(new Color(167, 227, 232));
-      //g.fillRect(0,0,800,500);
       g.drawImage(suburbs.getImage(),0,0,null);
       g.drawImage(character.getImage(), 525, 140, null);
       messages[2].draw(g);
@@ -166,8 +176,6 @@ public class Learning implements MouseListener {
     * @param g Graphics object for drawing
     */
    public void waysToTravelScreen(Graphics g) {
-      //g.setColor(new Color(167, 227, 232));
-      //g.fillRect(0,0,800,500);
       g.drawImage(chalkboard.getImage(), 100, -50, null);
       g.drawImage(walk.getImage(), 170, 150, null);
       g.drawImage(car.getImage(), 200, 80, null);
@@ -182,8 +190,6 @@ public class Learning implements MouseListener {
     * @param g Graphics object for drawing
     */
    public void bikeScreen(Graphics g) {
-      //g.setColor(new Color(167, 227, 232));
-      //g.fillRect(0,0,800,500);
 
       g.drawImage(chalkboard.getImage(), 100, -50, null);
 
@@ -200,8 +206,6 @@ public class Learning implements MouseListener {
     * @param g Graphics object for drawing
     */
    public void walkScreen(Graphics g) {
-      //g.setColor(new Color(167, 227, 232));
-      //g.fillRect(0,0,800,500);
       g.drawImage(chalkboard.getImage(), 100, -50, null);
       g.drawImage(walk.getImage(), 285, 120, null);
       g.drawImage(character.getImage(), 525, 140, null);
@@ -218,8 +222,6 @@ public class Learning implements MouseListener {
     * @param g Graphics object for drawing
     */
    public void busScreen(Graphics g) {
-      //g.setColor(new Color(167, 227, 232));
-      //g.fillRect(0,0,800,500);
       g.drawImage(chalkboard.getImage(), 100, -50, null);
       g.drawImage(bus.getImage(), 260, 50, null);
       g.drawImage(character.getImage(), 525, 140, null);
@@ -235,8 +237,6 @@ public class Learning implements MouseListener {
     * @param g Graphics object for drawing
     */
    public void uberScreen(Graphics g) {
-      //g.setColor(new Color(167, 227, 232));
-      //g.fillRect(0,0,800,500);
       g.drawImage(chalkboard.getImage(), 100, -50, null);
       g.drawImage(car.getImage(), 260, 160, null);
       g.drawImage(character.getImage(), 525, 140, null);
@@ -266,6 +266,7 @@ public class Learning implements MouseListener {
     * @param g Graphics object for drawing
     */
    public void petitionScreen(Graphics g) {
+      // draw a grid of petitioners
       for (int n = 360; n < 710; n+=65) {
          g.drawImage(petitioner.getImage(), n, 130, null);
       }

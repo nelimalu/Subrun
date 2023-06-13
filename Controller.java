@@ -10,7 +10,9 @@ import java.awt.event.*;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [50%] Luka Jovanovic & [50%] Brian Song
+ * Luka: Flow between frames, removing & adding listeners
+ * Brian: clear/character tracking variables, frame constructors
  * Created on 2023/05/29
  */
 public class Controller {
@@ -19,7 +21,7 @@ public class Controller {
    /** creating frame & assigning header name */
    public static JFrame frame = new JFrame("[ SUBRUN ] -- Vaughan Collective");
    /** current screen index corresponding with a switch statement to switch paintings */
-   public static int screen = 10;  // default 5
+   public static int screen = 5;
    /** limits the addition of listeners to frame to once */
    public static boolean initScreen = true;
    /** timer to manage framerate and track scores throughought the progression of the game */

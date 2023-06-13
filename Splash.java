@@ -10,8 +10,9 @@ import java.util.Timer;
  * ICS4U0 with V. Krasteva
  *
  * @version 1.0
- * @author Luka Jovanovic & Brian Song
+ * @author [0%] Luka Jovanovic & [100%] Brian Song
  * Created on 2023/06/02
+ * Brian: entry animation, fadeout, paint
  */
 public class Splash {
    /** bike sprite to be animated */
